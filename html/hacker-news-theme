@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]> <!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
+<meta name="description" content="A while back I restyled Hacker News using the Stylebot extension for Chrome. Initially I just wanted to apply a fixed width, as the site&#039;s fluid layout can result in some very long lines on a large/wide display. Over time I added in some other usability improvements, such as: - larger &#039;vote&#039; buttons with more space in between them, which helps to avoid mis-clicks on the downvote arrow (a common complaint on HN) - stronger delineation between unread and read articles, using a faint cyan highlight on those which are unread, while read articles almost fade into the background - monospace fonts optimised for code Works best with Helvetica Neue and Menlo installed (as they are by default on Mac OS). Alternatively, Anonymous Pro will be used for code if installed. Vote arrows use the [CSS border based triangle](http://css-tricks.com/snippets/css/css-triangle/) technique."/>
+<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
+<link rel="canonical" href="https://jamesfriend.com.au/hacker-news-theme"/>
+<link rel="shortlink" href="https://jamesfriend.com.au/node/4"/>
+ 
+<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+<title>Hacker News theme | James Friend</title>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_gPqjYq7fqdMzw8-29XWQIVoDSWTmZCGy9OqaHppNxuQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"jf","theme_token":"ES_iInXj859btutZOFyNnOGECqliUUjcLgAkNOYTe3s","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/themes\/open_framework\/js\/jquery-1.8.2.min.js":1,"sites\/all\/themes\/open_framework\/bootstrap\/js\/bootstrap.min.js":1,"sites\/all\/themes\/open_framework\/js\/open_framework.js":1,"sites\/all\/themes\/open_framework\/js\/override.js":1,"sites\/default\/themes\/jf\/js\/prism.custom.js":1,"sites\/default\/themes\/jf\/js\/script.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap.min.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap-responsive.min.css":1,"sites\/all\/themes\/open_framework\/css\/open_framework.css":1,"sites\/default\/themes\/jf\/css\/flat-ui.css":1,"sites\/default\/themes\/jf\/css\/prism.custom.css":1,"sites\/default\/themes\/jf\/css\/jf.css.less":1}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"}});
+//--><!]]>
+</script>
+ 
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-4 node-type-article      ">
+<div class="contents">
+<div id="header" class="clearfix">
+<div class="container">
+<div class="row">
+<div class="span12">
+<div id="name-and-slogan">
+<div id="site-name"><a href="/" title="Home" rel="home">James Friend</a></div>
+<div id="site-slogan">Web Platform Adventures &amp; PC Archeology</div>
+</div>
+ 
+</div>
+</div>
+</div>
+</div>
+ 
+<div id="main" class="clearfix">
+<div class="container">
+<div id="breadcrumb"><h2 class="element-invisible">You are here</h2><div class="breadcrumb"><a href="/">Home</a></div></div>
+<div id="main-content" class="row">
+<div id="content" class="span9">
+<div id="content-wrapper">
+<div id="content-head" class="row-fluid">
+<div id="highlighted" class="clearfix"></div>
+<h1 class="title" id="page-title"> Hacker News theme </h1>
+<div class="tabs"> </div>
+</div>
+<div id="content-body" class="row-fluid"> <div class="region region-content clearfix">
+<div id="block-system-main" class="clearfix block block-system"> <div class="content"> <div id="node-4" class="node node-article node-promoted clearfix" about="/hacker-news-theme" typeof="sioc:Item foaf:Document">
+<span property="dc:title" content="Hacker News theme" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-05-25T12:38:35+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on May 25, 2013 - 12:38</span> </div>
+<div class="content">
+<div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/hacker-news-neue.png"><img typeof="foaf:Image" src="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/hacker-news-neue.png" width="870" height="599" alt=""/></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>A while back I restyled Hacker News using the Stylebot extension for Chrome. Initially I just wanted to apply a fixed width, as the site's fluid layout can result in some very long lines on a large/wide display.</p>
+<p>Over time I added in some other usability improvements, such as:</p>
+<ul>
+<li>larger 'vote' buttons with more space in between them, which helps to avoid mis-clicks on the downvote arrow (a common complaint on HN)</li>
+<li>stronger delineation between unread and read articles, using a faint cyan highlight on those which are unread, while read articles almost fade into the background</li>
+<li>monospace fonts optimised for code</li>
+</ul>
+<p>Works best with Helvetica Neue and Menlo installed (as they are by default on Mac OS). Alternatively, Anonymous Pro will be used for code if installed.</p>
+<p>Vote arrows use the <a href="http://css-tricks.com/snippets/css/css-triangle/">CSS border based triangle</a> technique.</p>
+<p>If you want to use the theme yourself you can grab it from <a href="http://stylebot.me/styles/248">Stylebot Social</a>.</p>
+</div></div></div> </div>
+</div>
+</div>
+</div></div>
+ 
+</div>
+</div>
+ 
+</div>
+ 
+<div id="sidebar-second" class="sidebar span3">
+<div class="row-fluid"><div class="region region-sidebar-second clearfix">
+<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
+<div class="content"> <div class="pic-me">
+<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
+</div>
+<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
+</div>
+</div>
+<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
+<div class="content"> <ul>
+<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
+<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
+<li><a href="https://github.com/jsdf">GitHub</a></li>
+<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
+</ul>
+</div>
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+</div>
+</div>
+</div>
+ 
+</div>
+</body>
+</html>

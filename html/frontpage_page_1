@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]> <!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="alternate" type="application/rss+xml" title="Front page feed" href="https://jamesfriend.com.au/rss.xml"/>
+<link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
+<meta name="description" content="I make neat stuff on the web. I&#039;m particularly into visceral, realtime apps, node.js, and learning from the past."/>
+<meta name="generator" content="AppleScript"/>
+<link rel="canonical" href="https://jamesfriend.com.au/"/>
+<link rel="shortlink" href="https://jamesfriend.com.au/"/>
+ 
+<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+<title>James Friend | Web Platform Adventures & PC Archeology</title>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_gPqjYq7fqdMzw8-29XWQIVoDSWTmZCGy9OqaHppNxuQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"jf","theme_token":"HZo7j8KQdqNl_lSOOfb5mvqvybte_LXoHTEPW58uT6E","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/themes\/open_framework\/js\/jquery-1.8.2.min.js":1,"sites\/all\/themes\/open_framework\/bootstrap\/js\/bootstrap.min.js":1,"sites\/all\/themes\/open_framework\/js\/open_framework.js":1,"sites\/all\/themes\/open_framework\/js\/override.js":1,"sites\/default\/themes\/jf\/js\/prism.custom.js":1,"sites\/default\/themes\/jf\/js\/script.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap.min.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap-responsive.min.css":1,"sites\/all\/themes\/open_framework\/css\/open_framework.css":1,"sites\/default\/themes\/jf\/css\/flat-ui.css":1,"sites\/default\/themes\/jf\/css\/prism.custom.css":1,"sites\/default\/themes\/jf\/css\/jf.css.less":1}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"}});
+//--><!]]>
+</script>
+ 
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body class="html front not-logged-in one-sidebar sidebar-second page-frontpage      ">
+<div id="top-links-bar">
+<div class="container">
+<a class="attention-seeker" href="https://github.com/jsdf">here's some neat stuff I made</a>
+<ul>
+<li>
+<a href="/pce-js/" title="Mac Plus/IBM PC/Atari ST emulator in the browser" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">pce.js emulator</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/cached-loader" title="Adds persistent on-disk caching to webpack loaders" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">cached-loader</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/react-native-htmlview" title="A React Native component which renders HTML content as native views" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">react-native-htmlview</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/hacker-news-mobile" title="Hacker News mobile web app built in Universal/Isomorphic React" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">hacker-news-mobile</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/lisp.rs" title="A crappy Scheme interpreter in Rust" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">lisp.rs</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/browserify-incremental" title="Incremental rebuild for browserify" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">browserify-incremental</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="contents">
+<div id="header" class="clearfix">
+<div class="container">
+<div class="row">
+<div class="span12">
+<div id="name-and-slogan">
+<div id="site-name"><a href="/" title="Home" rel="home"><h1>James Friend</h1></a></div>
+<div id="site-slogan"><h2>Web Platform Adventures &amp; PC Archeology</h2></div>
+</div>
+ 
+</div>
+</div>
+</div>
+</div>
+ 
+<div id="main" class="clearfix">
+<div class="container">
+<div id="main-content" class="row">
+<div id="content" class="span9">
+<div id="content-wrapper">
+<div id="content-head" class="row-fluid">
+<div id="highlighted" class="clearfix"></div>
+<div class="tabs"> </div>
+</div>
+<div id="content-body" class="row-fluid"> <div class="region region-content clearfix">
+<div id="block-system-main" class="clearfix block block-system"> <div class="content"> <div class="view view-frontpage view-id-frontpage view-display-id-page view-dom-id-6dbae8560128be9efd129cfc891a8bc2">
+<div class="view-content">
+<div class="views-row views-row-1 views-row-odd views-row-first">
+<div id="node-3" class="node node-article node-promoted node-teaser clearfix" about="/content/setting-new-mac-nodejs-and-drupal-development" typeof="sioc:Item foaf:Document">
+<h2><a href="/content/setting-new-mac-nodejs-and-drupal-development">Setting up a new Mac for Node.js and Drupal development</a></h2>
+<span property="dc:title" content="Setting up a new Mac for Node.js and Drupal development" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-03-26T22:00:01+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on March 26, 2013 - 22:00</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>So you've got a fresh, clean Mountain Lion install and you need to get up and running for local development. Recently I spent a day doing just that, so I thought I'd write it all down, to save me from having to look all this stuff up again.</p>
+</div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/content/setting-new-mac-nodejs-and-drupal-development" rel="tag" title="Setting up a new Mac for Node.js and Drupal development">Read more<span class="element-invisible"> about Setting up a new Mac for Node.js and Drupal development</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-2 views-row-even views-row-last">
+<div id="node-1" class="node node-article node-promoted node-teaser clearfix" about="/content/hi" typeof="sioc:Item foaf:Document">
+<h2><a href="/content/hi">Hi.</a></h2>
+<span property="dc:title" content="Hi." class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-01-20T16:35:41+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on January 20, 2013 - 16:35</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>So I finally got round to putting together a new blog. Theme soon to come.</p>
+<p>It will be based on Stanford's <a href="https://openframework.stanford.edu">Open Framework</a> Drupal theme, which in turn is based on Twitter Bootstrap.</p>
+</div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/content/hi" rel="tag" title="Hi.">Read more<span class="element-invisible"> about Hi.</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+<h2 class="element-invisible">Pages</h2><ul class="pager"><li class="pager-first first"><a title="Go to first page" href="/frontpage">« first</a></li>
+<li class="pager-previous"><a title="Go to previous page" href="/frontpage">‹ previous</a></li>
+<li class="pager-item"><a title="Go to page 1" href="/frontpage">1</a></li>
+<li class="pager-current last">2</li>
+</ul>
+</div> </div>
+</div></div>
+ 
+<a href="https://jamesfriend.com.au/rss.xml" class="feed-icon" title="Subscribe to Front page feed"><img typeof="foaf:Image" src="https://jamesfriend.com.au/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/></a> </div>
+</div>
+ 
+</div>
+ 
+<div id="sidebar-second" class="sidebar span3">
+<div class="row-fluid"><div class="region region-sidebar-second clearfix">
+<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
+<div class="content"> <div class="pic-me">
+<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
+</div>
+<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
+</div>
+</div>
+<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
+<div class="content"> <ul>
+<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
+<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
+<li><a href="https://github.com/jsdf">GitHub</a></li>
+<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
+</ul>
+</div>
+</div>
+<div id="block-views-recent-articles-block" class="clearfix block block-views"> <h2>Recent stuff</h2>
+<div class="content"> <div class="view view-recent-articles view-id-recent_articles view-display-id-block view-dom-id-bd91e9738f09e1c92290e226189cb706">
+<div class="view-content">
+<div class="views-row views-row-1 views-row-odd views-row-first">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/how-do-binary-and-hexadecimal-numbers-work">How do binary and hexadecimal numbers work?</a></span> </div> </div>
+<div class="views-row views-row-2 views-row-even">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/better-assertions-shallow-rendered-react-components">Better assertions for shallow-rendered React components</a></span> </div> </div>
+<div class="views-row views-row-3 views-row-odd">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/installing-pygame-python-3-mac-os-yosemite">Installing Pygame for Python 3 on Mac OS Yosemite</a></span> </div> </div>
+<div class="views-row views-row-4 views-row-even">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/running-hypercard-stack-2014">Running a Hypercard stack on a modern Mac</a></span> </div> </div>
+<div class="views-row views-row-5 views-row-odd views-row-last">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/why-port-emulators-browser">Why port emulators to the browser?</a></span> </div> </div>
+</div>
+</div> </div>
+</div>
+<div id="block-views-archive-block" class="clearfix block block-views"> <h2>Past months</h2>
+<div class="content"> <div class="view view-archive view-id-archive view-display-id-block view-dom-id-82a6874b31576f2179a605ad92529154">
+<div class="view-content">
+<div class="item-list">
+<ul class="views-summary">
+<li><a href="/archive/201612">December 2016</a>
+(1)
+</li>
+<li><a href="/archive/201509">September 2015</a>
+(1)
+</li>
+<li><a href="/archive/201412">December 2014</a>
+(1)
+</li>
+<li><a href="/archive/201402">February 2014</a>
+(1)
+</li>
+<li><a href="/archive/201310">October 2013</a>
+(1)
+</li>
+<li><a href="/archive/201309">September 2013</a>
+(1)
+</li>
+<li><a href="/archive/201308">August 2013</a>
+(2)
+</li>
+<li><a href="/archive/201307">July 2013</a>
+(1)
+</li>
+<li><a href="/archive/201305">May 2013</a>
+(1)
+</li>
+<li><a href="/archive/201303">March 2013</a>
+(1)
+</li>
+<li><a href="/archive/201301">January 2013</a>
+(1)
+</li>
+</ul>
+</div>
+</div>
+</div> </div>
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+</div>
+</div>
+</div>
+ 
+</div>
+</body>
+</html>

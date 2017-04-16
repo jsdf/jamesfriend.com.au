@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]> <!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
+<meta name="description" content="So you&#039;ve got a fresh, clean Mountain Lion install and you need to get up and running for local development. Recently I spent a day doing just that, so I thought I&#039;d write it all down, to save me from having to look all this stuff up again."/>
+<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
+<link rel="canonical" href="https://jamesfriend.com.au/content/setting-new-mac-nodejs-and-drupal-development"/>
+<link rel="shortlink" href="https://jamesfriend.com.au/node/3"/>
+ 
+<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+<title>Setting up a new Mac for Node.js and Drupal development | James Friend</title>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_gPqjYq7fqdMzw8-29XWQIVoDSWTmZCGy9OqaHppNxuQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"jf","theme_token":"TiACkZxX4BxtqYkXzgHp2Nq8kTxba2bOGJB0NrqxdaQ","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/themes\/open_framework\/js\/jquery-1.8.2.min.js":1,"sites\/all\/themes\/open_framework\/bootstrap\/js\/bootstrap.min.js":1,"sites\/all\/themes\/open_framework\/js\/open_framework.js":1,"sites\/all\/themes\/open_framework\/js\/override.js":1,"sites\/default\/themes\/jf\/js\/prism.custom.js":1,"sites\/default\/themes\/jf\/js\/script.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap.min.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap-responsive.min.css":1,"sites\/all\/themes\/open_framework\/css\/open_framework.css":1,"sites\/default\/themes\/jf\/css\/flat-ui.css":1,"sites\/default\/themes\/jf\/css\/prism.custom.css":1,"sites\/default\/themes\/jf\/css\/jf.css.less":1}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"}});
+//--><!]]>
+</script>
+ 
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-3 node-type-article      ">
+<div class="contents">
+<div id="header" class="clearfix">
+<div class="container">
+<div class="row">
+<div class="span12">
+<div id="name-and-slogan">
+<div id="site-name"><a href="/" title="Home" rel="home">James Friend</a></div>
+<div id="site-slogan">Web Platform Adventures &amp; PC Archeology</div>
+</div>
+ 
+</div>
+</div>
+</div>
+</div>
+ 
+<div id="main" class="clearfix">
+<div class="container">
+<div id="breadcrumb"><h2 class="element-invisible">You are here</h2><div class="breadcrumb"><a href="/">Home</a></div></div>
+<div id="main-content" class="row">
+<div id="content" class="span9">
+<div id="content-wrapper">
+<div id="content-head" class="row-fluid">
+<div id="highlighted" class="clearfix"></div>
+<h1 class="title" id="page-title"> Setting up a new Mac for Node.js and Drupal development </h1>
+<div class="tabs"> </div>
+</div>
+<div id="content-body" class="row-fluid"> <div class="region region-content clearfix">
+<div id="block-system-main" class="clearfix block block-system"> <div class="content"> <div id="node-3" class="node node-article node-promoted clearfix" about="/content/setting-new-mac-nodejs-and-drupal-development" typeof="sioc:Item foaf:Document">
+<span property="dc:title" content="Setting up a new Mac for Node.js and Drupal development" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-03-26T22:00:01+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on March 26, 2013 - 22:00</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><strong>UPDATE:</strong> I am now of the opinion that you're probably better off installing homebrew with a prefix of somewhere inside your user directory, eg. <code>~/.homebrew/</code>. I mention this below as an alternative, but now this would be my primary recommendation. Some parts, however, such as configuring the Apple-included Apache installation, and the custom DNS resolvers, are system-wide changes, so you might not want to couple them to a particular user account. Perhaps consider <code>brew install</code>ing a user-local copy of Apache, but use a system level installation of dnsmasq.</p>
+<p><strong>Original article text follows:</strong></p>
+<p>So you've got a fresh, clean Mountain Lion install and you need to get up and running for local development. Recently I spent a day doing just that, so I thought I'd write it all down, to save me from having to look all this stuff up again.</p>
+<h4>Install Xcode Command Line Tools</h4>
+<p>Available from the <a href="https://developer.apple.com/downloads/index.action">Apple Developer downloads area</a>. You'll need an Apple ID.</p>
+<p>This package includes llvm-gcc, which is a (mostly) compatible replacement for gcc. It will work for most homebrew formulas which build with gcc.</p>
+<h4>Install homebrew</h4>
+<p><a href="http://mxcl.github.io/homebrew/">homebrew</a> can be conveniently installed with one line in the Terminal. As with all curl-to-sh style install scripts, you should read the script first to make sure it's not going to do anything bad. Don't say I didn't warn you :)</p>
+<pre><code>ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+</code></pre>
+<p>The most convenient approach to using homebrew is to make <code>/usr/local</code> writable to admin group, if you don’t mind a (sort of) security risk. Bear in mind, <code>/Applications</code> is writable by that group by default anyway, so unless you've locked that down also, this won't really make your system much more insecure than it already is.</p>
+<pre><code>sudo chmod -R g+w /usr/local
+</code></pre>
+<p>Unfortunately without doing this, homebrew doesn't work particularly well in its default install location. Alternatively install somewhere user-local like <code>~/homebrew</code> if you're really concerned about security and locking down user permissions on your local machine.</p>
+<h4>Install Node.js</h4>
+<p>Node in particular is easier to install from the nodejs.org installer package, not homebrew. Due to some past disagreement between the maintainers of npm and homebrew, the homebrew formula for node doesn’t properly install npm. The official installer, however, works pretty well.</p>
+<p>To get <code>npm install -g</code> working (without sudo) you may also want to change the global node_modules directory to have a group id of 'admin':</p>
+<pre><code>sudo chgrp -R admin /usr/local/lib/node_modules
+</code></pre>
+<p>You may also need to give g+w permissions to that directory tree, if you installed node after running the chmod command above. This comes with the same caveats as homebrew. If you're really security conscious, install node and npm somewhere in your user directory, rather than globally in <code>/usr</code>.</p>
+<h4>Install Redis &amp; MongoDB (optional)</h4>
+<pre><code>brew install redis
+redis-server
+brew install mongodb
+mongod
+</code></pre>
+<h4>Install MySQL</h4>
+<pre><code>brew install mysql
+</code></pre>
+<p>Then follow the instructions depending on whether you want MySQL to run as your user account or a different one, where data should be stored and whether you want to start the daemon manually or run at login.</p>
+<p>Eg. to set up databases to run as your user account, with data in <code>/usr/local/var/mysql</code> and running at login:</p>
+<pre><code>unset TMPDIR
+mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
+</code></pre>
+<p>To have launchd start mysql at login:</p>
+<pre><code>ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+</code></pre>
+<p>Then to load mysql now:</p>
+<pre><code>launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+</code></pre>
+<p>Set up the root mysql account. Pick a better password than I have.</p>
+<pre><code>/usr/local/opt/mysql/bin/mysqladmin -u root password 123456
+</code></pre>
+<h4>Install PHP 5.4 (optional)</h4>
+<p>PHP is not in the main homebrew packages, so you'll need to 'tap' some extra repos before you can install it.</p>
+<pre><code>brew tap homebrew/dupes
+brew tap josegonzalez/homebrew-php
+</code></pre>
+<p>Update LoadModule directive in Apache config file to point to new PHP version</p>
+<pre><code># /etc/apache2/httpd.conf
+# Apple default:
+# LoadModule php5_module libexec/apache2/libphp5.so
+# This should be equivalent to $(brew --prefix php54)/libexec/apache2/libphp5.so
+LoadModule php5_module /usr/local/opt/php54/libexec/apache2/libphp5.so
+</code></pre>
+<p>Add updated PHP version to the PATH in <code>.bash_profile</code></p>
+<pre><code># ~/.bash_profile
+export PATH="$(brew --prefix php54)/bin:$PATH"
+</code></pre>
+<h4>MySQL socket location &amp; PHP PDO extension</h4>
+<p>When first running a PHP application which connects to MySQL, you may run in to errors relating to the socket through which PHP's PDO extension is attempting to connect to MySQL. This is because PDO is looking for the MySQL socket at <code>/var/mysql/mysql.sock</code>, but it's probably at <code>/tmp/mysql.sock</code> instead.</p>
+<p>Some options you have include setting up a php.ini file:</p>
+<pre><code>sudo cp /etc/php.ini.default /etc/php.ini
+sudo vi /etc/php.ini
+</code></pre>
+<p>and setting <code>pdo_mysql.default_socket=/tmp/mysql.sock</code> therein. If you go for the php.ini approach it might also be worth setting <code>display_errors = On</code> while you're there.</p>
+<p>Or you could use a symbolic link to make PHP happy:</p>
+<pre><code>sudo mkdir /var/mysql
+sudo ln -s /tmp/mysql.sock /var/mysql/mysql.sock
+</code></pre>
+<p>I'm not really sure which solution is best, but both seem to do the job.</p>
+<h4>Set up .dev TLD for local development using dnsmasq</h4>
+<p>No one likes having to go and edit your hosts file, or something similarly tedious, every single time they create a new local project. By setting up a special TLD and dynamic vhosts, we can avoid ever having to waste time with this stuff again.</p>
+<pre><code>brew install dnsmasq
+mkdir -pv $(brew --prefix)/etc/
+</code></pre>
+<p>Configure dnsmasq</p>
+<pre><code>echo 'address=/.dev/127.0.0.1' &gt; $(brew --prefix)/etc/dnsmasq.conf
+</code></pre>
+<p>Create LaunchDaemon so dnsmasq runs at startup</p>
+<pre><code>sudo cp -v $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
+sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+</code></pre>
+<p>Set up a custom resolver to delegate resolution for .dev domains to dnsmasq</p>
+<pre><code>sudo mkdir -v /etc/resolver
+sudo bash -c 'echo "nameserver 127.0.0.1" &gt; /etc/resolver/dev'
+</code></pre>
+<h4>Set up dynamically configured mass virtual hosting in Apache</h4>
+<p>Ideally, all you should need to do to spool up a new site for development is create a directory under <code>/srv/www</code>.
+This Apache config should let you do just that.
+Create /etc/apache2/other/mass-vhost.conf:</p>
+<pre><code>&lt;Directory /srv/www&gt;
+  Order Deny,Allow
+  Allow from all
+  AllowOverride All
+&lt;/Directory&gt;
+
+NameVirtualHost *:80
+&lt;VirtualHost *:80&gt;
+  # get the server name from the Host: header
+  UseCanonicalName Off
+  # include the server name in the filenames used to satisfy requests
+  VirtualDocumentRoot /srv/www/%1
+&lt;/VirtualHost&gt;
+</code></pre>
+<h4>Create your sites directory</h4>
+<pre><code>sudo mkdir -p /srv/www
+sudo chown -R _www:_www /srv/www
+sudo chmod -R g+w /srv/www
+</code></pre>
+<p>Add your user account to the _www group so you can write to <code>/srv/www</code></p>
+<pre><code>sudo dseditgroup -o edit -a `whoami` -t user _www
+</code></pre>
+<h4>Start Apache (and configure it to start automatically at startup)</h4>
+<pre><code>sudo apachectl start
+</code></pre>
+<h4>Install Drush</h4>
+<pre><code>brew install drush
+</code></pre>
+<h4>Set up a test Drupal site</h4>
+<p>Create a database in MySQL</p>
+<pre><code>cd /srv/www
+drush dl drupal
+mv drupal-* dtest
+</code></pre>
+<p>Create a Drupal settings.php file and fill it out with your database credentials.</p>
+<p>In the site .htaccess file uncomment the directive:</p>
+<pre><code># RewriteBase /
+</code></pre>
+<p>Navigate to <a href="http://dtest.dev/install.php">http://dtest.dev/install.php</a>
+Once installed, you should also be able to enable Clean URLs.</p>
+<p>And you're done!</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/mac" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">mac</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/osx" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">osx</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/nodejs" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">nodejs</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/dnsmasq" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">dnsmasq</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/php" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">php</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/apache" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">apache</a></div></div></div> </div>
+</div>
+</div>
+</div></div>
+ 
+</div>
+</div>
+ 
+</div>
+ 
+<div id="sidebar-second" class="sidebar span3">
+<div class="row-fluid"><div class="region region-sidebar-second clearfix">
+<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
+<div class="content"> <div class="pic-me">
+<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
+</div>
+<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
+</div>
+</div>
+<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
+<div class="content"> <ul>
+<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
+<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
+<li><a href="https://github.com/jsdf">GitHub</a></li>
+<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
+</ul>
+</div>
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+</div>
+</div>
+</div>
+ 
+</div>
+</body>
+</html>

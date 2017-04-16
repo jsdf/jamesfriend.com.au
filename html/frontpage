@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]> <!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="alternate" type="application/rss+xml" title="Front page feed" href="https://jamesfriend.com.au/rss.xml"/>
+<link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
+<meta name="description" content="I make neat stuff on the web. I&#039;m particularly into visceral, realtime apps, node.js, and learning from the past."/>
+<meta name="generator" content="AppleScript"/>
+<link rel="canonical" href="https://jamesfriend.com.au/"/>
+<link rel="shortlink" href="https://jamesfriend.com.au/"/>
+ 
+<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+<title>James Friend | Web Platform Adventures & PC Archeology</title>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_gPqjYq7fqdMzw8-29XWQIVoDSWTmZCGy9OqaHppNxuQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"jf","theme_token":"Dc-hGme6scChMY6wuk2Q-Ol3XQxt42OOFsIDyP6_6qw","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/themes\/open_framework\/js\/jquery-1.8.2.min.js":1,"sites\/all\/themes\/open_framework\/bootstrap\/js\/bootstrap.min.js":1,"sites\/all\/themes\/open_framework\/js\/open_framework.js":1,"sites\/all\/themes\/open_framework\/js\/override.js":1,"sites\/default\/themes\/jf\/js\/prism.custom.js":1,"sites\/default\/themes\/jf\/js\/script.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap.min.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap-responsive.min.css":1,"sites\/all\/themes\/open_framework\/css\/open_framework.css":1,"sites\/default\/themes\/jf\/css\/flat-ui.css":1,"sites\/default\/themes\/jf\/css\/prism.custom.css":1,"sites\/default\/themes\/jf\/css\/jf.css.less":1}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"}});
+//--><!]]>
+</script>
+ 
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body class="html front not-logged-in one-sidebar sidebar-second page-frontpage      ">
+<div id="top-links-bar">
+<div class="container">
+<a class="attention-seeker" href="https://github.com/jsdf">here's some neat stuff I made</a>
+<ul>
+<li>
+<a href="/pce-js/" title="Mac Plus/IBM PC/Atari ST emulator in the browser" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">pce.js emulator</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/cached-loader" title="Adds persistent on-disk caching to webpack loaders" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">cached-loader</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/react-native-htmlview" title="A React Native component which renders HTML content as native views" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">react-native-htmlview</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/hacker-news-mobile" title="Hacker News mobile web app built in Universal/Isomorphic React" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">hacker-news-mobile</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/lisp.rs" title="A crappy Scheme interpreter in Rust" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">lisp.rs</a>
+</li>
+<li>
+<a href="https://github.com/jsdf/browserify-incremental" title="Incremental rebuild for browserify" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">browserify-incremental</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="contents">
+<div id="header" class="clearfix">
+<div class="container">
+<div class="row">
+<div class="span12">
+<div id="name-and-slogan">
+<div id="site-name"><a href="/" title="Home" rel="home"><h1>James Friend</h1></a></div>
+<div id="site-slogan"><h2>Web Platform Adventures &amp; PC Archeology</h2></div>
+</div>
+ 
+</div>
+</div>
+</div>
+</div>
+ 
+<div id="main" class="clearfix">
+<div class="container">
+<div id="main-content" class="row">
+<div id="content" class="span9">
+<div id="content-wrapper">
+<div id="content-head" class="row-fluid">
+<div id="highlighted" class="clearfix"></div>
+<div class="tabs"> </div>
+</div>
+<div id="content-body" class="row-fluid"> <div class="region region-content clearfix">
+<div id="block-system-main" class="clearfix block block-system"> <div class="content"> <div class="view view-frontpage view-id-frontpage view-display-id-page view-dom-id-1ae8d280bb3939ffcf0ff2732384f127">
+<div class="view-content">
+<div class="views-row views-row-1 views-row-odd views-row-first">
+<div id="node-15" class="node node-article node-promoted node-teaser clearfix" about="/how-do-binary-and-hexadecimal-numbers-work" typeof="sioc:Item foaf:Document">
+<h2><a href="/how-do-binary-and-hexadecimal-numbers-work">How do binary and hexadecimal numbers work?</a></h2>
+<span property="dc:title" content="How do binary and hexadecimal numbers work?" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2016-12-29T11:20:14+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on December 29, 2016 - 11:20</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><em>This post is from a series I'm writing in which we'll learn how computers work, by writing a computer simulator in Javascript. However, I figured an explanation of binary and hexadecimal numbers is useful enough by itself, so here it is!</em></p>
+<p>Before explaining how computers load data into their working space and process it, it's valuable to understand binary and hexadecimal numbers. This is because computer hardware only understands binary values due to the physical characteristics of the electronic circuitry used to implement them. I won't go further into explaining the reasons why computer hardware works with values in binary form, but you can read more about it <a href="http://nookkin.com/articles/computer-science/why-computers-use-binary.ndoc">here</a>.</p>
+<p>So what is binary? Binary is a 'base-2 number system'. But what does that mean?</p></div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/how-do-binary-and-hexadecimal-numbers-work" rel="tag" title="How do binary and hexadecimal numbers work?">Read more<span class="element-invisible"> about How do binary and hexadecimal numbers work?</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-2 views-row-even">
+<div id="node-14" class="node node-article node-promoted node-teaser clearfix" about="/better-assertions-shallow-rendered-react-components" typeof="sioc:Item foaf:Document">
+<h2><a href="/better-assertions-shallow-rendered-react-components">Better assertions for shallow-rendered React components</a></h2>
+<span property="dc:title" content="Better assertions for shallow-rendered React components" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2015-09-15T21:38:21+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on September 15, 2015 - 21:38</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The React TestUtils <a href="https://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a> feature allows us to test React components in true isolation from other component classes, and removes the need for a DOM in the test environment. It does this by allowing us to test the return value of a component's <code>render</code> method, without
+instantiating any subcomponents.</p>
+<p>A basic example of how it can be used, assuming we're testing a component called <code>&lt;Page /&gt;</code>:</p></div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/better-assertions-shallow-rendered-react-components" rel="tag" title="Better assertions for shallow-rendered React components">Read more<span class="element-invisible"> about Better assertions for shallow-rendered React components</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-3 views-row-odd">
+<div id="node-13" class="node node-article node-promoted node-teaser clearfix" about="/installing-pygame-python-3-mac-os-yosemite" typeof="sioc:Item foaf:Document">
+<h2><a href="/installing-pygame-python-3-mac-os-yosemite">Installing Pygame for Python 3 on Mac OS Yosemite</a></h2>
+<span property="dc:title" content="Installing Pygame for Python 3 on Mac OS Yosemite" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2014-12-20T13:36:59+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/users/superuser" typeof="sioc:UserAccount" property="foaf:name" datatype="">superuser</span> on December 20, 2014 - 13:36</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It's somewhat difficult to find instructions on how to successfully install Pygame for Python 3 on Yosemite. The front page of the Pygame website has a link which appears to point to installation instructions, but it is broken.</p>
+<p>Fortunately, someone posted <a href="http://pygame.org/wiki/macintosh">these instructions</a> on the Pygame wiki:</p>
+<p>Firstly, ensure you have the Apple Xcode command line tools installed:</p>
+<pre><code class="language-bash">xcode-select --install
+</code></pre>
+<p>Install XQuartz from <a href="http://xquartz.macosforge.org/landing/">http://xquartz.macosforge.org/landing/</a>.
+Restart your computer so the newly installed XQuartz is used.</p>
+<p>Make sure you have <a href="http://brew.sh/">homebrew</a> installed:</p></div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/installing-pygame-python-3-mac-os-yosemite" rel="tag" title="Installing Pygame for Python 3 on Mac OS Yosemite">Read more<span class="element-invisible"> about Installing Pygame for Python 3 on Mac OS Yosemite</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-4 views-row-even">
+<div id="node-11" class="node node-article node-promoted node-teaser clearfix" about="/running-hypercard-stack-2014" typeof="sioc:Item foaf:Document">
+<h2><a href="/running-hypercard-stack-2014">Running a Hypercard stack on a modern Mac</a></h2>
+<span property="dc:title" content="Running a Hypercard stack on a modern Mac" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2014-02-06T22:32:17+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on February 6, 2014 - 22:32</span> </div>
+<div class="content">
+<div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/Screen%20Shot%202014-02-12%20at%2010.00.43%20pm_0.png"><a href="/running-hypercard-stack-2014"><img typeof="foaf:Image" src="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/Screen%20Shot%202014-02-12%20at%2010.00.43%20pm_0.png" width="870" height="477" alt="Hypercard in SheepShaver emulator"/></a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><strong>Updated: now works on Yosemite</strong></p>
+<p>A bunch of people have emailed me about getting Hypercard stacks running under emulation.
+Here is a pretty easy guide to running a Hypercard stack on a recent Mac (eg. running Mavericks, Mountain Lion, etc):</p>
+<p>Place the Hypercard stack you want to access somewhere within your user folder: eg. Documents, or Desktop.</p>
+<p>Download <a href="/hypercard/hypercard-ca520e219.sheepvm.zip">this zip file</a> [95mb] containing the <a href="http://sheepshaver.cebix.net/">SheepShaver</a> classic Mac emulator bundled with Mac OS 9 and Hypercard.</p>
+<p>Extract and open <code>hypercard.sheepvm</code>. This should boot Mac OS 9.</p>
+<p>On the Mac OS 9 desktop there should be a disk called "Unix". This is a virtual disk which actually lets you access files on your computer (eg. outside the emulator). Opening it is equivalent to opening your OS X <code>/Users/</code> directory.</p></div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/running-hypercard-stack-2014" rel="tag" title="Running a Hypercard stack on a modern Mac">Read more<span class="element-invisible"> about Running a Hypercard stack on a modern Mac</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-5 views-row-odd">
+<div id="node-9" class="node node-article node-promoted node-teaser clearfix" about="/why-port-emulators-browser" typeof="sioc:Item foaf:Document">
+<h2><a href="/why-port-emulators-browser">Why port emulators to the browser?</a></h2>
+<span property="dc:title" content="Why port emulators to the browser?" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-10-18T14:42:40+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on October 18, 2013 - 14:42</span> </div>
+<div class="content">
+<div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/macpaint-woodblock_0.png"><a href="/why-port-emulators-browser"><img typeof="foaf:Image" src="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/macpaint-woodblock_0.png" width="513" height="343" alt="MacPaint Woodblock sample image"/></a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>In a discussion on Hacker News about emulators being ported to the browser, I drew attention to my own project, <a href="/pce-js/">PCE.js</a>, which emulates a <a href="http://en.wikipedia.org/wiki/Macintosh_Plus">Macintosh Plus</a> and an <a href="http://en.wikipedia.org/wiki/IBM_Personal_Computer_XT">IBM PC/XT</a>. Some of the questions brought up included why someone would undertake such a project, and also the legal considerations of including the software ROM required to boot the machine.</p></div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/why-port-emulators-browser" rel="tag" title="Why port emulators to the browser?">Read more<span class="element-invisible"> about Why port emulators to the browser?</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-6 views-row-even">
+<div id="node-8" class="node node-article node-promoted node-teaser clearfix" about="/pcejs-classic-mac-os-browser" typeof="sioc:Item foaf:Document">
+<h2><a href="/pcejs-classic-mac-os-browser">PCE.js - Classic Mac OS in the browser</a></h2>
+<span property="dc:title" content="PCE.js - Classic Mac OS in the browser" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-09-20T12:56:44+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on September 20, 2013 - 12:56</span> </div>
+<div class="content">
+<div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/pcejs.png"><a href="/pcejs-classic-mac-os-browser"><img typeof="foaf:Image" src="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/pcejs.png" width="820" height="656" alt="PCE.js MacPaint screenshot"/></a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I've just completed porting Hampa Hug's excellent <a href="http://www.hampa.ch/pce/">PCE</a> emulator to run in the browser, using Emscripten. I've mainly focused on the pce-macplus build. This is pretty awesome because it means you can run classic Mac OS in the browser. Check it out: <a href="/pce-js/">PCE.js - Classic Mac OS in the browser</a>.</p>
+<p>I've also got the pce-ibmpc build working (emulating an IBM compatible, up to a 286 CPU), and and pce-atarist, an Atari ST emulator also, with browser demos coming soon for each.</p>
+<p>A dump of the source is available <a href="/pce-js/pcejs20131028.zip">here</a> but I'll try to clean it up and make it available on GitHub when I get the chance.</p>
+<p><strong>Update: source on <a href="https://github.com/jsdf/pce">GitHub</a>, and I've added an <a href="/pce-js/ibmpc-games/">IBM PC Demo</a>.</strong></p>
+</div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/pcejs-classic-mac-os-browser" rel="tag" title="PCE.js - Classic Mac OS in the browser">Read more<span class="element-invisible"> about PCE.js - Classic Mac OS in the browser</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-7 views-row-odd">
+<div id="node-7" class="node node-article node-promoted node-teaser clearfix" about="/working-implementation-sdlcreatergbsurfacefrom-emscripten" typeof="sioc:Item foaf:Document">
+<h2><a href="/working-implementation-sdlcreatergbsurfacefrom-emscripten">Working implementation of SDL_CreateRGBSurfaceFrom for Emscripten</a></h2>
+<span property="dc:title" content="Working implementation of SDL_CreateRGBSurfaceFrom for Emscripten" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-08-13T18:55:44+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on August 13, 2013 - 18:55</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="https://github.com/kripken/emscripten">Emscripten</a> is an awesome tool for porting existing native codebases to the browser. There are a bunch of cool projects using it to port graphical applications such as games and emulators, especially those which already use the <a href="http://www.libsdl.org/">SDL library</a> as a cross-platform video, sound and I/O abstraction. Leveraging the fact that the SDL abstractions provide portability across different OS platforms means that by implementing of parts of SDL in Javascript and compiling the code via Emscripten, the browser can become (with some caveats) another SDL target platform. However, Emscripten's SDL 'shims' are still very much a work in progress, and in a current project of my own (porting a classic Mac OS emulator), I've run into some parts where I've had to fill in the gaps myself.</p>
+<p>Specifically, if you're finding your SDL-based, Emscripten compiled app is failing to render to the canvas, the issue may be that the app is trying to use the incomplete <code>SDL_CreateRGBSurfaceFrom</code> method to create an SDL surface from a buffer of pixels.</p>
+</div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/working-implementation-sdlcreatergbsurfacefrom-emscripten" rel="tag" title="Working implementation of SDL_CreateRGBSurfaceFrom for Emscripten">Read more<span class="element-invisible"> about Working implementation of SDL_CreateRGBSurfaceFrom for Emscripten</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-8 views-row-even">
+<div id="node-6" class="node node-article node-promoted node-teaser clearfix" about="/installing-pygame-python-mac-os-108-mountain-lion" typeof="sioc:Item foaf:Document">
+<h2><a href="/installing-pygame-python-mac-os-108-mountain-lion">Installing Pygame on Mac OS 10.8 Mountain Lion</a></h2>
+<span property="dc:title" content="Installing Pygame on Mac OS 10.8 Mountain Lion" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-08-07T16:34:15+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on August 7, 2013 - 16:34</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I decided to install and play around with Pygame today, mainly as an excuse to write some Python for a minor departure from all the Javascript/Coffeescript I've been writing lately. Unfortunately the process wasn't entirely frictionless, due to Pygame not yet accounting for Apple's move to XQuartz as the recommended X11 implementation for Mac OS as of 10.8 Mountain Lion. As a result I ran into some compilation errors while Pygame was building it's native extensions, which fortunately were not too hard to fix as I had some familiarity with changes to X11 on Mountain Lion.</p>
+</div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/installing-pygame-python-mac-os-108-mountain-lion" rel="tag" title="Installing Pygame on Mac OS 10.8 Mountain Lion">Read more<span class="element-invisible"> about Installing Pygame on Mac OS 10.8 Mountain Lion</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-9 views-row-odd">
+<div id="node-5" class="node node-article node-promoted node-teaser clearfix" about="/caniusecom-mirror" typeof="sioc:Item foaf:Document">
+<h2><a href="/caniusecom-mirror">Caniuse.com Mirror</a></h2>
+<span property="dc:title" content="Caniuse.com Mirror" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-07-12T19:30:13+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on July 12, 2013 - 19:30</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><strong>UPDATE: original site is back online, I took down the mirror</strong></p>
+<p>I rely on <a href="http://caniuse.com">caniuse.com</a> to look up browser compatibility of various new features in CSS, JS, SVG etc. I noticed the other day that seems to be down (possibly pending a re-launch). Considering it's such a useful resource I decided to extract it from Google's cache and throw up a mirror.</p>
+<p>You can find it at <a href="http://caniuse.jsdf.co">caniuse.jsdf.co</a>.</p>
+</div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/caniusecom-mirror" rel="tag" title="Caniuse.com Mirror">Read more<span class="element-invisible"> about Caniuse.com Mirror</span></a></li>
+</ul>
+</div>
+</div>
+<div class="views-row views-row-10 views-row-even views-row-last">
+<div id="node-4" class="node node-article node-promoted node-teaser clearfix" about="/hacker-news-theme" typeof="sioc:Item foaf:Document">
+<h2><a href="/hacker-news-theme">Hacker News theme</a></h2>
+<span property="dc:title" content="Hacker News theme" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-05-25T12:38:35+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on May 25, 2013 - 12:38</span> </div>
+<div class="content">
+<div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/hacker-news-neue.png"><a href="/hacker-news-theme"><img typeof="foaf:Image" src="https://jamesfriend.com.au/sites/default/files/styles/full_width/public/field/image/hacker-news-neue.png" width="870" height="599" alt=""/></a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>A while back I restyled Hacker News using the Stylebot extension for Chrome. Initially I just wanted to apply a fixed width, as the site's fluid layout can result in some very long lines on a large/wide display.</p>
+<p>Over time I added in some other usability improvements, such as:</p>
+<ul><li>larger 'vote' buttons with more space in between them, which helps to avoid mis-clicks on the downvote arrow (a common complaint on HN)</li>
+<li>stronger delineation between unread and read articles, using a faint cyan highlight on those which are unread, while read articles almost fade into the background</li>
+<li>monospace fonts optimised for code</li>
+</ul><p>Works best with Helvetica Neue and Menlo installed (as they are by default on Mac OS). Alternatively, Anonymous Pro will be used for code if installed.</p>
+<p>Vote arrows use the <a href="http://css-tricks.com/snippets/css/css-triangle/">CSS border based triangle</a> technique.</p></div></div></div> </div>
+<ul class="links inline"><li class="node-readmore first last"><a href="/hacker-news-theme" rel="tag" title="Hacker News theme">Read more<span class="element-invisible"> about Hacker News theme</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+<h2 class="element-invisible">Pages</h2><ul class="pager"><li class="pager-current first">1</li>
+<li class="pager-item"><a title="Go to page 2" href="/frontpage?page=1">2</a></li>
+<li class="pager-next"><a title="Go to next page" href="/frontpage?page=1">next ›</a></li>
+<li class="pager-last last"><a title="Go to last page" href="/frontpage?page=1">last »</a></li>
+</ul>
+</div> </div>
+</div></div>
+ 
+<a href="https://jamesfriend.com.au/rss.xml" class="feed-icon" title="Subscribe to Front page feed"><img typeof="foaf:Image" src="https://jamesfriend.com.au/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/></a> </div>
+</div>
+ 
+</div>
+ 
+<div id="sidebar-second" class="sidebar span3">
+<div class="row-fluid"><div class="region region-sidebar-second clearfix">
+<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
+<div class="content"> <div class="pic-me">
+<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
+</div>
+<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
+</div>
+</div>
+<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
+<div class="content"> <ul>
+<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
+<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
+<li><a href="https://github.com/jsdf">GitHub</a></li>
+<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
+</ul>
+</div>
+</div>
+<div id="block-views-recent-articles-block" class="clearfix block block-views"> <h2>Recent stuff</h2>
+<div class="content"> <div class="view view-recent-articles view-id-recent_articles view-display-id-block view-dom-id-5e526d52ab9c5e6edc5bc8fc0e94e1b1">
+<div class="view-content">
+<div class="views-row views-row-1 views-row-odd views-row-first">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/how-do-binary-and-hexadecimal-numbers-work">How do binary and hexadecimal numbers work?</a></span> </div> </div>
+<div class="views-row views-row-2 views-row-even">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/better-assertions-shallow-rendered-react-components">Better assertions for shallow-rendered React components</a></span> </div> </div>
+<div class="views-row views-row-3 views-row-odd">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/installing-pygame-python-3-mac-os-yosemite">Installing Pygame for Python 3 on Mac OS Yosemite</a></span> </div> </div>
+<div class="views-row views-row-4 views-row-even">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/running-hypercard-stack-2014">Running a Hypercard stack on a modern Mac</a></span> </div> </div>
+<div class="views-row views-row-5 views-row-odd views-row-last">
+<div class="views-field views-field-title"> <span class="field-content"><a href="/why-port-emulators-browser">Why port emulators to the browser?</a></span> </div> </div>
+</div>
+</div> </div>
+</div>
+<div id="block-views-archive-block" class="clearfix block block-views"> <h2>Past months</h2>
+<div class="content"> <div class="view view-archive view-id-archive view-display-id-block view-dom-id-68cb0f4c7294837de3b542cd68a5826c">
+<div class="view-content">
+<div class="item-list">
+<ul class="views-summary">
+<li><a href="/archive/201612">December 2016</a>
+(1)
+</li>
+<li><a href="/archive/201509">September 2015</a>
+(1)
+</li>
+<li><a href="/archive/201412">December 2014</a>
+(1)
+</li>
+<li><a href="/archive/201402">February 2014</a>
+(1)
+</li>
+<li><a href="/archive/201310">October 2013</a>
+(1)
+</li>
+<li><a href="/archive/201309">September 2013</a>
+(1)
+</li>
+<li><a href="/archive/201308">August 2013</a>
+(2)
+</li>
+<li><a href="/archive/201307">July 2013</a>
+(1)
+</li>
+<li><a href="/archive/201305">May 2013</a>
+(1)
+</li>
+<li><a href="/archive/201303">March 2013</a>
+(1)
+</li>
+<li><a href="/archive/201301">January 2013</a>
+(1)
+</li>
+</ul>
+</div>
+</div>
+</div> </div>
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+</div>
+</div>
+</div>
+ 
+</div>
+</body>
+</html>

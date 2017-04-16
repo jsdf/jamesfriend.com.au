@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]> <!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
+<meta name="description" content="I decided to install and play around with Pygame today, mainly as an excuse to write some Python for a minor departure from all the Javascript/Coffeescript I&#039;ve been writing lately. Unfortunately the process wasn&#039;t entirely frictionless, due to Pygame not yet accounting for Apple&#039;s move to XQuartz as the recommended X11 implementation for Mac OS as of 10.8 Mountain Lion. As a result I ran into some compilation errors while Pygame was building it&#039;s native extensions, which fortunately were not too hard to fix as I had some familiarity with changes to X11 on Mountain Lion."/>
+<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
+<link rel="canonical" href="https://jamesfriend.com.au/installing-pygame-python-mac-os-108-mountain-lion"/>
+<link rel="shortlink" href="https://jamesfriend.com.au/node/6"/>
+ 
+<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+<title>Installing Pygame on Mac OS 10.8 Mountain Lion | James Friend</title>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_gPqjYq7fqdMzw8-29XWQIVoDSWTmZCGy9OqaHppNxuQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"jf","theme_token":"lwHhWt1Uq2AJ6pAAs_pyOvJKdVT-2771rgtsLXz90X8","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/themes\/open_framework\/js\/jquery-1.8.2.min.js":1,"sites\/all\/themes\/open_framework\/bootstrap\/js\/bootstrap.min.js":1,"sites\/all\/themes\/open_framework\/js\/open_framework.js":1,"sites\/all\/themes\/open_framework\/js\/override.js":1,"sites\/default\/themes\/jf\/js\/prism.custom.js":1,"sites\/default\/themes\/jf\/js\/script.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap.min.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap-responsive.min.css":1,"sites\/all\/themes\/open_framework\/css\/open_framework.css":1,"sites\/default\/themes\/jf\/css\/flat-ui.css":1,"sites\/default\/themes\/jf\/css\/prism.custom.css":1,"sites\/default\/themes\/jf\/css\/jf.css.less":1}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"}});
+//--><!]]>
+</script>
+ 
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-6 node-type-article      ">
+<div class="contents">
+<div id="header" class="clearfix">
+<div class="container">
+<div class="row">
+<div class="span12">
+<div id="name-and-slogan">
+<div id="site-name"><a href="/" title="Home" rel="home">James Friend</a></div>
+<div id="site-slogan">Web Platform Adventures &amp; PC Archeology</div>
+</div>
+ 
+</div>
+</div>
+</div>
+</div>
+ 
+<div id="main" class="clearfix">
+<div class="container">
+<div id="breadcrumb"><h2 class="element-invisible">You are here</h2><div class="breadcrumb"><a href="/">Home</a></div></div>
+<div id="main-content" class="row">
+<div id="content" class="span9">
+<div id="content-wrapper">
+<div id="content-head" class="row-fluid">
+<div id="highlighted" class="clearfix"></div>
+<h1 class="title" id="page-title"> Installing Pygame on Mac OS 10.8 Mountain Lion </h1>
+<div class="tabs"> </div>
+</div>
+<div id="content-body" class="row-fluid"> <div class="region region-content clearfix">
+<div id="block-system-main" class="clearfix block block-system"> <div class="content"> <div id="node-6" class="node node-article node-promoted clearfix" about="/installing-pygame-python-mac-os-108-mountain-lion" typeof="sioc:Item foaf:Document">
+<span property="dc:title" content="Installing Pygame on Mac OS 10.8 Mountain Lion" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2013-08-07T16:34:15+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on August 7, 2013 - 16:34</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I decided to install and play around with Pygame today, mainly as an excuse to write some Python for a minor departure from all the Javascript/Coffeescript I've been writing lately. Unfortunately the process wasn't entirely frictionless, due to Pygame not yet accounting for Apple's move to XQuartz as the recommended X11 implementation for Mac OS as of 10.8 Mountain Lion. As a result I ran into some compilation errors while Pygame was building it's native extensions, which fortunately were not too hard to fix as I had some familiarity with changes to X11 on Mountain Lion.</p>
+<p><strong>TL;DR</strong> <a href="https://jamesfriend.com.au/installing-pygame-python-mac-os-108-mountain-lion#node_6_tldr">you need to set some environment variables before installing Pygame</a></p>
+<h3>What didn't work</h3>
+<p>Running <code>pip install pygame</code> would fail as follows:</p>
+<pre><code class="language-nohighlight">building 'pygame.display' extension
+cc -fno-strict-aliasing -fno-common -dynamic -I/usr/local/include -DNDEBUG -g -O3 -Wall -Wstrict-prototypes -Ddarwin -I/Library/Frameworks/SDL.framework/Versions/Current/Headers -I/usr/local/Cellar/python/2.7.3/Frameworks/Python.framework/Versions/2.7/include/python2.7 -c src/display.c -o build/temp.macosx-10.8-x86_64-2.7/src/display.o
+In file included from src/display.c:30:
+/Library/Frameworks/SDL.framework/Versions/Current/Headers/SDL_syswm.h:58:10: fatal error: 'X11/Xlib.h' file not found
+#include &lt;X11/Xlib.h&gt;
+             ^
+1 error generated.
+error: command 'cc' failed with exit status 1
+</code></pre>
+<p>While building the native extention 'pygame.display', Xlib.h (a particular X11 header, required by SDL) is not found, as XQuartz's <code>/opt/X11/include</code> directory has not been specified to search for headers.</p>
+<p>By setting some environment variables, we can configure the Pygame build process to build correctly. I found these in a few other blog posts, but they specified only <code>-arch i386</code> for CFLAGS, LDFLAGS and ARCHFLAGS, which allowed the build process to complete, but <code>import pygame</code> fails (when running 64bit Python):</p>
+<pre><code>&gt;&gt;&gt; import pygame
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+  File "/usr/local/lib/python2.7/site-packages/pygame/__init__.py", line 95, in &lt;module&gt;
+    from pygame.base import *
+ImportError: dlopen(/usr/local/lib/python2.7/site-packages/pygame/base.so, 2): no suitable image found.  Did find:
+/usr/local/lib/python2.7/site-packages/pygame/base.so: mach-o, but wrong architecture
+</code></pre>
+<h3><a id="node_6_tldr"></a>What actually got Pygame working</h3>
+<p>The environment variables (gcc flags) required to allow Pygame to correctly build fat binaries (for both 32bit and 64bit Python) are:</p>
+<pre><code>export CC='/usr/bin/gcc'
+export CFLAGS='-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -I/opt/X11/include -arch i386 -arch x86_64'
+export LDFLAGS='-arch i386 -arch x86_64'
+export ARCHFLAGS='-arch i386 -arch x86_64'
+</code></pre>
+<p>Then <code>pip install pygame</code> and <code>python -c 'import pygame'</code>. If no error is returned by Python, then you should now have a working installation of Pygame.</p>
+<h3>Additional details</h3>
+<p>I'm using homebrew-installed Python/pip, and I've set my $PATH with <code>/usr/local/bin</code> before the system-installed Python.</p>
+<p>If you haven't installed Python/pip via homebrew (you're using the system-installed Python), you would likely need to run <code>sudo pip install pygame</code>.</p>
+<p>If you're using another install method, such as easy_install, this fix should still work.</p>
+<p>Before running <code>pip install pygame</code>, I had also installed <a href="https://developer.apple.com/downloads/index.action">Command Line Tools for XCode</a> (<a href="http://docwiki.embarcadero.com/RADStudio/XE4/en/Installing_the_Xcode_Command_Line_Tools_on_a_Mac">walkthrough</a>), as well as <a href="http://xquartz.macosforge.org/landing/">XQuartz</a>, and the following homebrew packages:
+<code>brew install sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi</code>.</p>
+<p>If homebrew fails to install <code>smpeg</code> you might need to do the following:</p>
+<pre><code class="language-bash">brew tap homebrew/headonly
+brew install --HEAD smpeg
+</code></pre>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/python" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">python</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/homebrew" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">homebrew</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/pygame" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">pygame</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/osx" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">osx</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/mac" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">mac</a></div></div></div> </div>
+</div>
+</div>
+</div></div>
+ 
+</div>
+</div>
+ 
+</div>
+ 
+<div id="sidebar-second" class="sidebar span3">
+<div class="row-fluid"><div class="region region-sidebar-second clearfix">
+<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
+<div class="content"> <div class="pic-me">
+<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
+</div>
+<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
+</div>
+</div>
+<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
+<div class="content"> <ul>
+<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
+<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
+<li><a href="https://github.com/jsdf">GitHub</a></li>
+<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
+</ul>
+</div>
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+</div>
+</div>
+</div>
+ 
+</div>
+</body>
+</html>

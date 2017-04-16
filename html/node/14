@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]> <!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
+<meta name="description" content="The React TestUtils [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) feature allows us to test React components in true isolation from other component classes, and removes the need for a DOM in the test environment. It does this by allowing us to test the return value of a component&#039;s `render` method, without instantiating any subcomponents. A basic example of how it can be used, assuming we&#039;re testing a component called ``: ```jsx import React from &#039;react/addons&#039;; const headingElement = title text; // shallow render the component under test const renderer = React.addons.TestUtils.createRenderer(); renderer.render(); const renderedTree = renderer.getRenderedOutput(); // make assertions about the shallow rendered tree assert(renderedTree.type === &#039;div&#039;); assert(renderedTree.props.className === &#039;page&#039;);"/>
+<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
+<link rel="canonical" href="https://jamesfriend.com.au/better-assertions-shallow-rendered-react-components"/>
+<link rel="shortlink" href="https://jamesfriend.com.au/node/14"/>
+ 
+<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+<title>Better assertions for shallow-rendered React components | James Friend</title>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_gPqjYq7fqdMzw8-29XWQIVoDSWTmZCGy9OqaHppNxuQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"jf","theme_token":"5M9rzeYBPh1TQCdCvzSdPt0u-f2QvjflQB-ZB5TLvcw","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/themes\/open_framework\/js\/jquery-1.8.2.min.js":1,"sites\/all\/themes\/open_framework\/bootstrap\/js\/bootstrap.min.js":1,"sites\/all\/themes\/open_framework\/js\/open_framework.js":1,"sites\/all\/themes\/open_framework\/js\/override.js":1,"sites\/default\/themes\/jf\/js\/prism.custom.js":1,"sites\/default\/themes\/jf\/js\/script.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap.min.css":1,"sites\/all\/themes\/open_framework\/bootstrap\/css\/bootstrap-responsive.min.css":1,"sites\/all\/themes\/open_framework\/css\/open_framework.css":1,"sites\/default\/themes\/jf\/css\/flat-ui.css":1,"sites\/default\/themes\/jf\/css\/prism.custom.css":1,"sites\/default\/themes\/jf\/css\/jf.css.less":1}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"}});
+//--><!]]>
+</script>
+ 
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-14 node-type-article      ">
+<div class="contents">
+<div id="header" class="clearfix">
+<div class="container">
+<div class="row">
+<div class="span12">
+<div id="name-and-slogan">
+<div id="site-name"><a href="/" title="Home" rel="home">James Friend</a></div>
+<div id="site-slogan">Web Platform Adventures &amp; PC Archeology</div>
+</div>
+ 
+</div>
+</div>
+</div>
+</div>
+ 
+<div id="main" class="clearfix">
+<div class="container">
+<div id="breadcrumb"><h2 class="element-invisible">You are here</h2><div class="breadcrumb"><a href="/">Home</a></div></div>
+<div id="main-content" class="row">
+<div id="content" class="span9">
+<div id="content-wrapper">
+<div id="content-head" class="row-fluid">
+<div id="highlighted" class="clearfix"></div>
+<h1 class="title" id="page-title"> Better assertions for shallow-rendered React components </h1>
+<div class="tabs"> </div>
+</div>
+<div id="content-body" class="row-fluid"> <div class="region region-content clearfix">
+<div id="block-system-main" class="clearfix block block-system"> <div class="content"> <div id="node-14" class="node node-article node-promoted clearfix" about="/better-assertions-shallow-rendered-react-components" typeof="sioc:Item foaf:Document">
+<span property="dc:title" content="Better assertions for shallow-rendered React components" class="rdf-meta element-hidden"></span>
+<div class="submitted">
+<span property="dc:date dc:created" content="2015-09-15T21:38:21+08:00" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/7" typeof="sioc:UserAccount" property="foaf:name" datatype="">James</span> on September 15, 2015 - 21:38</span> </div>
+<div class="content">
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The React TestUtils <a href="https://facebook.github.io/react/docs/test-utils.html#shallow-rendering">shallow rendering</a> feature allows us to test React components in true isolation from other component classes, and removes the need for a DOM in the test environment. It does this by allowing us to test the return value of a component's <code>render</code> method, without
+instantiating any subcomponents.</p>
+<p>A basic example of how it can be used, assuming we're testing a component called <code>&lt;Page /&gt;</code>:</p>
+<pre><code class="language-jsx">import React from 'react/addons';
+
+const headingElement = &lt;h1 className=&quot;title&quot;&gt;title text&lt;/h1&gt;;
+
+// shallow render the component under test
+const renderer = React.addons.TestUtils.createRenderer();
+renderer.render(&lt;Page heading={headingElement} /&gt;);
+const renderedTree = renderer.getRenderedOutput();
+
+// make assertions about the shallow rendered tree
+assert(renderedTree.type === 'div');
+assert(renderedTree.props.className === 'page');
+assert(renderedTree.props.children[0] === headingElement);
+</code></pre>
+<p>If we're testing a stateless component, we can use a helper function to simplify things a bit, as the rendered output will always be the same given the same props:</p>
+<pre><code class="language-jsx">import React from 'react';
+import shallowRender from 'react-shallow-render';
+
+const headingElement = &lt;h1 className=&quot;title&quot;&gt;title text&lt;/h1&gt;;
+
+// shallow render the component under test
+const renderedTree = shallowRender(&lt;Page heading={headingElement} /&gt;);
+
+// and then do your assertions as before
+</code></pre>
+<p>However, if we are asserting directly on the root <code>ReactElement</code> returned by the renderer (or a specific child or descendant of it), then we're coupling our test to the exact structure of the tree returned by the component's render method. This means that the test will break even if we change something superficial, like wrapping the rendered child in a <code>&lt;div&gt;</code>.</p>
+<p>Instead, we can query the rendered tree to find the nodes we're interested in:</p>
+<pre><code class="language-jsx">import { findWithClass } from 'react-shallow-testutils';
+
+const pageContentElement = findWithClass(renderedTree, 'page-content');
+assert(pageContentElement != null);
+</code></pre>
+<p>You can use a utility like the <code>findAll</code> function provided by the <a href="https://www.npmjs.com/package/react-shallow-testutils">react-shallow-testutils</a> npm package to traverse the rendered tree returned by <code>shallowRender</code>, finding all nodes which match a function. On top of that a number of useful finder utilities can be built, such as <code>findWithClass</code> shown in the example above (also included in the react-shallow-testutils package). <code>findWithClass</code>, as you might guess, is used to find an node with a <code>className</code> prop which includes the specified class.</p>
+<p>You can draw a parallel between the finder functions which the React <a href="https://facebook.github.io/react/docs/test-utils.html">TestUtils</a> provide for finding <code>ReactComponent</code> instances in the rendered component tree and these utilties which allow finding <code>ReactElement</code> objects in the rendered element tree for a component. If you're still unclear on the difference between React components and elements, see <a href="https://facebook.github.io/react/docs/glossary.html">React (Virtual) DOM Terminology</a> in the React docs.</p>
+<p>Another particularly useful approach is to find nodes in the rendered tree which are equal to an expected node, specified by the test. However, usually you want to compare the nodes via value equality, not reference equality. Additionally, often it is preferable to match the rendered node on only a specified subset of its props. For example:</p>
+<pre><code class="language-jsx">import findMatching from './findMatching'; // we'll implement this later
+
+class Page extends React.Component {
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;div className=&quot;page-head&quot;&gt;
+          &lt;PageHeader title={this.props.title} unimportant=&quot;something&quot; /&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;page-body&quot;&gt;
+          {this.props.children}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+const titleText = 'My Page';
+const renderedTree = shallowRender(&lt;Page title={titleText} /&gt;);
+
+// matches any PageHeader element where the 'title' prop equals the value titleText
+assert(findMatching(renderedTree, &lt;PageHeader title={titleText} /&gt;) != null);
+
+// matches an element of any type where the 'title' prop equals the value titleText
+assert(findMatching(renderedTree, {props: {title: titleText}}) != null);
+</code></pre>
+<p>In this example, we're finding an element of type <code>PageHeader</code>, which a matching <code>title</code> prop.</p>
+<p>In addition to being a clearer syntax for declaring the shape of the element you want to match, this approach allows us to ignore inconsequential details when finding matches, like the <code>unimportant</code> prop on the <code>&lt;PageHeader /&gt;</code> in the example above.</p>
+<p>A simple implementation of <code>findMatching</code> in the previous example might be something like:</p>
+<pre><code class="language-jsx">import { findAll } from 'react-shallow-testutils';
+import objectMatches from 'object-matches';
+
+function findAllMatching(tree, match) {
+  return findAll(tree, (el) =&gt;
+    (match.type ? el.type === match.type : true) &amp;&amp; // match type if specified
+    objectMatches(el.props, match.props) // match subset of props
+  );
+}
+
+function findMatching(tree, match) {
+  const found = findAllMatching(tree, match);
+  if (found.length !== 1) throw new Error('Did not find exactly one match');
+  return found[0];
+}
+</code></pre>
+<p>Additionally, you can make the output of failing tests a bit easier to read by pretty-printing the <code>ReactElement</code>s which are involved, for which you could use a module I wrote called <a href="https://www.npmjs.com/package/inspect-react-element">inspect-react-element</a>.</p>
+<p>Now when an assertion fails, like:</p>
+<pre><code class="language-jsx">expect(renderedTree).toContainReactNodeInTreeLike(&lt;PageHeader nonExistentProp /&gt;);
+</code></pre>
+<p>You would see the message:</p>
+<pre><code>Expected
+  &lt;div&gt;
+    &lt;div className=&quot;page-head&quot;&gt;
+      &lt;PageHeader title={undefined} unimportant=&quot;something&quot; /&gt;
+    &lt;/div&gt;
+    &lt;div className=&quot;page-body&quot; /&gt;
+  &lt;/div&gt;
+to contain a ReactNode in its tree like
+  &lt;PageHeader nonExistentProp={true} /&gt;
+</code></pre>
+<p>Here's the implementation of the custom <code>toContainReactNodeInTreeLike</code> Jasmine/Jest matcher used above, which prints an informative error message when a match is not found:</p>
+<pre><code class="language-jsx">jasmine.addMatchers({
+  toContainReactNodeInTreeLike(expectedChild) {
+    const {actual, isNot} = this;
+    this.message = () =&gt;
+      clean`
+        Expected
+        ${indent(inspectReactElement(actual), 1)}
+        ${isNot ? 'not ' : ''}to contain a ReactNode in its tree like
+        ${indent(inspectReactElement(expectedChild), 1)}
+      `;
+
+    const found = findAllMatching(actual, expectedChild);
+    return found.length &gt; 0;
+  },
+});
+</code></pre>
+<p>In conclusion, try to write your shallow-render tests the way you'd write tests using <code>TestUtils.findAllInRenderedTree</code> etc, but use utilities which do the same thing for shallow-rendered trees as the TestUtils do for rendered DOM components.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/react" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">react</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/unit-testing" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">unit testing</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/jest" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">jest</a></div></div></div> </div>
+</div>
+</div>
+</div></div>
+ 
+</div>
+</div>
+ 
+</div>
+ 
+<div id="sidebar-second" class="sidebar span3">
+<div class="row-fluid"><div class="region region-sidebar-second clearfix">
+<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
+<div class="content"> <div class="pic-me">
+<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
+</div>
+<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
+</div>
+</div>
+<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
+<div class="content"> <ul>
+<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
+<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
+<li><a href="https://github.com/jsdf">GitHub</a></li>
+<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
+</ul>
+</div>
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+</div>
+</div>
+</div>
+ 
+</div>
+</body>
+</html>

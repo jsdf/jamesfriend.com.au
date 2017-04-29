@@ -1,18 +1,14 @@
-{{{block_0}}}
+<!DOCTYPE html>
+
+<head>
+{{{meta_tags}}}
 <meta name="description" content="It&#039;s somewhat difficult to find instructions on how to successfully install Pygame for Python 3 on Yosemite. The front page of the Pygame website has a link which appears to point to installation instructions, but it is broken. Fortunately, someone posted [these instructions](http://pygame.org/wiki/macintosh) on the Pygame wiki: Firstly, ensure you have the Apple Xcode command line tools installed: ```bash xcode-select --install ``` Install XQuartz from [http://xquartz.macosforge.org/landing/](http://xquartz.macosforge.org/landing/). Restart your computer so the newly installed XQuartz is used. Make sure you have [homebrew](http://brew.sh/) installed: ```bash ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot; ``` Ensure the homebrew-installed binaries take precedence over system binaries in your `$PATH` ```bash # in ~/.bash_profile # Homebrew binaries now take precedence over Apple defaults"/>
-<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
 <link rel="canonical" href="https://jamesfriend.com.au/installing-pygame-python-3-mac-os-yosemite"/>
-<link rel="shortlink" href="https://jamesfriend.com.au/node/13"/>
- 
-{{{meta_viewport}}}
 <title>Installing Pygame for Python 3 on Mac OS Yosemite | James Friend</title>
 {{{common_css}}}
 {{{common_js}}}
-
- 
-
 </head>
-<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-13 node-type-article      ">
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- node-type-article      ">
 <div class="contents">
 <div id="header" class="clearfix">
 <div class="container">
@@ -76,29 +72,7 @@ export PATH=/usr/local/bin:$PATH
  
 </div>
  
-<div id="sidebar-second" class="sidebar span3">
-<div class="row-fluid"><div class="region region-sidebar-second clearfix">
-<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
-<div class="content"> <div class="pic-me">
-<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
-</div>
-<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
-</div>
-</div>
-<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
-<div class="content"> <ul>
-<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
-<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
-<li><a href="https://github.com/jsdf">GitHub</a></li>
-<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-</ul>
-</div>
-</div>
-</div>
- 
-</div>
-</div>
- 
+{{{sidebar}}} 
 </div>
 </div>
 </div>

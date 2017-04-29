@@ -1,14 +1,11 @@
-{{{block_1}}}
+<!DOCTYPE html>
+
+<head>
+{{{meta_tags}}}
 <link rel="canonical" href="https://jamesfriend.com.au/archive/201309"/>
-<link rel="shortlink" href="https://jamesfriend.com.au/archive/201309"/>
- 
-{{{meta_viewport}}}
 <title>September 2013 | James Friend</title>
 {{{common_css}}}
 {{{common_js}}}
-
- 
-
 </head>
 <body class="html not-front not-logged-in one-sidebar sidebar-second page-archive page-archive- page-archive-201309      ">
 <div class="contents">
@@ -38,7 +35,7 @@
 <div class="tabs"> </div>
 </div>
 <div id="content-body" class="row-fluid"> <div class="region region-content clearfix">
-<div id="block-system-main" class="clearfix block block-system"> <div class="content"> <div class="view view-archive view-id-archive view-display-id-page view-dom-id-4711f2c6f0fadc772723ead8f54c3870">
+<div id="block-system-main" class="clearfix block block-system"> <div class="content"> <div class="view view-archive view-id-archive view-display-id-page">
 <div class="view-content">
 <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
 <div id="node-8" class="node node-article node-promoted node-teaser clearfix" about="/pcejs-classic-mac-os-browser" typeof="sioc:Item foaf:Document">
@@ -65,29 +62,7 @@
  
 </div>
  
-<div id="sidebar-second" class="sidebar span3">
-<div class="row-fluid"><div class="region region-sidebar-second clearfix">
-<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
-<div class="content"> <div class="pic-me">
-<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
-</div>
-<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
-</div>
-</div>
-<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
-<div class="content"> <ul>
-<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
-<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
-<li><a href="https://github.com/jsdf">GitHub</a></li>
-<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-</ul>
-</div>
-</div>
-</div>
- 
-</div>
-</div>
- 
+{{{sidebar}}} 
 </div>
 </div>
 </div>

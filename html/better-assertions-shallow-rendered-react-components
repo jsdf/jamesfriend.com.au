@@ -1,18 +1,14 @@
-{{{block_0}}}
+<!DOCTYPE html>
+
+<head>
+{{{meta_tags}}}
 <meta name="description" content="The React TestUtils [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) feature allows us to test React components in true isolation from other component classes, and removes the need for a DOM in the test environment. It does this by allowing us to test the return value of a component&#039;s `render` method, without instantiating any subcomponents. A basic example of how it can be used, assuming we&#039;re testing a component called ``: ```jsx import React from &#039;react/addons&#039;; const headingElement = title text; // shallow render the component under test const renderer = React.addons.TestUtils.createRenderer(); renderer.render(); const renderedTree = renderer.getRenderedOutput(); // make assertions about the shallow rendered tree assert(renderedTree.type === &#039;div&#039;); assert(renderedTree.props.className === &#039;page&#039;);"/>
-<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
 <link rel="canonical" href="https://jamesfriend.com.au/better-assertions-shallow-rendered-react-components"/>
-<link rel="shortlink" href="https://jamesfriend.com.au/node/14"/>
- 
-{{{meta_viewport}}}
 <title>Better assertions for shallow-rendered React components | James Friend</title>
 {{{common_css}}}
 {{{common_js}}}
-
- 
-
 </head>
-<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-14 node-type-article      ">
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- node-type-article      ">
 <div class="contents">
 <div id="header" class="clearfix">
 <div class="container">
@@ -171,29 +167,7 @@ to contain a ReactNode in its tree like
  
 </div>
  
-<div id="sidebar-second" class="sidebar span3">
-<div class="row-fluid"><div class="region region-sidebar-second clearfix">
-<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
-<div class="content"> <div class="pic-me">
-<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
-</div>
-<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
-</div>
-</div>
-<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
-<div class="content"> <ul>
-<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
-<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
-<li><a href="https://github.com/jsdf">GitHub</a></li>
-<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-</ul>
-</div>
-</div>
-</div>
- 
-</div>
-</div>
- 
+{{{sidebar}}} 
 </div>
 </div>
 </div>

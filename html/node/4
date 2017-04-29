@@ -1,18 +1,14 @@
-{{{block_0}}}
+<!DOCTYPE html>
+
+<head>
+{{{meta_tags}}}
 <meta name="description" content="A while back I restyled Hacker News using the Stylebot extension for Chrome. Initially I just wanted to apply a fixed width, as the site&#039;s fluid layout can result in some very long lines on a large/wide display. Over time I added in some other usability improvements, such as: - larger &#039;vote&#039; buttons with more space in between them, which helps to avoid mis-clicks on the downvote arrow (a common complaint on HN) - stronger delineation between unread and read articles, using a faint cyan highlight on those which are unread, while read articles almost fade into the background - monospace fonts optimised for code Works best with Helvetica Neue and Menlo installed (as they are by default on Mac OS). Alternatively, Anonymous Pro will be used for code if installed. Vote arrows use the [CSS border based triangle](http://css-tricks.com/snippets/css/css-triangle/) technique."/>
-<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
 <link rel="canonical" href="https://jamesfriend.com.au/hacker-news-theme"/>
-<link rel="shortlink" href="https://jamesfriend.com.au/node/4"/>
- 
-{{{meta_viewport}}}
 <title>Hacker News theme | James Friend</title>
 {{{common_css}}}
 {{{common_js}}}
-
- 
-
 </head>
-<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-4 node-type-article      ">
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- node-type-article      ">
 <div class="contents">
 <div id="header" class="clearfix">
 <div class="container">
@@ -65,29 +61,7 @@
  
 </div>
  
-<div id="sidebar-second" class="sidebar span3">
-<div class="row-fluid"><div class="region region-sidebar-second clearfix">
-<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
-<div class="content"> <div class="pic-me">
-<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
-</div>
-<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
-</div>
-</div>
-<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
-<div class="content"> <ul>
-<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
-<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
-<li><a href="https://github.com/jsdf">GitHub</a></li>
-<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-</ul>
-</div>
-</div>
-</div>
- 
-</div>
-</div>
- 
+{{{sidebar}}} 
 </div>
 </div>
 </div>

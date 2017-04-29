@@ -1,18 +1,14 @@
-{{{block_0}}}
+<!DOCTYPE html>
+
+<head>
+{{{meta_tags}}}
 <meta name="description" content="**Updated: now works on Yosemite** A bunch of people have emailed me about getting Hypercard stacks running under emulation. Here is a pretty easy guide to running a Hypercard stack on a recent Mac (eg. running Mavericks, Mountain Lion, etc): Place the Hypercard stack you want to access somewhere within your user folder: eg. Documents, or Desktop. Download [this zip file](/hypercard/hypercard-ca520e219.sheepvm.zip) [95mb] containing the [SheepShaver](http://sheepshaver.cebix.net/) classic Mac emulator bundled with Mac OS 9 and Hypercard. Extract and open `hypercard.sheepvm`. This should boot Mac OS 9. On the Mac OS 9 desktop there should be a disk called &quot;Unix&quot;. This is a virtual disk which actually lets you access files on your computer (eg. outside the emulator). Opening it is equivalent to opening your OS X `/Users/` directory."/>
-<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
 <link rel="canonical" href="https://jamesfriend.com.au/running-hypercard-stack-2014"/>
-<link rel="shortlink" href="https://jamesfriend.com.au/node/11"/>
- 
-{{{meta_viewport}}}
 <title>Running a Hypercard stack on a modern Mac | James Friend</title>
 {{{common_css}}}
 {{{common_js}}}
-
- 
-
 </head>
-<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-11 node-type-article      ">
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- node-type-article      ">
 <div class="contents">
 <div id="header" class="clearfix">
 <div class="container">
@@ -65,29 +61,7 @@ Here is a pretty easy guide to running a Hypercard stack on a recent Mac (eg. ru
  
 </div>
  
-<div id="sidebar-second" class="sidebar span3">
-<div class="row-fluid"><div class="region region-sidebar-second clearfix">
-<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
-<div class="content"> <div class="pic-me">
-<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
-</div>
-<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
-</div>
-</div>
-<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
-<div class="content"> <ul>
-<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
-<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
-<li><a href="https://github.com/jsdf">GitHub</a></li>
-<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-</ul>
-</div>
-</div>
-</div>
- 
-</div>
-</div>
- 
+{{{sidebar}}} 
 </div>
 </div>
 </div>

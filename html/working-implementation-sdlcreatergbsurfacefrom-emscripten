@@ -1,18 +1,14 @@
-{{{block_0}}}
+<!DOCTYPE html>
+
+<head>
+{{{meta_tags}}}
 <meta name="description" content="[Emscripten](https://github.com/kripken/emscripten) is an awesome tool for porting existing native codebases to the browser. There are a bunch of cool projects using it to port graphical applications such as games and emulators, especially those which already use the [SDL library](http://www.libsdl.org/) as a cross-platform video, sound and I/O abstraction. Leveraging the fact that the SDL abstractions provide portability across different OS platforms means that by implementing of parts of SDL in Javascript and compiling the code via Emscripten, the browser can become (with some caveats) another SDL target platform. However, Emscripten&#039;s SDL &#039;shims&#039; are still very much a work in progress, and in a current project of my own (porting a classic Mac OS emulator), I&#039;ve run into some parts where I&#039;ve had to fill in the gaps myself. Specifically, if you&#039;re finding your SDL-based, Emscripten compiled app is failing to render to the canvas, the issue may be that the app is trying to use the incomplete `SDL_CreateRGBSurfaceFrom` method to create an SDL surface from a buffer of pixels."/>
-<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
 <link rel="canonical" href="https://jamesfriend.com.au/working-implementation-sdlcreatergbsurfacefrom-emscripten"/>
-<link rel="shortlink" href="https://jamesfriend.com.au/node/7"/>
- 
-{{{meta_viewport}}}
 <title>Working implementation of SDL_CreateRGBSurfaceFrom for Emscripten | James Friend</title>
 {{{common_css}}}
 {{{common_js}}}
-
- 
-
 </head>
-<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-7 node-type-article      ">
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- node-type-article      ">
 <div class="contents">
 <div id="header" class="clearfix">
 <div class="container">
@@ -87,29 +83,7 @@
  
 </div>
  
-<div id="sidebar-second" class="sidebar span3">
-<div class="row-fluid"><div class="region region-sidebar-second clearfix">
-<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
-<div class="content"> <div class="pic-me">
-<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
-</div>
-<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
-</div>
-</div>
-<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
-<div class="content"> <ul>
-<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
-<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
-<li><a href="https://github.com/jsdf">GitHub</a></li>
-<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-</ul>
-</div>
-</div>
-</div>
- 
-</div>
-</div>
- 
+{{{sidebar}}} 
 </div>
 </div>
 </div>

@@ -1,27 +1,16 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="ie6 ie" lang="en" dir="ltr"> <![endif]-->
-<!--[if IE 7]>    <html class="ie7 ie" lang="en" dir="ltr"> <![endif]-->
-<!--[if IE 8]>    <html class="ie8 ie" lang="en" dir="ltr"> <![endif]-->
-<!--[if gt IE 8]> <!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+{{{meta_tags}}}
 <meta about="/tags/javascript" typeof="skos:Concept" property="rdfs:label skos:prefLabel" content="javascript"/>
-<link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
 <link rel="alternate" type="application/rss+xml" title="RSS - javascript" href="https://jamesfriend.com.au/taxonomy/term/12/feed"/>
-<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
 <link rel="canonical" href="https://jamesfriend.com.au/tags/javascript"/>
-<link rel="shortlink" href="https://jamesfriend.com.au/taxonomy/term/12"/>
- 
-{{{meta_viewport}}}
 <title>javascript | James Friend</title>
 <link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
 <link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
 <link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_AK7pOwvoGKo7KAdPeyO7vi8lk2hYd9Tl8Rg7d_fs8bA.css" media="all"/>
 <link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
 {{{common_js}}}
-
- 
-
 </head>
 <body class="html not-front not-logged-in one-sidebar sidebar-second page-taxonomy page-taxonomy-term page-taxonomy-term- page-taxonomy-term-12      ">
 <div class="contents">
@@ -99,29 +88,7 @@
  
 </div>
  
-<div id="sidebar-second" class="sidebar span3">
-<div class="row-fluid"><div class="region region-sidebar-second clearfix">
-<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
-<div class="content"> <div class="pic-me">
-<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
-</div>
-<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
-</div>
-</div>
-<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
-<div class="content"> <ul>
-<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
-<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
-<li><a href="https://github.com/jsdf">GitHub</a></li>
-<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-</ul>
-</div>
-</div>
-</div>
- 
-</div>
-</div>
- 
+{{{sidebar}}} 
 </div>
 </div>
 </div>

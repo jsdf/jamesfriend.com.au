@@ -1,17 +1,13 @@
-{{{block_0}}}
+<!DOCTYPE html>
+
+<head>
+{{{meta_tags}}}
 <meta name="description" content="In a discussion on Hacker News about emulators being ported to the browser, I drew attention to my own project, [PCE.js](/pce-js/), which emulates a [Macintosh Plus](http://en.wikipedia.org/wiki/Macintosh_Plus) and an [IBM PC/XT](http://en.wikipedia.org/wiki/IBM_Personal_Computer_XT). Some of the questions brought up included why someone would undertake such a project, and also the legal considerations of including the software ROM required to boot the machine."/>
-<meta name="generator" content="Drupal 7 (http://drupal.org)"/>
-<link rel="canonical" href="https://jamesfriend.com.au/porting-pce-emulator-browser"/>
- 
-{{{meta_viewport}}}
-<title>Porting the PCE emulator to the browser | James Friend</title>
+<link rel="canonical" href="https://jamesfriend.com.au/porting-pce-emulator-browser"/><title>Porting the PCE emulator to the browser | James Friend</title>
 {{{common_css}}}
 {{{common_js}}}
-
- 
-
 </head>
-<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-9 node-type-article      ">
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- node-type-article      ">
 <div class="contents">
 <div id="header" class="clearfix">
 <div class="container">
@@ -123,29 +119,7 @@ to the browser, have a read of <a href="https://jamesfriend.com.au/why-port-emul
  
 </div>
  
-<div id="sidebar-second" class="sidebar span3">
-<div class="row-fluid"><div class="region region-sidebar-second clearfix">
-<div id="block-block-1" class="clearfix block block-block"> <h2>Hi! I&#039;m James.</h2>
-<div class="content"> <div class="pic-me">
-<img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
-</div>
-<p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
-</div>
-</div>
-<div id="block-block-3" class="clearfix block block-block"> <h2>Drop me a line</h2>
-<div class="content"> <ul>
-<li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
-<li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
-<li><a href="https://github.com/jsdf">GitHub</a></li>
-<li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-</ul>
-</div>
-</div>
-</div>
- 
-</div>
-</div>
- 
+{{{sidebar}}} 
 </div>
 </div>
 </div>

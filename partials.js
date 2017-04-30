@@ -5,43 +5,18 @@ function subtitute(input) {
   return template.render(partials);
 }
 
-const nodeTemplate = hogan.compile(`
-<div id="node-{{node_id}}" class="node node-article node-promoted node-teaser clearfix" about="/{{slug}}" typeof="sioc:Item foaf:Document">
-  <h2><a href="/{{slug}}">{{{title}}}</a></h2>
-  <span property="dc:title" content="{{{title}}}" class="rdf-meta element-hidden"></span>
-  <div class="submitted">
-    <span property="dc:date dc:created" content="{{created_iso}}" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/{{author_id}}" typeof="sioc:UserAccount" property="foaf:name" datatype="">{{author_name}}</span> on {{created_human}}</span>
-  </div>
-  <div class="content">
-    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
-      <div class="field-items">
-        {{{body}}}
-      </div>
-    </div>
-  </div>
-  <ul class="links inline">
-    <li class="node-readmore first last">
-      <a href="/{{slug}}" rel="tag" title="{{{title}}}">Read more<span class="element-invisible"> about {{{title}}}</span></a>
-    </li>
-  </ul>
-</div>
-`);
-
-function renderNode(params) {
-  return nodeTemplate.render(params);
-}
-
-module.exports = (options) => {
+module.exports = options => {
   const partials = {
-    common_css: () => `
-<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="https://jamesfriend.com.au/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+    common_css: () =>
+      `
+<link type="text/css" rel="stylesheet" href="/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
 `,
-    common_js: () => `
+    common_js: () =>
+      `
 <script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
-<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_gPqjYq7fqdMzw8-29XWQIVoDSWTmZCGy9OqaHppNxuQ.js"></script>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
@@ -49,13 +24,15 @@ module.exports = (options) => {
 </script>
 <script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
 `,
-    meta_tags: () => `
+    meta_tags: () =>
+      `
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
 <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
 <meta name="generator" content="AppleScript"/>
 `,
-    sidebar: () => `
+    sidebar: () =>
+      `
 <div id="sidebar-second" class="sidebar span3">
   <div class="row-fluid">
     <div class="region region-sidebar-second clearfix">
@@ -65,7 +42,8 @@ module.exports = (options) => {
   </div>
 </div>
 `,
-    block_archive: () => `
+    block_archive: () =>
+      `
 <div id="block-views-archive-block" class="clearfix block block-views"> <h2>Past months</h2>
   <div class="content"> <div class="view view-archive view-id-archive view-display-id-block">
     <div class="view-content">
@@ -110,7 +88,8 @@ module.exports = (options) => {
   </div> </div>
 </div>
 `,
-    block_me: () => `
+    block_me: () =>
+      `
 <div id="block-block-1" class="clearfix block block-block">
   <h2>Hi! I&#039;m James.</h2>
   <div class="content">
@@ -121,7 +100,8 @@ module.exports = (options) => {
   </div>
 </div>
 `,
-    block_contact: () => `
+    block_contact: () =>
+      `
 <div id="block-block-3" class="clearfix block block-block">
   <h2>Drop me a line</h2>
   <div class="content">
@@ -134,7 +114,8 @@ module.exports = (options) => {
   </div>
 </div>
 `,
-    block_recent_articles: () => `
+    block_recent_articles: () =>
+      `
 <div id="block-views-recent-articles-block" class="clearfix block block-views">
   <h2>Recent stuff</h2>
   <div class="content">
@@ -165,12 +146,14 @@ module.exports = (options) => {
   </div>
 </div>
 `,
-    rss_link: () => `
+    rss_link: () =>
+      `
 <a href="https://jamesfriend.com.au/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
   <img typeof="foaf:Image" src="https://jamesfriend.com.au/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/>
 </a>
 `,
-    top_links_bar: () => `
+    top_links_bar: () =>
+      `
 <div id="top-links-bar">
   <div class="container">
     <a class="attention-seeker" href="https://github.com/jsdf">here's some neat stuff I made</a>
@@ -194,6 +177,21 @@ module.exports = (options) => {
         <a href="https://github.com/jsdf/browserify-incremental" title="Incremental rebuild for browserify" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">browserify-incremental</a>
       </li>
     </ul>
+  </div>
+</div>
+`,
+    header: () =>
+      `
+<div id="header" class="clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <div id="name-and-slogan">
+          <div id="site-name"><a href="/" title="Home" rel="home">James Friend</a></div>
+          <div id="site-slogan">Web Platform Adventures &amp; PC Archeology</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `,

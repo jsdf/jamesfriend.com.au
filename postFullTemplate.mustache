@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+  {{{meta_tags}}}  
+  <meta name="description" content="{{{meta_description}}}"/>
+  <link rel="canonical" href="https://jamesfriend.com.au/{{{post.slug}}}"/>
+  <title>{{{post.title}}} | James Friend
+  </title>
+  {{{common_css}}}
+  {{{common_js}}}
+</head>
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- node-type-article      ">
+  <div class="contents">
+    {{{header}}}
+    <div id="main" class="clearfix">
+      <div class="container">
+        <div id="main-content" class="row">
+          <div id="content" class="span9">
+            <div id="content-wrapper">
+              <div id="content-head" class="row-fluid">
+                <div id="highlighted" class="clearfix">
+                </div>
+                <h1 class="title" id="page-title"> {{{post.title}}} 
+                </h1>
+              </div>
+              <div id="content-body" class="row-fluid"> 
+                <div class="region region-content clearfix">
+                  <div id="block-system-main" class="clearfix block block-system"> 
+                    <div class="content"> 
+                      <div id="node-14" class="node node-article node-promoted clearfix" about="/{{{post.slug}}}" typeof="sioc:Item foaf:Document">
+                        <span property="dc:title" content="{{{post.title}}}" class="rdf-meta element-hidden"></span>
+                        <div class="submitted">
+                          <span property="dc:date dc:created" content="{{{post.created}}}" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by 
+                            <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">{{post.author.username}}
+                            </span> on {{{post.created_human}}}
+                          </span> 
+                        </div>
+                        <div class="content">
+                          <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+                            <div class="field-items">
+                              <div class="field-item even" property="content:encoded">
+                                {{{post.body}}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{{sidebar}}} 
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

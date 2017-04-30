@@ -1,33 +1,75 @@
 const exec = require('child_process').execSync;
 const fs = require('fs');
-const hogan = require('hogan.js');
+const moment = require('moment');
+const {
+  getLines,
+  loadTemplate,
+  mergeWithNoDuplicateKeys,
+  renderTemplate,
+} = require('./utils');
 
-function die(msg) {
-  throw new Error(msg);
-}
-
-const options = {
-  submitHost: process.env.SUBMIT_HOST || die('missing env var SUBMIT_HOST'),
-};
+const options = {};
 
 const partials = require('./partials')(options);
 
-function subtitute(input) {
-  const template = hogan.compile(input);
-  return template.render(partials);
-}
+const postFullTemplate = loadTemplate('postFullTemplate');
+const postShortTemplate = loadTemplate('postShortTemplate');
+const listPageTemplate = loadTemplate('listPageTemplate');
 
 function run() {
   exec('mkdir -p ./build/');
-  exec('rsync -r --delete  ./html/ ./build/')
+  exec('mkdir -p ./build/node');
+  // exec('rsync -r --delete  ./html/ ./build/');
 
-  const files = fs.readdirSync('./html').filter(file => file.endsWith('.html'));
+  const posts = require('./posts.json');
 
-  files.forEach(file => {
-    const input = fs.readFileSync(`./html/${file}`, {encoding: 'utf8'});
-    const output = subtitute(input);
-    fs.writeFileSync(`./build/${file}`, output, {encoding: 'utf8'});
+  const orderedPostIds = Object.keys(posts).sort(
+    (a, b) => -(Number.parseInt(a) - Number.parseInt(b))
+  );
+
+  // post full view pages
+  orderedPostIds.forEach(postId => {
+    const post = posts[postId];
+    if (post.slug.includes('/')) return;
+
+    const page = renderTemplate(
+      postFullTemplate,
+      mergeWithNoDuplicateKeys(partials, {
+        post: mergeWithNoDuplicateKeys(post, {
+          created_human: moment(post.created).format('MMMM D, YYYY'),
+        }),
+        meta_description: post.body_text.slice(0, 300),
+      })
+    );
+    fs.writeFileSync(`./build/${post.slug}`, page, {encoding: 'utf8'});
   });
+
+  // post previews
+  const postsShortTexts = [];
+  orderedPostIds.forEach(postId => {
+    const post = posts[postId];
+    if (post.slug.includes('/')) return;
+
+    const postShortText = renderTemplate(
+      postShortTemplate,
+      mergeWithNoDuplicateKeys(partials, {
+        post: mergeWithNoDuplicateKeys(post, {
+          created_human: moment(post.created).format('MMMM D, YYYY'),
+          body_short: post.body_preview,
+        }),
+      })
+    );
+    postsShortTexts.push(postShortText);
+  });
+
+  // front page
+  const frontpage = renderTemplate(
+    listPageTemplate,
+    mergeWithNoDuplicateKeys(partials, {
+      views_rows: postsShortTexts.join('\n'),
+    })
+  );
+  fs.writeFileSync(`./build/index.html`, frontpage, {encoding: 'utf8'});
 }
 
 if (!module.parent) {

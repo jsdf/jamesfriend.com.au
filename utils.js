@@ -26,7 +26,7 @@ function trapInvalidAccesses(obj) {
   return new Proxy(objWithSubObjectsWrapped, handler);
 }
 
-function mergeWithNoDuplicateKeys(...args) {
+function mergeDisjoint(...args) {
   const target = {};
   for (var i = 0; i < args.length; i++) {
     const source = args[i];
@@ -49,6 +49,6 @@ function loadTemplate(name) {
 
 module.exports = {
   loadTemplate,
-  mergeWithNoDuplicateKeys,
+  mergeDisjoint,
   renderTemplate,
 };

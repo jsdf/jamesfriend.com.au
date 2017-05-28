@@ -4,7 +4,7 @@ const moment = require('moment');
 const {
   getLines,
   loadTemplate,
-  mergeWithNoDuplicateKeys,
+  mergeDisjoint,
   renderTemplate,
 } = require('./utils');
 const marked = require('marked');
@@ -47,8 +47,8 @@ function run() {
 
     const page = renderTemplate(
       postFullTemplate,
-      mergeWithNoDuplicateKeys(partials, {
-        post: mergeWithNoDuplicateKeys(post, {
+      mergeDisjoint(partials, {
+        post: mergeDisjoint(post, {
           created_human: moment(post.created).format('MMMM D, YYYY'),
         }),
         meta_description: post.body_text.slice(0, 300),
@@ -73,8 +73,8 @@ function run() {
 
     const postShortText = renderTemplate(
       postShortTemplate,
-      mergeWithNoDuplicateKeys(partials, {
-        post: mergeWithNoDuplicateKeys(post, {
+      mergeDisjoint(partials, {
+        post: mergeDisjoint(post, {
           created_human: moment(post.created).format('MMMM D, YYYY'),
           body_short: preview,
         }),
@@ -86,7 +86,7 @@ function run() {
   // front page
   const frontpage = renderTemplate(
     listPageTemplate,
-    mergeWithNoDuplicateKeys(partials, {
+    mergeDisjoint(partials, {
       views_rows: postsShortTexts.join('\n'),
     })
   );

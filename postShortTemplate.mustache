@@ -1,6 +1,6 @@
 <div class="views-row views-row-1 views-row-odd views-row-first">
   <div id="node-{{post.id}}" class="node node-article node-promoted node-teaser clearfix" about="/{{{post.slug}}}" typeof="sioc:Item foaf:Document">
-    <h2><a href="/{{post.slug}}">{{{post.title}}}</a></h2>
+    <h2><a href="/{{{post.slug}}}">{{{post.title}}}</a></h2>
     <span property="dc:title" content="{{{post.title}}}" class="rdf-meta element-hidden"></span>
     <div class="submitted">
       <span property="dc:date dc:created" content="{{post.created}}" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/{{post.author.id}}" typeof="sioc:UserAccount" property="foaf:name" datatype="">{{post.author.username}}</span> on {{post.created_human}}</span>
@@ -8,7 +8,9 @@
     <div class="content">
       <div class="field field-name-body field-type-text-with-summary field-label-hidden">
         <div class="field-items">
-          {{{post.body_short}}}
+          <div class="field-item">
+            {{{post.body_short}}}
+          </div>
         </div>
       </div>
     </div>

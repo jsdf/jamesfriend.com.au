@@ -47,14 +47,7 @@ function loadTemplate(name) {
   return hogan.compile(fs.readFileSync(filepath, {encoding: 'utf8'}));
 }
 
-function getLines(str, n) {
-  return (
-    str.split(/\.\s/).filter(l => l.length != 0).slice(0, n).join('. ') + '.'
-  );
-}
-
 module.exports = {
-  getLines,
   loadTemplate,
   mergeWithNoDuplicateKeys,
   renderTemplate,

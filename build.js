@@ -7,10 +7,8 @@ const {
   mergeWithNoDuplicateKeys,
   renderTemplate,
 } = require('./utils');
-
-const options = {};
-
-const partials = require('./partials')(options);
+const marked = require('marked');
+const cheerio = require('cheerio');
 
 const postFullTemplate = loadTemplate('postFullTemplate');
 const postShortTemplate = loadTemplate('postShortTemplate');
@@ -21,11 +19,26 @@ function run() {
   exec('mkdir -p ./build/node');
   // exec('rsync -r --delete  ./html/ ./build/');
 
+  // delete existing html files from root dir
+  exec('file build/* --mime-type --no-pad')
+    .toString()
+    .split('\n')
+    .map(line => line.split(': '))
+    .filter(parts => parts[1] === 'text/html')
+    .forEach(parts => exec(`rm ${parts[0]}`));
+
   const posts = require('./posts.json');
 
   const orderedPostIds = Object.keys(posts).sort(
     (a, b) => -(Number.parseInt(a) - Number.parseInt(b))
   );
+
+  const options = {
+    orderedPosts: orderedPostIds.map(id => posts[id]),
+    host: 'https://jamesfriend.com.au',
+  };
+
+  const partials = require('./partials')(options);
 
   // post full view pages
   orderedPostIds.forEach(postId => {
@@ -50,12 +63,20 @@ function run() {
     const post = posts[postId];
     if (post.slug.includes('/')) return;
 
+    const bodyHTML = marked(post.body_markdown, {gfm: true});
+    const $ = cheerio.load(bodyHTML);
+    const preview = $('p')
+      .toArray()
+      .slice(0, 3)
+      .map(el => `<p>${$(el).html()}</p>`)
+      .join('\n');
+
     const postShortText = renderTemplate(
       postShortTemplate,
       mergeWithNoDuplicateKeys(partials, {
         post: mergeWithNoDuplicateKeys(post, {
           created_human: moment(post.created).format('MMMM D, YYYY'),
-          body_short: post.body_preview,
+          body_short: preview,
         }),
       })
     );

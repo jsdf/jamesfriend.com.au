@@ -3,6 +3,7 @@ const fs = require('fs');
 const exec = require('child_process').execSync;
 const diff = require('jest-diff');
 const leftPad = require('left-pad');
+const toMarkdown = require('to-markdown');
 
 function nullthrows(value, name = 'value') {
   if (value == null) throw new Error(`${name} unexpectedly null`);
@@ -48,12 +49,10 @@ function extractDataFromPosts(htmlText) {
   const slug = $page.find('.node-article').attr('about').slice(1);
   const title = $page.find('.title').text();
 
-  const body = $page.find('.field-name-body .field-items').html();
-  const bodyPreview = $page
-    .find('.field-name-body .field-items .field-item')
-    .children()
-    .slice(0, 2)
-    .html();
+  const body = $page.find('.field-name-body .field-items .field-item').html();
+
+  const bodyMarkdown = toMarkdown(body, {gfm: true});
+
   const bodyText = $page.find('.field-name-body .field-items').text();
 
   postsData[nodeId] = {
@@ -62,8 +61,8 @@ function extractDataFromPosts(htmlText) {
     title: nullthrows(title, 'title'),
     author: nullthrows(author, 'author'),
     body: nullthrows(body, 'body'),
+    body_markdown: nullthrows(bodyMarkdown, 'bodyMarkdown'),
     body_text: nullthrows(bodyText, 'bodyText'),
-    body_preview: nullthrows(bodyPreview, 'bodyPreview'),
     created: nullthrows(created, 'created'),
   };
   return postsData;

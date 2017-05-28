@@ -9,25 +9,25 @@ module.exports = options => {
   const partials = {
     common_css: () =>
       `
-<link type="text/css" rel="stylesheet" href="/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="${options.host}/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="${options.host}/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="${options.host}/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="${options.host}/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
 `,
     common_js: () =>
       `
-<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
+<script type="text/javascript" src="${options.host}/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
 //--><!]]>
 </script>
-<script type="text/javascript" src="https://jamesfriend.com.au/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
+<script type="text/javascript" src="${options.host}/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
 `,
     meta_tags: () =>
       `
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<link rel="shortcut icon" href="https://jamesfriend.com.au/favicon.ico" type="image/vnd.microsoft.icon"/>
+<link rel="shortcut icon" href="${options.host}/favicon.ico" type="image/vnd.microsoft.icon"/>
 <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
 <meta name="generator" content="AppleScript"/>
 `,
@@ -121,35 +121,23 @@ module.exports = options => {
   <div class="content">
     <div class="view view-recent-articles view-id-recent_articles view-display-id-block">
       <div class="view-content">
-        <div class="views-row views-row-1 views-row-odd views-row-first">
-          <div class="views-field views-field-title"> <span class="field-content"><a href="/how-do-binary-and-hexadecimal-numbers-work">How do binary and hexadecimal numbers work?</a></span>
+      ${options.orderedPosts
+        .slice(0, 5)
+        .map(post => `
+          <div class="views-row">
+            <div class="views-field views-field-title"> <span class="field-content"><a href="/${post.slug}">${post.title}</a></span>
+            </div>
           </div>
-        </div>
-        <div class="views-row views-row-2 views-row-even">
-          <div class="views-field views-field-title"> <span class="field-content"><a href="/better-assertions-shallow-rendered-react-components">Better assertions for shallow-rendered React components</a></span>
-          </div>
-        </div>
-        <div class="views-row views-row-3 views-row-odd">
-          <div class="views-field views-field-title"> <span class="field-content"><a href="/installing-pygame-python-3-mac-os-yosemite">Installing Pygame for Python 3 on Mac OS Yosemite</a></span>
-          </div>
-        </div>
-        <div class="views-row views-row-4 views-row-even">
-          <div class="views-field views-field-title"> <span class="field-content"><a href="/running-hypercard-stack-2014">Running a Hypercard stack on a modern Mac</a></span>
-          </div>
-        </div>
-        <div class="views-row views-row-5 views-row-odd views-row-last">
-          <div class="views-field views-field-title"> <span class="field-content"><a href="/why-port-emulators-browser">Why port emulators to the browser?</a></span>
-          </div>
-        </div>
-      </div>
+          `)
+        .join('\n')}
     </div>
   </div>
 </div>
 `,
     rss_link: () =>
       `
-<a href="https://jamesfriend.com.au/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
-  <img typeof="foaf:Image" src="https://jamesfriend.com.au/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/>
+<a href="${options.host}/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
+  <img typeof="foaf:Image" src="${options.host}/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/>
 </a>
 `,
     top_links_bar: () =>

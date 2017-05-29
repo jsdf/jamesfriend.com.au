@@ -1,10 +1,5 @@
 const hogan = require('hogan.js');
 
-function subtitute(input) {
-  const template = hogan.compile(input);
-  return template.render(partials);
-}
-
 module.exports = options => {
   const partials = {
     common_css: () =>

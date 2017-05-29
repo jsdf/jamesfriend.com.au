@@ -1,11 +1,21 @@
+// @flow
+
+'use strict';
+
 const spawn = require('child_process').spawn;
 const exec = require('child_process').execSync;
+const http = require('http');
+const util = require('util');
+const path = require('path');
+const fs = require('fs');
 
 const sane = require('sane');
 const lodash = require('lodash');
 
 function build() {
+  console.time('build done');
   exec('node build.js');
+  console.timeEnd('build done');
 }
 
 const buildDebounced = lodash.debounce(() => {
@@ -13,19 +23,60 @@ const buildDebounced = lodash.debounce(() => {
   build();
 }, 50);
 
-var watcher = sane('./html/', {glob: ['**/*.js', '**/*.css', '**/*.html']});
-watcher.on('ready', function () { console.log('watching for changes') });
+const watcher = sane('./', {
+  glob: [
+    'html/**/*.js',
+    'html/**/*.css',
+    'html/**/*.html',
+    '*.mustache',
+    'partials.js',
+    'posts.json',
+    'posts/*.md',
+  ],
+});
+watcher.on('ready', function() {
+  console.log('watching for changes');
+});
 watcher.on('change', buildDebounced);
 watcher.on('add', buildDebounced);
 watcher.on('delete', buildDebounced);
 
 const port = 8081;
-spawn('node_modules/.bin/http-server', ['./build', '-p', port]);
+const serveDir = path.join(__dirname, 'build');
+
+const filesMimeTypesCache = {};
+function getMimeType(filepath) {
+  if (!filesMimeTypesCache[filepath]) {
+    filesMimeTypesCache[filepath] = exec(`file --mime-type --brief ${filepath}`)
+      .toString()
+      .trim();
+  }
+  return filesMimeTypesCache[filepath];
+}
+
+const server = http.createServer(function(req, res) {
+  try {
+    const serverpath = req.url == '/' ? '/index.html' : req.url;
+    const filepath = path.join(serveDir, serverpath);
+    const mimeType = getMimeType(filepath);
+    console.log(`200 ${req.url}`);
+    res.writeHead(200, {'Content-Type': mimeType});
+    res.write(fs.readFileSync(filepath));
+    res.end();
+  } catch (err) {
+    console.log(`404 ${req.url} ${err}`);
+    res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.write(err.stack);
+    res.end();
+  }
+});
+server.listen(port);
 
 build();
 
 setTimeout(() => {
-  console.log(`
+  console.log(
+    `
 opening http://127.0.0.1:${port}/ in your browser
 
 press CTRL-C to quit this program

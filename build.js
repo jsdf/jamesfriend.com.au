@@ -1,13 +1,17 @@
+// @flow
+
+'use strict';
+
 const exec = require('child_process').execSync;
 const fs = require('fs');
 const moment = require('moment');
 const {
-  getLines,
   loadTemplate,
   mergeDisjoint,
   renderTemplate,
+  renderPostBody,
+  getPostMarkdown,
 } = require('./utils');
-const marked = require('marked');
 const cheerio = require('cheerio');
 
 const postFullTemplate = loadTemplate('postFullTemplate');
@@ -20,7 +24,7 @@ function run() {
   // exec('rsync -r --delete  ./html/ ./build/');
 
   // delete existing html files from root dir
-  exec('file build/* --mime-type --no-pad')
+  exec('file --mime-type --no-pad build/*')
     .toString()
     .split('\n')
     .map(line => line.split(': '))
@@ -29,29 +33,23 @@ function run() {
 
   const posts = require('./posts.json');
 
-  const orderedPostIds = Object.keys(posts).sort(
-    (a, b) => -(Number.parseInt(a) - Number.parseInt(b))
-  );
-
   const options = {
-    orderedPosts: orderedPostIds.map(id => posts[id]),
+    orderedPosts: posts,
     host: 'https://jamesfriend.com.au',
   };
 
   const partials = require('./partials')(options);
 
   // post full view pages
-  orderedPostIds.forEach(postId => {
-    const post = posts[postId];
-    if (post.slug.includes('/')) return;
-
+  posts.forEach(post => {
+    const bodyHTML = renderPostBody(post);
     const page = renderTemplate(
       postFullTemplate,
       mergeDisjoint(partials, {
-        post: mergeDisjoint(post, {
+        post: mergeDisjoint(Object.assign(post, {body: bodyHTML}), {
           created_human: moment(post.created).format('MMMM D, YYYY'),
         }),
-        meta_description: post.body_text.slice(0, 300),
+        meta_description: getPostMarkdown(post).slice(0, 300),
       })
     );
     fs.writeFileSync(`./build/${post.slug}`, page, {encoding: 'utf8'});
@@ -59,11 +57,8 @@ function run() {
 
   // post previews
   const postsShortTexts = [];
-  orderedPostIds.forEach(postId => {
-    const post = posts[postId];
-    if (post.slug.includes('/')) return;
-
-    const bodyHTML = marked(post.body_markdown, {gfm: true});
+  posts.forEach(post => {
+    const bodyHTML = renderPostBody(post);
     const $ = cheerio.load(bodyHTML);
     const preview = $('p')
       .toArray()

@@ -1,5 +1,8 @@
+// @flow
+
 const fs = require('fs');
 const hogan = require('hogan.js');
+const marked = require('marked');
 
 function die(msg) {
   throw new Error(msg);
@@ -26,7 +29,7 @@ function trapInvalidAccesses(obj) {
   return new Proxy(objWithSubObjectsWrapped, handler);
 }
 
-function mergeDisjoint(...args) {
+function mergeDisjoint(...args /*:Array<Object>*/) {
   const target = {};
   for (var i = 0; i < args.length; i++) {
     const source = args[i];
@@ -38,17 +41,36 @@ function mergeDisjoint(...args) {
   return target;
 }
 
-function renderTemplate(template, data) {
-  return template.render(trapInvalidAccesses(data));
+function renderTemplate(template /*:Object*/, data /*:Object*/) {
+  // use named wrapper function for debugging ease
+  function render() {
+    return template.render(trapInvalidAccesses(data));
+  }
+  Object.defineProperty(render, 'name', {value: `render ${template.name}`});
+
+  return render();
 }
 
-function loadTemplate(name) {
+function loadTemplate(name /*: string*/) {
   const filepath = __dirname + `/${name}.mustache`;
-  return hogan.compile(fs.readFileSync(filepath, {encoding: 'utf8'}));
+  const template = hogan.compile(fs.readFileSync(filepath, {encoding: 'utf8'}));
+  template.name = name;
+  return template;
 }
 
+function getPostMarkdown(post /*: Object*/) {
+  return fs.readFileSync(`${__dirname}/posts/${post.slug}.md`, {
+    encoding: 'utf8',
+  });
+}
+function renderPostBody(post /*: Object*/) {
+  const postMarkdown = getPostMarkdown(post);
+  return marked(postMarkdown, {gfm: true});
+}
 module.exports = {
   loadTemplate,
   mergeDisjoint,
   renderTemplate,
+  renderPostBody,
+  getPostMarkdown,
 };

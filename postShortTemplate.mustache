@@ -3,7 +3,7 @@
     <h2><a href="/{{{post.slug}}}">{{{post.title}}}</a></h2>
     <span property="dc:title" content="{{{post.title}}}" class="rdf-meta element-hidden"></span>
     <div class="submitted">
-      <span property="dc:date dc:created" content="{{post.created}}" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" about="/user/{{post.author.id}}" typeof="sioc:UserAccount" property="foaf:name" datatype="">{{post.author.username}}</span> on {{post.created_human}}</span>
+      <span property="dc:date dc:created" content="{{post.created}}" datatype="xsd:dateTime" rel="sioc:has_creator">Submitted by <span class="username" xml:lang="" typeof="sioc:UserAccount" property="foaf:name" datatype="">{{post.author}}</span> on {{post.created_human}}</span>
     </div>
     <div class="content">
       <div class="field field-name-body field-type-text-with-summary field-label-hidden">

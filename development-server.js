@@ -12,15 +12,15 @@ const fs = require('fs');
 const sane = require('sane');
 const lodash = require('lodash');
 
-function build() {
+function build(skipRsync) {
   console.time('build done');
-  exec('node build.js');
+  exec(`node build.js ${skipRsync ? '--skip-rsync' : ''}`);
   console.timeEnd('build done');
 }
 
 const buildDebounced = lodash.debounce(() => {
   console.log('changes detected, rebuilding');
-  build();
+  build(true);
 }, 50);
 
 const watcher = sane('./', {

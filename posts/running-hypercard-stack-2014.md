@@ -1,3 +1,5 @@
+![Hypercard running in the SheepShaver emulator](/files/sheepshaver.png)
+
 **Updated: now works on Yosemite**
 
 A bunch of people have emailed me about getting Hypercard stacks running under emulation. Here is a pretty easy guide to running a Hypercard stack on a recent Mac (eg. running Mavericks, Mountain Lion, etc):

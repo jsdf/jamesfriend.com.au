@@ -1,3 +1,5 @@
+![Hacker News Neue](/files/hacker-news-neue.png)
+
 A while back I restyled Hacker News using the Stylebot extension for Chrome. Initially I just wanted to apply a fixed width, as the site's fluid layout can result in some very long lines on a large/wide display.
 
 Over time I added in some other usability improvements, such as:

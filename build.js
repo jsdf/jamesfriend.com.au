@@ -10,18 +10,24 @@ const {
   mergeDisjoint,
   renderTemplate,
   renderPostBody,
+  renderPostPreview,
   getPostMarkdown,
 } = require('./utils');
-const cheerio = require('cheerio');
 
 const postFullTemplate = loadTemplate('postFullTemplate');
 const postShortTemplate = loadTemplate('postShortTemplate');
 const listPageTemplate = loadTemplate('listPageTemplate');
+const rssTemplate = loadTemplate('rssTemplate');
 
+const skipRsync = process.argv.includes('--skip-rsync');
 function run() {
   exec('mkdir -p ./build/');
   exec('mkdir -p ./build/node');
-  // exec('rsync -r --delete  ./html/ ./build/');
+
+  if (!skipRsync) {
+    // sync static files
+    exec('rsync -r --delete  ./html/ ./build/');
+  }
 
   // delete existing html files from root dir
   exec('file --mime-type --no-pad build/*')
@@ -34,7 +40,7 @@ function run() {
   const posts = require('./posts.json');
 
   const options = {
-    orderedPosts: posts,
+    posts: posts,
     host: 'https://jamesfriend.com.au',
   };
 
@@ -58,13 +64,7 @@ function run() {
   // post previews
   const postsShortTexts = [];
   posts.forEach(post => {
-    const bodyHTML = renderPostBody(post);
-    const $ = cheerio.load(bodyHTML);
-    const preview = $('p')
-      .toArray()
-      .slice(0, 3)
-      .map(el => `<p>${$(el).html()}</p>`)
-      .join('\n');
+    const preview = renderPostPreview(post);
 
     const postShortText = renderTemplate(
       postShortTemplate,
@@ -77,6 +77,22 @@ function run() {
     );
     postsShortTexts.push(postShortText);
   });
+
+  // rss
+  const rss = renderTemplate(
+    rssTemplate,
+    mergeDisjoint(partials, {
+      posts: posts.map(post =>
+        mergeDisjoint(post, {
+          created_rss: moment(post.created).format(
+            'ddd, DD MMM YYYY HH:mm:ss ZZ'
+          ),
+          body_short: renderPostPreview(post),
+        })
+      ),
+    })
+  );
+  fs.writeFileSync(`./build/rss.xml`, rss, {encoding: 'utf8'});
 
   // front page
   const frontpage = renderTemplate(

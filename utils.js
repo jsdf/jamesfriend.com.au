@@ -3,6 +3,7 @@
 const fs = require('fs');
 const hogan = require('hogan.js');
 const marked = require('marked');
+const cheerio = require('cheerio');
 
 function die(msg) {
   throw new Error(msg);
@@ -11,9 +12,17 @@ function die(msg) {
 function trapInvalidAccesses(obj) {
   const objWithSubObjectsWrapped = {};
   Object.keys(obj).forEach(key => {
-    objWithSubObjectsWrapped[key] = obj[key] && typeof obj[key] == 'object'
-      ? trapInvalidAccesses(obj[key])
-      : obj[key];
+    if (obj[key] && typeof obj[key] == 'object') {
+      if (Array.isArray(obj[key])) {
+        objWithSubObjectsWrapped[key] = obj[key] = obj[key].map(v =>
+          trapInvalidAccesses(v)
+        );
+      } else {
+        objWithSubObjectsWrapped[key] = trapInvalidAccesses(obj[key]);
+      }
+    }
+
+    objWithSubObjectsWrapped[key] = obj[key];
   });
 
   const handler = {
@@ -63,14 +72,28 @@ function getPostMarkdown(post /*: Object*/) {
     encoding: 'utf8',
   });
 }
+
 function renderPostBody(post /*: Object*/) {
   const postMarkdown = getPostMarkdown(post);
   return marked(postMarkdown, {gfm: true});
 }
+
+function renderPostPreview(post /*: Object*/) {
+  const bodyHTML = renderPostBody(post);
+  const $ = cheerio.load(bodyHTML);
+  const preview = $('p')
+    .toArray()
+    .slice(0, 3)
+    .map(el => `<p>${$(el).html()}</p>`)
+    .join('\n');
+  return preview;
+}
+
 module.exports = {
   loadTemplate,
   mergeDisjoint,
   renderTemplate,
   renderPostBody,
+  renderPostPreview,
   getPostMarkdown,
 };

@@ -1,3 +1,5 @@
+![Screenshot of MacPaint showing the 'woodblock' demo image](/files/macpaint-woodblock_0.png)
+
 The [Internet Archive](https://archive.org) recently added the original Macintosh to the list of classic computers of which they provide emulation, so you can play with the software titles in their archive [in your browser](https://archive.org/details/softwarelibrary_mac), without installing anything. This is great because it provides the same level of accessibility and convenience to emulation as you'd expect of playing a media file or viewing a document.
 
 When you start up the emulated computer on these pages of the Internet Archive, you're running the [PCE](http://hampa.ch/pce/) emulator, originally a piece of software intended to run natively on desktop operating systems, which has been adapted and recompiled to run in your web browser. As the person who did the initial work of porting this emulator, I thought it would be worthwhile to provide a run-down of the tools and gross hacks which made this possible.

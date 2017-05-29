@@ -1,6 +1,8 @@
+// @flow
+
 const hogan = require('hogan.js');
 
-module.exports = options => {
+module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
   const partials = {
     common_css: () =>
       `
@@ -37,52 +39,6 @@ module.exports = options => {
   </div>
 </div>
 `,
-    block_archive: () =>
-      `
-<div id="block-views-archive-block" class="clearfix block block-views"> <h2>Past months</h2>
-  <div class="content"> <div class="view view-archive view-id-archive view-display-id-block">
-    <div class="view-content">
-      <div class="item-list">
-        <ul class="views-summary">
-          <li><a href="/archive/201612">December 2016</a>
-            (1)
-          </li>
-          <li><a href="/archive/201509">September 2015</a>
-            (1)
-          </li>
-          <li><a href="/archive/201412">December 2014</a>
-            (1)
-          </li>
-          <li><a href="/archive/201402">February 2014</a>
-            (1)
-          </li>
-          <li><a href="/archive/201310">October 2013</a>
-            (1)
-          </li>
-          <li><a href="/archive/201309">September 2013</a>
-            (1)
-          </li>
-          <li><a href="/archive/201308">August 2013</a>
-            (2)
-          </li>
-          <li><a href="/archive/201307">July 2013</a>
-            (1)
-          </li>
-          <li><a href="/archive/201305">May 2013</a>
-            (1)
-          </li>
-          <li><a href="/archive/201303">March 2013</a>
-            (1)
-          </li>
-          <li><a href="/archive/201301">January 2013</a>
-            (1)
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div> </div>
-</div>
-`,
     block_me: () =>
       `
 <div id="block-block-1" class="clearfix block block-block">
@@ -116,7 +72,7 @@ module.exports = options => {
   <div class="content">
     <div class="view view-recent-articles view-id-recent_articles view-display-id-block">
       <div class="view-content">
-      ${options.orderedPosts
+      ${options.posts
         .slice(0, 5)
         .map(post => `
           <div class="views-row">
@@ -129,40 +85,63 @@ module.exports = options => {
   </div>
 </div>
 `,
+    site_slogan: () => `Web Platform Adventures &amp; PC Archeology`,
     rss_link: () =>
       `
 <a href="${options.host}/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
   <img typeof="foaf:Image" src="${options.host}/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/>
 </a>
 `,
-    top_links_bar: () =>
-      `
+    top_links_bar: () => {
+      const renderItem = ({url, tip, label}) =>
+        `
+<li>
+  <a href="${url}" title="${tip}" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">${label}</a>
+</li>
+      `;
+      const items = [
+        {
+          url: '/pce-js/',
+          tip: 'Mac Plus/IBM PC/Atari ST emulator in the browser',
+          label: 'pce.js emulator',
+        },
+        {
+          url: 'https://github.com/jsdf/react-native-htmlview',
+          tip: 'A React Native component which renders HTML content as native views',
+          label: 'react-native-htmlview',
+        },
+        {
+          url: 'https://github.com/jsdf/reason-react-hacker-news',
+          tip: 'Hacker News mobile progressive web app built with Reason React',
+          label: 'reason-react-hacker-news',
+        },
+        {
+          url: 'https://github.com/jsdf/they-live',
+          tip: 'Serverless server monitoring with near-zero running costs',
+          label: 'they-live',
+        },
+        {
+          url: 'https://github.com/jsdf/lisp.rs',
+          tip: 'A crappy Scheme interpreter in Rust',
+          label: 'lisp.rs',
+        },
+        {
+          url: 'https://github.com/jsdf/cached-loader',
+          tip: 'Adds persistent on-disk caching to webpack loaders',
+          label: 'cached-loader',
+        },
+      ];
+      return `
 <div id="top-links-bar">
   <div class="container">
     <a class="attention-seeker" href="https://github.com/jsdf">here's some neat stuff I made</a>
     <ul>
-      <li>
-        <a href="/pce-js/" title="Mac Plus/IBM PC/Atari ST emulator in the browser" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">pce.js emulator</a>
-      </li>
-      <li>
-        <a href="https://github.com/jsdf/cached-loader" title="Adds persistent on-disk caching to webpack loaders" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">cached-loader</a>
-      </li>
-      <li>
-        <a href="https://github.com/jsdf/react-native-htmlview" title="A React Native component which renders HTML content as native views" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">react-native-htmlview</a>
-      </li>
-      <li>
-        <a href="https://github.com/jsdf/hacker-news-mobile" title="Hacker News mobile web app built in Universal/Isomorphic React" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">hacker-news-mobile</a>
-      </li>
-      <li>
-        <a href="https://github.com/jsdf/lisp.rs" title="A crappy Scheme interpreter in Rust" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">lisp.rs</a>
-      </li>
-      <li>
-        <a href="https://github.com/jsdf/browserify-incremental" title="Incremental rebuild for browserify" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">browserify-incremental</a>
-      </li>
+    ${items.map(renderItem).join('\n')}
     </ul>
   </div>
 </div>
-`,
+     `;
+    },
     header: () =>
       `
 <div id="header" class="clearfix">
@@ -171,7 +150,7 @@ module.exports = options => {
       <div class="span12">
         <div id="name-and-slogan">
           <div id="site-name"><a href="/" title="Home" rel="home">James Friend</a></div>
-          <div id="site-slogan">Web Platform Adventures &amp; PC Archeology</div>
+          <div id="site-slogan">${partials.site_slogan()}</div>
         </div>
       </div>
     </div>

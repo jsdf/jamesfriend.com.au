@@ -32,7 +32,12 @@ s3_sync() {
   fi
 }
 
-for filepath in *
+for filepath in build/*
+do
+  s3_sync "$filepath"
+done
+
+for filepath in build/files/*
 do
   s3_sync "$filepath"
 done

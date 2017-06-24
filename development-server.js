@@ -12,9 +12,13 @@ const fs = require('fs');
 const sane = require('sane');
 const lodash = require('lodash');
 
+const port = 8081;
+const host = `http://127.0.0.1:${port}`;
 function build(skipRsync) {
   console.time('build done');
-  exec(`node build.js ${skipRsync ? '--skip-rsync' : ''}`);
+  exec(`node build.js ${skipRsync ? '--skip-rsync' : ''}`, {
+    env: Object.assign({HOST: host}, process.env),
+  });
   console.timeEnd('build done');
 }
 
@@ -41,25 +45,37 @@ watcher.on('change', buildDebounced);
 watcher.on('add', buildDebounced);
 watcher.on('delete', buildDebounced);
 
-const port = 8081;
 const serveDir = path.join(__dirname, 'build');
 
 const filesMimeTypesCache = {};
 function getMimeType(filepath) {
   if (!filesMimeTypesCache[filepath]) {
-    filesMimeTypesCache[filepath] = exec(`file --mime-type --brief ${filepath}`)
-      .toString()
-      .trim();
+    switch (path.extname(filepath)) {
+      case '.css':
+        filesMimeTypesCache[filepath] = 'text/css';
+        break;
+      case '.js':
+        filesMimeTypesCache[filepath] = 'application/javascript';
+        break;
+      default:
+        filesMimeTypesCache[filepath] = exec(
+          `file --mime-type --brief ${filepath}`
+        )
+          .toString()
+          .trim();
+    }
   }
   return filesMimeTypesCache[filepath];
 }
 
 const server = http.createServer(function(req, res) {
   try {
-    const serverpath = req.url == '/' ? '/index.html' : req.url;
+    const serverpath = req.url[req.url.length - 1] == '/'
+      ? req.url + 'index.html'
+      : req.url;
     const filepath = path.join(serveDir, serverpath);
     const mimeType = getMimeType(filepath);
-    console.log(`200 ${req.url}`);
+    console.log(`200 ${req.url} ${mimeType}`);
     res.writeHead(200, {'Content-Type': mimeType});
     res.write(fs.readFileSync(filepath));
     res.end();

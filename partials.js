@@ -6,20 +6,16 @@ module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
   const partials = {
     common_css: () =>
       `
-<link type="text/css" rel="stylesheet" href="${options.host}/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="${options.host}/sites/default/files/css/css_hYCLW089C9S9sP3ZYkuG6R-Q5ZHbEhblZBFjwZ_bE_I.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="${options.host}/sites/default/files/css/css_MnXiytJtb186Ydycnpwpw34cuUsHaKc80ey5LiQXhSY.css" media="all"/>
-<link type="text/css" rel="stylesheet" href="${options.host}/sites/default/files/css/css_EQmBOaqeJ6UMg2PoNVczLlpd0AwgWU0blkdCDAsm-3Q.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="${options.host}/assets/main.css" media="all"/>
 `,
     common_js: () =>
       `
-<script type="text/javascript" src="${options.host}/sites/default/files/js/js_Xjzh1hVfcgVAixhmmB6Go8TUMPOiprA-2vkC-oWXARQ.js"></script>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
 //--><!]]>
 </script>
-<script type="text/javascript" src="${options.host}/sites/default/files/js/js_sTOU3jnGFEE0UHPROho9n2P1-yiOmwxWWJre6f_dNEQ.js"></script>
+<script type="text/javascript" src="${options.host}/assets/main.js"></script>
 `,
     meta_tags: () =>
       `

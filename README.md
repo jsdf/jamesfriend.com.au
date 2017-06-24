@@ -10,3 +10,9 @@ prod
 ```
 node build.js
 ```
+
+publish
+
+```
+./upload.sh
+```

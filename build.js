@@ -5,6 +5,7 @@
 const exec = require('child_process').execSync;
 const fs = require('fs');
 const moment = require('moment');
+const purify = require('purify-css');
 const {
   loadTemplate,
   mergeDisjoint,
@@ -22,7 +23,7 @@ const rssTemplate = loadTemplate('rssTemplate');
 const skipRsync = process.argv.includes('--skip-rsync');
 function run() {
   exec('mkdir -p ./build/');
-  exec('mkdir -p ./build/node');
+  exec('mkdir -p ./build/files');
 
   if (!skipRsync) {
     // sync static files
@@ -37,11 +38,11 @@ function run() {
     .filter(parts => parts[1] === 'text/html')
     .forEach(parts => exec(`rm ${parts[0]}`));
 
-  const posts = require('./posts.json');
+  const posts = require('./posts.json').filter(p => p.published !== false);
 
   const options = {
     posts: posts,
-    host: 'https://jamesfriend.com.au',
+    host: process.env.HOST || 'https://jamesfriend.com.au',
   };
 
   const partials = require('./partials')(options);
@@ -102,6 +103,26 @@ function run() {
     })
   );
   fs.writeFileSync(`./build/index.html`, frontpage, {encoding: 'utf8'});
+
+  {
+    const content = [
+      'build/index.html',
+      'build/a-first-reason-react-app-for-js-developers',
+      'html/assets/main.js',
+    ];
+    const css = ['./html/assets/main.css'];
+
+    const options = {
+      output: './build/assets/main.css',
+
+      info: true,
+
+      // Logs out removed selectors.
+      rejected: true,
+    };
+
+    purify(content, css, options);
+  }
 }
 
 if (!module.parent) {

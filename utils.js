@@ -73,9 +73,24 @@ function getPostMarkdown(post /*: Object*/) {
   });
 }
 
+const renderer = new marked.Renderer();
+renderer.html = function(html /*: string*/) /*:string*/ {
+  return html;
+  // const $ = cheerio.load(html);
+  // const transformedHTML = $('aside')
+  //   .addClass('')
+  //   .toArray()
+  //   .slice(0, 3)
+  //   .map(el => `<p>${$(el).html()}</p>`)
+  //   .join('\n');
+
+  // return transformedHTML;
+};
+
 function renderPostBody(post /*: Object*/) {
   const postMarkdown = getPostMarkdown(post);
-  return marked(postMarkdown, {gfm: true});
+  const postHTML = marked(postMarkdown, {gfm: true, renderer});
+  return postHTML;
 }
 
 function renderPostPreview(post /*: Object*/) {

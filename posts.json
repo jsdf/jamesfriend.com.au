@@ -1,71 +1,78 @@
 [
   {
+    "id": "17",
+    "slug": "a-first-reason-react-app-for-js-developers",
+    "title": " A First Reason React app for Javascript developers",
+    "author": "James",
+    "created": "2017-06-23T23:00:00-08:00"
+  },
+  {
     "id": "16",
     "slug": "porting-pce-emulator-browser",
-    "title": " Porting the PCE emulator to the browser ",
+    "title": " Porting the PCE emulator to the browser",
     "author": "James",
     "created": "2017-04-11T12:18:40-08:00"
   },
   {
     "id": "15",
     "slug": "how-do-binary-and-hexadecimal-numbers-work",
-    "title": " How do binary and hexadecimal numbers work? ",
+    "title": " How do binary and hexadecimal numbers work?",
     "author": "James",
     "created": "2016-12-29T11:20:14+08:00"
   },
   {
     "id": "14",
     "slug": "better-assertions-shallow-rendered-react-components",
-    "title": " Better assertions for shallow-rendered React components ",
+    "title": " Better assertions for shallow-rendered React components",
     "author": "James",
     "created": "2015-09-15T21:38:21+08:00"
   },
   {
     "id": "13",
     "slug": "installing-pygame-python-3-mac-os-yosemite",
-    "title": " Installing Pygame for Python 3 on Mac OS Yosemite ",
+    "title": " Installing Pygame for Python 3 on Mac OS Yosemite",
     "author": "superuser",
     "created": "2014-12-20T13:36:59+08:00"
   },
   {
     "id": "11",
     "slug": "running-hypercard-stack-2014",
-    "title": " Running a Hypercard stack on a modern Mac ",
+    "title": " Running a Hypercard stack on a modern Mac",
     "author": "James",
     "created": "2014-02-06T22:32:17+08:00"
   },
   {
     "id": "9",
     "slug": "why-port-emulators-browser",
-    "title": " Why port emulators to the browser? ",
+    "title": " Why port emulators to the browser?",
     "author": "James",
     "created": "2013-10-18T14:42:40+08:00"
   },
   {
     "id": "8",
     "slug": "pcejs-classic-mac-os-browser",
-    "title": " PCE.js - Classic Mac OS in the browser ",
+    "title": " PCE.js - Classic Mac OS in the browser",
     "author": "James",
     "created": "2013-09-20T12:56:44+08:00"
   },
   {
     "id": "7",
     "slug": "working-implementation-sdlcreatergbsurfacefrom-emscripten",
-    "title": " Working implementation of SDL_CreateRGBSurfaceFrom for Emscripten ",
+    "title": " Working implementation of SDL_CreateRGBSurfaceFrom for Emscripten",
     "author": "James",
     "created": "2013-08-13T18:55:44+08:00"
   },
   {
     "id": "6",
     "slug": "installing-pygame-python-mac-os-108-mountain-lion",
-    "title": " Installing Pygame on Mac OS 10.8 Mountain Lion ",
+    "title": " Installing Pygame on Mac OS 10.8 Mountain Lion",
     "author": "James",
     "created": "2013-08-07T16:34:15+08:00"
   },
   {
     "id": "4",
     "slug": "hacker-news-theme",
-    "title": " Hacker News theme ",
+    "title": " Hacker News theme",
     "author": "James",
     "created": "2013-05-25T12:38:35+08:00"
   }

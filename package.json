@@ -14,6 +14,7 @@
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
+    "purify-css": "1.2.1",
     "sane": "^1.6.0",
     "to-markdown": "^3.0.4"
   }

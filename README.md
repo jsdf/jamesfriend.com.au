@@ -1,11 +1,13 @@
+jamesfriend.com.au
 
-dev
+
+dev server
 
 ```
 node development-server.js
 ```
 
-prod
+build for deployment
 
 ```
 node build.js

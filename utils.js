@@ -30,7 +30,9 @@ function trapInvalidAccesses(obj) {
       return name in target
         ? target[name]
         : die(
-            `invalid access of property '${name}' in object {${Object.keys(target).join(', ')}}`
+            `invalid access of property '${name}' in object {${Object.keys(
+              target
+            ).join(', ')}}`
           );
     },
   };
@@ -61,7 +63,7 @@ function renderTemplate(template /*:Object*/, data /*:Object*/) {
 }
 
 function loadTemplate(name /*: string*/) {
-  const filepath = __dirname + `/${name}.mustache`;
+  const filepath = __dirname + `/templates/${name}.mustache`;
   const template = hogan.compile(fs.readFileSync(filepath, {encoding: 'utf8'}));
   template.name = name;
   return template;

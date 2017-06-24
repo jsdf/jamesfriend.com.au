@@ -7,14 +7,8 @@ dev server
 node development-server.js
 ```
 
-build for deployment
+build for prod and publish to s3
 
 ```
-node build.js
-```
-
-publish
-
-```
-./upload.sh
+node build && ./upload.sh
 ```

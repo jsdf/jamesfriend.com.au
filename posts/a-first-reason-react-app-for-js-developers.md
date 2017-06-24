@@ -47,7 +47,7 @@ Open http://localhost:8080 and you should see this:
 
 This page is being rendered using React, from a component written in Reason. In your editor, open the project folder and open up `src/index.re`. If you've built many React apps this should look pretty familiar. The Reason code:
 
-```js
+```reason
 ReactDOMRe.renderToElementWithId <App name="Welcome to Create Reason React App!" /> "root";
 ```
 
@@ -61,7 +61,7 @@ ReactDOM.render(<App name="Welcome to Create Reason React App!" />, document.get
 
 When comparing the Reason and Javascript code above, you'll notice that the Reason version omits the parentheses `()` around the function call, and also the commas between the arguments. In Reason, each space-separated value after the function name is an argument to the function. Parentheses are only needed if you want to call one function and use the result as an argument to another function, eg.
 
-```js
+```reason
 myFunctionB (myFunctionA arg1 arg2) arg3
 ```
 
@@ -77,7 +77,7 @@ Let's move over to `src/app.re`. Don't worry too much about all the stuff going 
 
 Let's start making some changes. We're going to start building the front page of our app, starting with the render method of our top level component. Replace the entire contents of the file with:
 
-```js
+```reason
 let component = ReasonReact.statelessComponent "App";
 
 let make ::name _children => {
@@ -126,7 +126,7 @@ https://api.github.com/search/repositories?q=topic%3Areasonml&type=Repositories
 
 We'll define a record type to represent each repo item from the JSON. A record is like a JS object, except that the list of properties that it has and what their types are is fixed. This is how we might define a record type for Github API data about a Github repo:
 
-```js
+```reason
 type repo = {
   full_name: string,
   stargazers_count: int,
@@ -142,7 +142,7 @@ We've defined our type at the top level of the file. In Reason, every file is a 
 
 Let's use our type in `app.re`. The repos page is just a list of repos, with each item in the list consisting of the name of the repo (linking to the repo on Github), and the number of stars the repo has. We'll define some dummy data and sketch out a new component called `RepoItem` to represent an item in the list of repos:
 
-```js
+```reason
 let component = ReasonReact.statelessComponent "App";
 
 let make ::title _children => {
@@ -173,7 +173,7 @@ Note that the body of the render function is now wrapped in `{}` braces, because
 
 You might now see an error saying `unbound module RepoItem`. That's because we haven't created that module yet. We'll add the new file called `RepoItem.re`:
 
-```js
+```reason
 let component = ReasonReact.statelessComponent "RepoItem";
 
 let make repo::(repo: RepoData.repo) _children => {
@@ -187,7 +187,7 @@ Here we have a minimal stateless component which takes one prop called `repo`. E
 
 Next we'll flesh out the render method to present the fields of the `repo` record:
 
-```js
+```reason
 let component = ReasonReact.statelessComponent "RepoItem";
 
 let make repo::(repo: RepoData.repo) _children => {
@@ -211,7 +211,7 @@ In JS React we define a `render` method on a class, and inside it we can access 
 Our app is going to load some data and then render it, which means we need a place to put the data after it's loaded. React component state seems like an obvious choice. So we'll make our App component stateful. 
 
 In `app.re`:
-```js
+```reason
 type componentState = {repo: RepoData.repo};
 
 let component = ReasonReact.statefulComponent "App";
@@ -243,12 +243,12 @@ Note that the `componentState` type must be defined before the call to `ReasonRe
 
 Currently we have our `repo` dummy data already available when we define the initial state of the component, but once we are loading it from the server it will initially be null. However, in Reason you can't just have the value of a record field be `null`, as you can in Javascript. Instead, things which might not be present need to be 'wrapped' in another type called `option`. We can change our `componentState` type to represent this like so:
 
-```js
+```reason
 type componentState = {repo: option RepoData.repo};
 ```
 
 and in our `initialState` function we add `Some` before our repo record:
-```js
+```reason
 initialState: fun () :componentState => {
   repo: Some dummyRepo
 },
@@ -268,7 +268,7 @@ Wanted:  RepoData.repo
 
 We can't pass `state.repo` directly as the `repo` prop to `RepoItem`, because it's wrapped in an `option`. So how do we unwrap it? We use *pattern matching*. This is where Reason forces use to cover all possible cases (or at least explicitly throw an error). Pattern matching makes use of the `switch` statement. Unlike a switch statement in Javascript however, a switch statement in Reason matches the *types* of the values (eg. `Some` and `None`), not just the values themselves. We'll change our render method to use a `switch` to provide logic to render our repo item in each possible case:
 
-```js
+```reason
   render: fun state _self => {
     let repoItem =
       switch (state.repo) {
@@ -287,13 +287,13 @@ Here you can see the switch statement has a case to match a `state.repo` value w
 
 Before we get into loading our data from JSON, there's one more change to make to the component. We actually want to show a list of repos, not just a single one, so we need to change the type of our state:
 
-```js
+```reason
 type componentState = {repos: option (array RepoData.repo)};
 ```
 
 And a corresponding change to our dummy data:
 
-```js
+```reason
 let dummyRepos: array RepoData.repo = [|
   {
     stargazers_count: 27,
@@ -312,7 +312,7 @@ Err, what's with the `[| ... |]` syntax? That's Reason's array literal syntax. I
 
 Finally, we'll change our render method to render an array of `RepoItem`s instead of just one, by mapping over the `repos` and creating a `RepoItem` for each. We have to use `ReasonReact.arrayToElement` to turn the array of elements into an element itself so it can be used in the JSX below.
 
-```js
+```reason
   render: fun state _self => {
     let repoItem = switch (state.repos) {
       | Some repos => ReasonReact.arrayToElement (Array.map
@@ -368,7 +368,7 @@ You'll need to kill and restart your `yarn start`/`npm start` command so that th
 Now we've installed `bs-json` we can use `Json.Decode` to read JSON and turn it into a record.
 
 We'll define a function called `parseRepoJson` at the end of `RepoData.re`:
-```js
+```reason
 type repo = {
   full_name: string,
   stargazers_count: int,
@@ -390,7 +390,7 @@ This is looking a bit wordy. Do we really have to write `Json.Decode` over and o
 
 Nope, Reason has some handy syntax to help us when we need to refer to the exports of a particular module over and over again. One option is to 'open' the module, which means that all of its exports become available in the current scope, so we can ditch the `Json.Decode` qualifier:
 
-```js
+```reason
 open Json.Decode
 
 let parseRepoJson json :repo =>
@@ -403,7 +403,7 @@ let parseRepoJson json :repo =>
 
 However this does introduce the risk of name collisions if you're opening multiple modules. Another option is to use the module name, followed by a period `.` before an expression. Inside the expression we can use any export of the module without qualifying it with the module name:
 
-```js
+```reason
 let parseRepoJson json :repo =>
   Json.Decode.{
     full_name: field "full_name" string json,
@@ -415,7 +415,7 @@ let parseRepoJson json :repo =>
 Now let's test it out by adding some code which defines a string of JSON and uses our `parseRepoJson` function to parse it.
 
 In `app.re`: 
-```js
+```reason
 let dummyRepos: array RepoData.repo = [|
   RepoData.parseRepoJson (
     Js.Json.parseExn {js|
@@ -436,7 +436,7 @@ Don't worry about understanding what `Js.Json.parseExn` does or the weird `{js| 
 Looking at the form of the Github API response, we're interested in the `items` field. This field contains an array of repos. We'll add another function which uses our `parseRepoJson` function to parse the `items` field into an array of records.
 
 In `RepoData.re`:
-```js
+```reason
 let parseReposResponseJson json => (Json.Decode.field "items" (Json.Decode.array parseRepoJson) json);
 ```
 
@@ -446,20 +446,20 @@ But first, more new syntax! I promise this is the last bit. The pipe operator `|
 
 For example, instead of:
 
-```js
+```reason
 (doThing3 (doThing2 (doThing1 arg)))
 ```
 
 with the pipe operator we can do:
 
-```js
+```reason
 arg |> doThing1 |> doThing2 |> doThing3
 ```
 
 This lets us simulate something like the chaining API of Promises in Javascript, except that `Js.Promise.then_` is a function we call with the promise as the argument, instead of being a method on the promise object.
 
 In `RepoData.re`:
-```js
+```reason
 let reposUrl = "https://api.github.com/search/repositories?q=topic%3Areasonml&type=Repositories";
 
 let fetchRepos () =>
@@ -472,7 +472,7 @@ let fetchRepos () =>
 
 Finally, back in `app.re` we'll add some code to load the data and store it in component state:
 
-```js
+```reason
 type componentState = {repos: option (array RepoData.repo)};
 
 let component = ReasonReact.statefulComponent "App";
@@ -520,11 +520,10 @@ We immediately call that updater function with our loaded `repos` data, which up
 
 We end the promise chain by returning `Js.Promise.resolve ()` (remember `()` is called 'unit' and it just means 'no value'). The whole expression defining the promise chain is then piped to a special function called `ignore`, which just tells Reason that we don't intend to do anything with the value that the whole expression evaluates to (we only care about the side effect it has of calling the updater function). You can leave this out, but it stops the typechecker from complaining with: `Warning 10: this expression should have type unit.`.
 
-You can see the completed app running [here](/projects/github-reason-react-tutorial/).
-
 And that's it!
 
-A finished copy of the source is [on Github](https://github.com/jsdf/github-reason-react-tutorial/).
+You can see the completed app running [here](/projects/github-reason-react-tutorial/). The completed source is [on Github](https://github.com/jsdf/github-reason-react-tutorial/).
 
+If you have any feedback about this article you can tweet me: [@ur_friend_james](https://twitter.com/ur_friend_james)
 
 

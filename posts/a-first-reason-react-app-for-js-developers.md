@@ -30,7 +30,7 @@ npm install
 npm start
 ```
 
-If you're using [yarn](yarnpkg.com) you can instead do:
+If you're using [yarn](https://yarnpkg.com) you can instead do:
 
 ```bash
 yarn create reason-react-app github-reason-list
@@ -204,7 +204,7 @@ Now is a good time to save and take a look at our progress in the browser.
 
 Note that we convert the int value of `repo.stargazers_count` to a string using the `string_of_int` function, before concatenating it with the string `" stars"` with the `^` string concatenation operator.
 
-In JS React we define a `render` method on a class, and inside it we can access `this.props`, which is an instance property of the component class instance. In Reason React we recieve the props as labeled arguments to `make` (the weird `::` syntax signified labeled arguments), and `render` is just a function defined inside `make`, and returned as part of the record returned from `make`.
+In JS React we define a `render` method on a class, and inside it we can access `this.props`, which is an instance property of the component class instance. In Reason React we receive the props as labeled arguments to `make` (the weird `::` syntax signified labeled arguments), and `render` is just a function defined inside `make`, and returned as part of the record returned from `make`.
 
 ### A stateful React component
 
@@ -429,7 +429,7 @@ let dummyRepos: array RepoData.repo = [|
 |];
 ```
 
-Don't worry about understanding what `Js.Json.parseExn` does or the weird `{js| ... |js}` thing (it's an alternative [string literal syntax](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_annotations_for_unicode_and_js_ffi_support)). Returning to the browser you should see the page sucessfully render from this JSON input.
+Don't worry about understanding what `Js.Json.parseExn` does or the weird `{js| ... |js}` thing (it's an alternative [string literal syntax](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_annotations_for_unicode_and_js_ffi_support)). Returning to the browser you should see the page successfully render from this JSON input.
 
 ### Fetching data
 

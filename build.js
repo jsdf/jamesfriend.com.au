@@ -3,6 +3,7 @@
 'use strict';
 
 const exec = require('child_process').execSync;
+const spawn = require('child_process').spawnSync;
 const fs = require('fs');
 const moment = require('moment');
 const purify = require('purify-css');
@@ -22,12 +23,21 @@ const rssTemplate = loadTemplate('rssTemplate');
 
 const skipRsync = process.argv.includes('--skip-rsync');
 function run() {
-  exec('mkdir -p ./build/');
-  exec('mkdir -p ./build/files');
+  const posts = require('./posts.json').filter(p => p.published !== false);
+
+  const options = {
+    posts: posts,
+    host: process.env.HOST || 'https://jamesfriend.com.au',
+  };
+
+  const partials = require('./partials')(options);
+
+  spawn('mkdir -p ./build/');
+  spawn('mkdir -p ./build/files');
 
   if (!skipRsync) {
     // sync static files
-    exec('rsync -r --delete  ./html/ ./build/');
+    spawn('rsync -r --delete  ./html/ ./build/');
   }
 
   // delete existing html files from root dir
@@ -37,15 +47,6 @@ function run() {
     .map(line => line.split(': '))
     .filter(parts => parts[1] === 'text/html')
     .forEach(parts => exec(`rm ${parts[0]}`));
-
-  const posts = require('./posts.json').filter(p => p.published !== false);
-
-  const options = {
-    posts: posts,
-    host: process.env.HOST || 'https://jamesfriend.com.au',
-  };
-
-  const partials = require('./partials')(options);
 
   // post full view pages
   posts.forEach(post => {
@@ -105,11 +106,9 @@ function run() {
   fs.writeFileSync(`./build/index.html`, frontpage, {encoding: 'utf8'});
 
   {
-    const content = [
-      'build/index.html',
-      'build/a-first-reason-react-app-for-js-developers',
-      'html/assets/main.js',
-    ];
+    const content = ['build/index.html', 'html/assets/main.js'].concat(
+      posts.map(p => `build/${p.slug}`)
+    );
     const css = ['./html/assets/main.css'];
 
     const options = {
@@ -122,6 +121,15 @@ function run() {
     };
 
     purify(content, css, options);
+  }
+
+  if (process.argv.includes('--publish')) {
+    spawn(`./upload.sh`, {stdio: 'inherit'});
+    const urlsToPurge = posts
+      .map(p => `${options.host}/${p.slug}`)
+      .concat([`${options.host}/`]);
+    console.log('purging', urlsToPurge);
+    spawn(`cfcli purge -d jamesfriend.com.au ${urlsToPurge.join(' ')}`);
   }
 }
 

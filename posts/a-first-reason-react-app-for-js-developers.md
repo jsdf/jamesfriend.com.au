@@ -1,3 +1,6 @@
+
+*A Traditional Chinese translation of this article is available [here](http://987.tw/a-first-reason-react-app-for-javascript-developers/).*
+
 [Reason](https://facebook.github.io/reason/) is a new statically-typed functional programming language from Facebook which can be compiled to Javascript. [Reason React](https://reasonml.github.io/reason-react/) is a wrapper for [React](https://facebook.github.io/react/) which makes it easy to use from Reason.
 
 We're going to build a small single page web app to put Reason React through its paces. The app will display a list of top Reason-related Github repos. It's a small enough task that we can complete it in a few hours, but also has enough complexity that we can kick the tires of this new language. This tutorial expects no existing knowledge of Reason, though a basic familiarity with static types would be helpful.

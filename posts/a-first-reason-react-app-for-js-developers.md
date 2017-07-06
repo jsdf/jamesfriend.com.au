@@ -85,7 +85,7 @@ let component = ReasonReact.statelessComponent "App";
 
 let make ::name _children => {
   ...component,
-  render: fun () self =>
+  render: fun self =>
     <div className="App">
       <div className="App-header">
         <h1> (ReasonReact.stringToElement "Reason Projects") </h1>
@@ -103,7 +103,7 @@ You can think of the above code as being more or less equivalent to this JS Reac
 ```js
 class App extends React.Component {
   render() {
-    return ( 
+    return (
       <div className="App">
         <div className="App-header">
           <h1>{'Reason Projects'}</h1>
@@ -150,7 +150,7 @@ let component = ReasonReact.statelessComponent "App";
 
 let make ::title _children => {
   ...component,
-  render: fun () self => {
+  render: fun self => {
     /* our dummy data */
     let dummyRepo: RepoData.repo = {
       stargazers_count: 27,
@@ -181,7 +181,7 @@ let component = ReasonReact.statelessComponent "RepoItem";
 
 let make repo::(repo: RepoData.repo) _children => {
   ...component,
-  render: fun () self =>
+  render: fun self =>
     <div className="RepoItem" />
 };
 ```
@@ -195,7 +195,7 @@ let component = ReasonReact.statelessComponent "RepoItem";
 
 let make repo::(repo: RepoData.repo) _children => {
   ...component,
-  render: fun () self =>
+  render: fun self =>
     <div className="RepoItem">
       <a href=repo.html_url> <h2> (ReasonReact.stringToElement repo.full_name) </h2> </a>
       (ReasonReact.stringToElement (string_of_int repo.stargazers_count ^ " stars"))
@@ -211,7 +211,7 @@ In JS React we define a `render` method on a class, and inside it we can access 
 
 ### A stateful React component
 
-Our app is going to load some data and then render it, which means we need a place to put the data after it's loaded. React component state seems like an obvious choice. So we'll make our App component stateful. 
+Our app is going to load some data and then render it, which means we need a place to put the data after it's loaded. React component state seems like an obvious choice. So we'll make our App component stateful.
 
 In `app.re`:
 ```reason
@@ -230,7 +230,7 @@ let make ::title _children => {
   initialState: fun () :componentState => {
     repo: dummyRepo
   },
-  render: fun state _self => {
+  render: fun {state} => {
     <div className="App">
       <div className="App-header"> <h1> (ReasonReact.stringToElement "Reason Projects") </h1> </div>
       <RepoItem repo=state.repo />
@@ -272,7 +272,7 @@ Wanted:  RepoData.repo
 We can't pass `state.repo` directly as the `repo` prop to `RepoItem`, because it's wrapped in an `option`. So how do we unwrap it? We use *pattern matching*. This is where Reason forces use to cover all possible cases (or at least explicitly throw an error). Pattern matching makes use of the `switch` statement. Unlike a switch statement in Javascript however, a switch statement in Reason matches the *types* of the values (eg. `Some` and `None`), not just the values themselves. We'll change our render method to use a `switch` to provide logic to render our repo item in each possible case:
 
 ```reason
-  render: fun state _self => {
+  render: fun {state} => {
     let repoItem =
       switch (state.repo) {
       | Some repo => <RepoItem repo=repo />
@@ -316,7 +316,7 @@ Err, what's with the `[| ... |]` syntax? That's Reason's array literal syntax. I
 Finally, we'll change our render method to render an array of `RepoItem`s instead of just one, by mapping over the `repos` and creating a `RepoItem` for each. We have to use `ReasonReact.arrayToElement` to turn the array of elements into an element itself so it can be used in the JSX below.
 
 ```reason
-  render: fun state _self => {
+  render: fun {state} => {
     let repoItem = switch (state.repos) {
       | Some repos => ReasonReact.arrayToElement (Array.map
           (fun (repo: RepoData.repo) => <RepoItem key=repo.full_name repo=repo />)
@@ -417,7 +417,7 @@ let parseRepoJson json :repo =>
 
 Now let's test it out by adding some code which defines a string of JSON and uses our `parseRepoJson` function to parse it.
 
-In `app.re`: 
+In `app.re`:
 ```reason
 let dummyRepos: array RepoData.repo = [|
   RepoData.parseRepoJson (
@@ -480,7 +480,7 @@ type componentState = {repos: option (array RepoData.repo)};
 
 let component = ReasonReact.statefulComponent "App";
 
-let handleReposLoaded repos _state _self => {
+let handleReposLoaded repos _self => {
   ReasonReact.Update {
     repos: Some repos
   };
@@ -491,7 +491,7 @@ let make ::title _children => {
   initialState: fun () :componentState => {
     repos: None
   },
-  didMount: fun _state self => {
+  didMount: fun self => {
     RepoData.fetchRepos ()
       |> Js.Promise.then_ (fun repos => {
           (self.update handleReposLoaded) repos;
@@ -501,7 +501,7 @@ let make ::title _children => {
 
     ReasonReact.NoUpdate;
   },
-  render: fun state _self => {
+  render: fun {state} => {
     let repoItem = switch (state.repos) {
       | Some repos => ReasonReact.arrayToElement (Array.map
           (fun (repo: RepoData.repo) => <RepoItem key=repo.full_name repo=repo />) repos
@@ -528,5 +528,3 @@ And that's it!
 You can see the completed app running [here](/projects/github-reason-react-tutorial/). The completed source is [on Github](https://github.com/jsdf/github-reason-react-tutorial/).
 
 If you have any feedback about this article you can tweet me: [@ur_friend_james](https://twitter.com/ur_friend_james)
-
-

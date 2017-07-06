@@ -1,5 +1,5 @@
 
-*A Traditional Chinese translation of this article is available [here](http://987.tw/a-first-reason-react-app-for-javascript-developers/).*
+*This post has been updated to account for API changes in [Reason React 0.2.1](https://reasonml.github.io/reason-react/blog.html#021-released). A Traditional Chinese translation of this article is available [here](http://987.tw/a-first-reason-react-app-for-javascript-developers/).*
 
 [Reason](https://facebook.github.io/reason/) is a new statically-typed functional programming language from Facebook which can be compiled to Javascript. [Reason React](https://reasonml.github.io/reason-react/) is a wrapper for [React](https://facebook.github.io/react/) which makes it easy to use from Reason.
 

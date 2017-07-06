@@ -49,3 +49,8 @@ for filepath in assets/*
 do
   s3_sync "$filepath"
 done
+
+for filepath in projects/**/*
+do
+  s3_sync "$filepath"
+done

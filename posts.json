@@ -1,5 +1,12 @@
 [
   {
+    "id": "18",
+    "slug": "routing-in-reason-react",
+    "title": "Routing in Reason React",
+    "author": "James",
+    "created": "2017-07-17T12:00:00-08:00"
+  },
+  {
     "id": "17",
     "slug": "a-first-reason-react-app-for-js-developers",
     "title": " A First Reason React app for Javascript developers",

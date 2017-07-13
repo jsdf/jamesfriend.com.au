@@ -62,6 +62,7 @@ DirectorRe.init router "/";
 
 And we'll change our components so that each has a link to the other page:
 
+`home.re`
 ```reason
 <div>
   <h1> (ReasonReact.stringToElement "Home") </h1>
@@ -69,6 +70,7 @@ And we'll change our components so that each has a link to the other page:
 </div>
 ```
 
+`user.re`
 ```reason
 <div>
   <h1> (ReasonReact.stringToElement "User") </h1>
@@ -78,8 +80,9 @@ And we'll change our components so that each has a link to the other page:
 
 If you load up the app you'll see the Home component, and if you click the "User" link, you'll see the User component.
 
-You might have noticed that we are using the URL's 'hash fragment' or 'fragment identifier' for routing. This is useful if our server can't serve up actual server-generated pages for each of our routes, but if we have that capability, then we might instead want to use the HTML History API (pushState) to change whole path of the URL instead. To do that, we need to add some more configuration, and also we need to intercept link clicks and instead call a function on the router to change route.
+### pushState routing
 
+You might have noticed that we are using the URL's 'hash fragment' or 'fragment identifier' for routing. This is useful if our server can't serve up actual server-generated pages for each of our routes, but if we have that capability, then we might instead want to use the HTML History API (pushState) to change the whole path of the URL instead. To do that, we need to add some more configuration, and also we need  to intercept link clicks and call a function on the router to change route.
 
 First, we need to configure Director to use HTML History API:
 
@@ -108,7 +111,7 @@ let router =
   };
 ```
 
-This is because in Reason WE can't refer to the `router` variable inside the route handler functions, because it doesn't yet exist when those functions are defined.
+This is because in Reason we can't refer to the `router` variable inside the route handler functions, because it doesn't yet exist when those functions are defined.
 
 Instead we can use the `resource` configuration feature of Director which lets us define the route paths with names, and then define the route handler functions afterwards:
 
@@ -202,7 +205,9 @@ let make ::router ::userID  _children => {
 
 If we navigate to `/user/4` we'll see "User 4" on the page.
 
-Now, what if we want to pass information about the current route around in our app? This seems like a great use case for Reason's Variants feature.
+### Enscapsulating routing state with variants
+
+Now, what if we want to pass information about the current route around in our app? This seems like a great use case for Reason's 'variants' feature.
 
 We could add another type which simply describes the different routing states which can exist as variants, and then use pattern matching to decide what to render:
 

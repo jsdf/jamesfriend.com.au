@@ -35,6 +35,7 @@ s3_sync() {
 }
 
 cd build
+
 for filepath in *
 do
   s3_sync "$filepath"

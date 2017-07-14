@@ -10,8 +10,11 @@ const glob = require('glob');
 const path = require('path');
 
 const utilUntyped /*: any*/ = util;
+const promisify /*: (Function) => Function */ = utilUntyped.promisify;
 
-const readFile = utilUntyped.promisify(fs.readFile);
+const readFile = promisify(fs.readFile);
+const lstat = promisify(fs.lstat);
+
 async function s3Upload(filepath, contentType) {
   if (process.env.DRYRUN != null) {
     console.log(`filepath:${filepath} contentType:${contentType}`);
@@ -34,44 +37,41 @@ async function s3Upload(filepath, contentType) {
   }
 }
 
-const exists = utilUntyped.promisify(fs.exists);
+const exists = promisify(fs.exists);
+
+const mimeTypes = {
+  '': 'text/html',
+  '.html': 'text/html',
+  '.css': 'text/css',
+  '.js': 'application/javascript',
+  '.png': 'image/png',
+  '.gif': 'image/gif',
+  '.jpg': 'image/jpeg',
+};
 
 async function s3Sync(filepath) {
-  if (await exists(filepath)) {
+  if ((await exists(filepath)) && !(await lstat(filepath)).isDirectory()) {
     const filename = path.basename(filepath);
     const extension = path.extname(filename);
-    switch (extension) {
-      case '':
-        await s3Upload(filepath, 'text/html');
-        break;
-      case '.html':
-        await s3Upload(filepath, 'text/html');
-        break;
-      case '.css':
-        await s3Upload(filepath, 'text/css');
-        break;
-      case '.js':
-        await s3Upload(filepath, 'application/javascript');
-        break;
-      case '.png':
-        await s3Upload(filepath, 'image/png');
-        break;
-      case '.gif':
-        await s3Upload(filepath, 'image/gif');
-        break;
-      case '.jpg':
-        await s3Upload(filepath, 'image/jpeg');
-        break;
+    const contentType = mimeTypes[extension];
+    if (contentType) {
+      await s3Upload(filepath, contentType);
     }
   }
 }
 
 async function main() {
   process.chdir('build');
-  await Promise.all(glob.sync('*').map(s3Sync));
-  await Promise.all(glob.sync('files/*').map(s3Sync));
-  await Promise.all(glob.sync('assets/*').map(s3Sync));
-  await Promise.all(glob.sync('projects/**/*').map(s3Sync));
+  await Promise.all(
+    []
+      .concat(
+        glob.sync('*'),
+        glob.sync('files/*'),
+        glob.sync('assets/*'),
+        glob.sync('projects/**/*')
+      )
+      .map(s3Sync)
+  );
 }
 
 main().catch(err => console.error(err));

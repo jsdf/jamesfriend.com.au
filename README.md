@@ -10,5 +10,6 @@ node development-server.js
 build for prod and publish to s3
 
 ```
-node build --publish
+node build
+node upload
 ```

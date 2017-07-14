@@ -1,4 +1,4 @@
-In my previous tutorial about [Reason React](https://reasonml.github.io/reason-react/), I covered most of the elements one might need for a typical web app, but one I left out was routing, so this is a quick guide to adding client-side routes to your Reason app.
+In my [previous tutorial](https://jamesfriend.com.au/a-first-reason-react-app-for-js-developers) about [Reason React](https://reasonml.github.io/reason-react/), I covered most of the elements one might need for a typical web app, but one I left out was routing, so this is a quick guide to adding client-side routes to your Reason app.
 
 We're going to use a library called [Director](https://github.com/flatiron/director), which is a simple and mature routing library for Javascript. We're actually going to install a version of the package called [bs-director](https://github.com/BuckleTypes/bs-director) which also contains bindings to Reason/BuckleScript, which means we can use it easily from our Reason code.
 

@@ -2,6 +2,8 @@ In my previous tutorial about [Reason React](https://reasonml.github.io/reason-r
 
 We're going to use a library called [Director](https://github.com/flatiron/director), which is a simple and mature routing library for Javascript. We're actually going to install a version of the package called [bs-director](https://github.com/BuckleTypes/bs-director) which also contains bindings to Reason/BuckleScript, which means we can use it easily from our Reason code.
 
+To start with, install `bs-director` with npm or yarn:
+
 ```bash
 yarn add bs-director
 ```

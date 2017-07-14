@@ -4,6 +4,7 @@
 
 const exec = require('child_process').execSync;
 const spawn = require('child_process').spawnSync;
+const mkdirp = require('mkdirp');
 const fs = require('fs');
 const moment = require('moment');
 const purify = require('purify-css');
@@ -32,8 +33,8 @@ function run() {
 
   const partials = require('./partials')(options);
 
-  spawn('mkdir -p ./build/');
-  spawn('mkdir -p ./build/files');
+  mkdirp.sync('./build/');
+  mkdirp.sync('./build/files');
 
   if (!skipRsync) {
     // sync static files

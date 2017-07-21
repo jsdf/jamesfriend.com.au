@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>The Oregon Trail</title>
+<link rel="stylesheet" type="text/css" href="css/pce.css">
+<style type="text/css">h1{font-size:48px;display:block;text-align:center;}</style>
+</head>
+<body>
+<h1 class="title">The Oregon Trail</h1>
+<div class="container" id="pcejs"></div>
+<script type="text/javascript" src="js/pce-deps.js"></script>
+<script type="text/javascript" src="js/pce.js"></script>
+<script type="text/javascript">
+      PCEJS.init({
+        canvasScale: 1.5,
+        canvasOffset: 100,
+        zoomControls: true
+      });
+    </script>
+<script type="text/javascript" src="pce-macplus.js"></script>
+</body>
+</html>

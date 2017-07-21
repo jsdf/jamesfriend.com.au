@@ -68,7 +68,8 @@ async function main() {
         glob.sync('*'),
         glob.sync('files/*'),
         glob.sync('assets/*'),
-        glob.sync('projects/**/*')
+        glob.sync('projects/**/*'),
+        glob.sync('pce-js/**/*')
       )
       .map(s3Sync)
   );

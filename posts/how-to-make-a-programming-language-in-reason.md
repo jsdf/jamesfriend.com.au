@@ -1,4 +1,8 @@
-A while ago, Peter Norvig wrote the article [(How to Write a (Lisp) Interpreter (in Python))](http://norvig.com/lispy.html) which does a good job of showing how to build a Lisp interpreter in Python. I'm going to show how one might build the same thing using [Reason](https://facebook.github.io/reason/).
+A while ago, Peter Norvig wrote the article [(How to Write a (Lisp) Interpreter (in Python))](http://norvig.com/lispy.html) which does a good job of showing how to build an implementation of the Lisp programming language using Python. I'm going to show how one might build the same thing using [Reason](https://facebook.github.io/reason/).
+
+If you're already familiar with Lisp you can skip ahead to [Representing Lisp values in Reason](#Representing_Lisp_values_in_Reason).
+
+## Lisp explained
 
 If you're not familiar with Lisp, it's basically like Javascript except you use function calls to do absolutely everything, and the syntax for a function call has the opening parenthese `(` before the name of the function being called, and function arguments are separated only by spaces, not commas.
 
@@ -90,13 +94,15 @@ list
         └── number: 3
 ```
 
-In addition to function calls, the other types of expressions in Lisp (like `if`, `define`, `begin`, etc) can also be represented as a list. Every Lisp program can be thought of as a bunch of nested expressions, which can be represented in our implementation as a bunch of nested lists.
+In addition to function calls, the other types of expressions in Lisp (like `if`, `define`, `begin`, etc) can also be represented as a list. Every Lisp program can be thought of as a bunch of nested expressions, which can be represented in our implementation as a bunch of nested lists. This tree of nested lists is called an Abstract Syntax Tree (AST).
 
-The way a Lisp interpreter works is that the program text is input, converted into this 'tree of lists' form, and then 'evaluated', which basically means to start at the root of the tree and work your way inward, deciding what to do with each thing you come across. If the thing is a function, you want to evaluate all the expressions given as the function's arguments, and then call the named function with those arguments. If it's something special like `if` or `define`, then you'll need some logic to do the appropriate thing. For example, for `if`, you only want to evaluate the appropriate branch of the two 'if' or 'else' branches, based on the result of the condition.
+The way a Lisp interpreter works is that the program text is input, converted into AST form, and then 'evaluated', which basically means to start at the root of the tree and work your way inward, deciding what to do with each thing you come across. If the thing is a function, you want to evaluate all the expressions given as the function's arguments, and then call the named function with those arguments. If it's something special like `if` or `define`, then you'll need some logic to do the appropriate thing. For example, for `if`, you only want to evaluate the appropriate branch of the two 'if' or 'else' branches, based on the result of the condition.
 
 The result of all this evaluating is a final result value, which we print to the screen. And that's all there is to Lisp. It's a pretty simple language, which makes it ideal as a first programming language to have a go at implementing.
 
-Representing the possible values of a program is a great use for a Reason 'variant' type:
+## Representing Lisp values in Reason
+
+Representing the possible values of a Lisp program is a great use for a Reason 'variant' type:
 
 ```reason
 type value =
@@ -108,10 +114,10 @@ type value =
 We can implement a function to convert these values to a string:
 
 ```reason
-let rec format_val value :string =>
+let rec format_value value :string =>
   switch value {
   | ListVal x =>
-    let formatted_items = List.map format_val x;
+    let formatted_items = List.map format_value x;
     let joined = String.concat " " formatted_items;
     "(" ^ joined ^ ")"
   | NumberVal x => Printf.sprintf "%.12g" x
@@ -122,16 +128,20 @@ let rec format_val value :string =>
 We can test it by creating a `ListVal` of `value`s representing the program `(+ 2 4)`:
 
 ```reason
-let program_value = ListVal [
+let ast = ListVal [
   SymbolVal "+",
   NumberVal 2.,
   NumberVal 4.
 ];
-print_endline (format_val program_value);
+print_endline (format_value ast);
 ```
 This prints `(+ 2 4)`. So now we have a way to define values representing a program, and print out their value.
 
-However, we want to be able to type in code as text and have our programming language evaluate it to some result value. This means we need to implement a parser to turn the program text into `value`s. We'll do it in two stages: first we'll 'tokenize' or 'lex' the text, which means to break the text up into a list of values called 'tokens', which represent the various textual things in the code (just words/numbers and parentheses), and then a section stage to 'parse' the tokens by reading through them in sequence and turning combinations of them them into `value`s based on the 'grammar' of our language. A 'grammar' is just a set of rules which determine which sequences and combinations of tokens which are valid and meaningful in the language, just as the grammar of English determines which words can be used together and what they mean when combined in a sentence.
+## Parsing and Tokens
+
+However, we want to be able to type in code as text and have our programming language evaluate it to some result value. This means we need to implement a parser to turn the program text into an Abstract Syntax Tree represented using our `value` type. We'll do it in two stages: first we'll 'tokenize' or 'lex' the text, which means to break the text up into a list of values called 'tokens', and then a second stage to 'parse' the tokens by reading through them in sequence and turning combinations of them them into `value`s based on the 'grammar' of our language. A 'grammar' is just a set of rules which determine which sequences and combinations of tokens which are valid and meaningful in the language, just as the grammar of English determines which words can be used together and what they mean when combined in a sentence.
+
+## The Tokenizer
 
 Let's implement the tokenizing part. First we'll need a type to represent the possible types of tokens in our code:
 
@@ -249,112 +259,60 @@ Which outputs:
 LParenToken, TextToken "hi", TextToken "friend", RParenToken
 ```
 
+## The Parser
 
-
-
-
-The first function we'll need is `tokenize`, which takes our program as a text string and breaks it into a list of strings called 'tokens', which are basically just the individual words, numbers and parentheses of the program code.
+Now we have tokens, we need to turn them into values. We have two kinds of values 'atomic' values, which are the single, indivisible value types: numbers and symbols. You may contrast them with lists, which can contain other values. Parsing an atomic value from a `TextToken` like `TextToken "33"` or `TextToken "foo"` into a `value` is simple, we just take the `TextToken`'s text value and try to parse it as a float. Failing that, it must be symbol.
 
 ```reason
-/* Convert a string of characters into a list of tokens. */
-let tokenize input: list string => {
-  let tokens = Containers.String.(
-    input
-      |> (replace sub::"(" by::" ( " )
-      |> (replace sub::")" by::" ) ")
-      |> (replace sub::"\n" by::"")
-      |> split by::" "
-  );
-  /* filter out empty strings */
-  List.filter (fun token => token != "") tokens;
-};
-```
-
-Note we're using the `Containers.String` module of the `containers` package here, so you'll need to modify your project to include it. If you're using native Reason you'll want to `opam install containers` and modify your build arguments to specify that you're using the `containers` library. If you're using Reason via Bucklescript you can `yarn add bs-containers-core` and add `bs-containers-core` as a dependency in `.bsconfig`.
-
-To test out our function, we'll need a function to print the list of tokens back to us:
-
-```reason
-let print_tokens_list list => print_endline (String.concat " " list);
-```
-
-Now, lets test it out with a small program:
-
-```reason
-let program = "(+ 2 2)";
-
-print_tokens_list (tokenize program);
-````
-
-This prints:
-```
-( + 2 2 )
-```
-
-Now we have tokens, we need to turn them into values. Here's function to read a simple token like `33` or `foo` and turn it into a value:
-
-```reason
-/* Numbers become numbers; every other token is a symbol. */
-let atom token: value => {
-  try (NumberVal (float_of_string token)) {
+let atom text: value => {
+  try (NumberVal (float_of_string text)) {
     | Failure "float_of_string" => {
-      SymbolVal token
+      SymbolVal text
     };
   };
 };
 ```
 
-That deals with numbers and symbols, but what about lists (including lists of numbers and symbols)? We need to match the token representing the start and end of a list and build up a `ListVal`. We'll also need to recursively deal with any nested lists.
+That deals with the atomic value types, but what about lists (including lists of numbers and symbols)? We need to match the token representing the start and end of a list and build up a `ListVal`. We'll also need to recursively deal with any nested lists and atomic values. We'll create a function called `read_from_tokens`, which takes a reference to a list of tokens and recursively moves along it, popping off tokens and pattern matching against them. When an `LParenToken` is reached, that's the start of a list, and we recursively call `read_list_from_tokens` until we run into a corresponding `RParenToken` marking the end of that list. `TextToken`s are passed to our `atom` function. If we run out of tokens in the middle of a list, or reach an `RParenToken` without a corresponding `LParenToken`, however, that's a parsing error.
 
 ```reason
-let rec read_from_tokens = fun (remaining_tokens: ref (list string)) => {
+let rec read_from_tokens (remaining_tokens: ref (list token)) =>
   switch !remaining_tokens {
-    | [] => failwith "unexpected EOF while reading"
-    | ["(", ...rest] => {
-      remaining_tokens := rest;
-      let values_list: list value = [];
-      read_list_from_tokens remaining_tokens values_list;
-    }
-    | [")", ...rest] => failwith "unexpected )"
-    | [token, ...rest] => {
-      remaining_tokens := rest;
-      atom token
-    }
-  };
-} and read_list_from_tokens = fun remaining_tokens values_list => {
+  | [] => failwith "unexpected EOF while reading"
+  | [LParenToken, ...rest] =>
+    remaining_tokens := rest;
+    read_list_from_tokens remaining_tokens []
+  | [RParenToken, ...rest] => failwith "unexpected )"
+  | [TextToken text, ...rest] =>
+    remaining_tokens := rest;
+    atom text
+  }
+and read_list_from_tokens remaining_tokens values_list =>
   switch !remaining_tokens {
-    | [] => failwith "unexpected EOF while reading list"
-    | [")", ...rest] => {
-      remaining_tokens := rest;
-      ListVal (List.rev values_list);
-    }
-    | _ => {
-      let value = read_from_tokens remaining_tokens;
-      read_list_from_tokens remaining_tokens [value, ...values_list];
-    }
+  | [] => failwith "unexpected EOF while reading list"
+  | [RParenToken, ...rest] =>
+    remaining_tokens := rest;
+    ListVal (List.rev values_list)
+  | _ =>
+    let value = read_from_tokens remaining_tokens;
+    read_list_from_tokens remaining_tokens [value, ...values_list]
   };
-};
 ```
-
-We could even get rid of the mutable reference entirely by returning a tuple of `(value, remaining_tokens)` from each recursive call, but when I tried writing the function that way I found it kind of unreadable.
 
 Okay, so let's put it all together:
 
 ```reason
 /* Read a Lisp expression from a string. */
 let parse program => {
-  let tokens = ref (tokenize program);
-  let value = read_from_tokens (tokens);
-  if (!tokens != []) {
-    failwith "parsing finished with tokens remaining";
-  };
-  value;
+  let tokens = tokenize program;
+  read_from_tokens (ref tokens)
 };
 ```
 
 ```reason
 let program_text = "(+ 4 5)";
-print_endline (format_val (parse program_text));
+let program_ast = parse program_text;
+print_endline (format_value program_ast);
 ```
 
 This prints:
@@ -362,4 +320,81 @@ This prints:
 (+ 4 5)
 ```
 
-So our code has made a full round trip. But it's not really much use until we can execute it. That means we have to implement the `eval` to take a
+## Read Eval Print Loop
+
+So our code has made a round trip from text, to tokens, to AST, and back to text. But it's not really much use until we can execute it. That means we have to implement the `eval` function. The eval function takes a program AST, and evaluates it to a result, possibly recursively evaluting subtrees of the AST.
+
+The full cycle looks like this:
+
+```
+program text => [tokenize] => tokens => [read_from_tokens] => AST => [eval] => result value => [format_valueue] => result text
+```
+
+A very barebones implementation of `eval`, with only support for the arithmetic functions, would look something like this:
+
+
+```reason
+
+let unwrap_number_value (value: value) :float =>
+  switch value {
+  | NumberVal x => x
+  | _ => failwith @@ "expected number value"
+  };
+
+let apply_arithmetic func (args: list value) :value => {
+  let numbers = List.map unwrap_number_value args;
+  let result = List.fold_left func (List.hd numbers) (List.tl numbers);
+  NumberVal result
+};
+
+let rec eval value =>
+  switch value {
+  | NumberVal _ => value
+  | ListVal [SymbolVal name_to_call, ...args] =>
+    let evaluated_args = List.map (fun arg => eval arg) args;
+    switch name_to_call {
+    | "+" => apply_arithmetic (+.) evaluated_args
+    | "-" => apply_arithmetic (-.) evaluated_args
+    | "*" => apply_arithmetic ( *. ) evaluated_args
+    | "/" => apply_arithmetic (/.) evaluated_args
+    | _ => failwith "unknown function"
+    }
+  | _ => failwith "unknown list form"
+  };
+```
+
+Then, to tie together `parse` and `eval` into a command prompt we can type code into and get results back from, here is the 'read eval print loop':
+
+```reason
+let read_eval_print program => {
+  let program_value = parse program;
+  let result = eval program_value;
+  let result_formatted = format_val result;
+  print_endline ("=> " ^ result_formatted)
+};
+
+let read_eval_print_loop () =>
+  while true {
+    print_string "lisp.re> ";
+    let input = read_line ();
+    try (read_eval_print (String.trim input)) {
+    | Failure message => print_endline ("error: " ^ message)
+    }
+  };
+
+read_eval_print_loop ();
+```
+
+Running the program will now show a prompt at which you may enter an expression to be evaluated:
+
+```
+lisp.re> (+ 3 4)
+=> 7
+lisp.re> (* 3 4 (+ 4 4))
+=> 96
+```
+
+## Variables and Environments
+
+
+

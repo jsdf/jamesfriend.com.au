@@ -51,27 +51,13 @@ Open http://localhost:8080 and you should see this:
 This page is being rendered using React, from a component written in Reason. In your editor, open the project folder and open up `src/index.re`. If you've built many React apps this should look pretty familiar. The Reason code:
 
 ```reason
-ReactDOMRe.renderToElementWithId <App name="Welcome to Create Reason React App!" /> "root";
+ReactDOMRe.renderToElementWithId(<App name="Welcome to Create Reason React App!" />, "root");
 ```
 
 is doing roughly the same thing as this Javascript equivalent:
 
 ```js
 ReactDOM.render(<App name="Welcome to Create Reason React App!" />, document.getElementById('root'));
-```
-
-### Function calls in Reason
-
-When comparing the Reason and Javascript code above, you'll notice that the Reason version omits the parentheses `()` around the function call, and also the commas between the arguments. In Reason, each space-separated value after the function name is an argument to the function. Parentheses are only needed if you want to call one function and use the result as an argument to another function, eg.
-
-```reason
-myFunctionB (myFunctionA arg1 arg2) arg3
-```
-
-which is equivalent to this Javascript:
-
-```js
-myFunctionB(myFunctionA(arg1, arg2), arg3)
 ```
 
 ### JSX in Reason
@@ -81,14 +67,14 @@ Let's move over to `src/app.re`. Don't worry too much about all the stuff going 
 Let's start making some changes. We're going to start building the front page of our app, starting with the render method of our top level component. Replace the entire contents of the file with:
 
 ```reason
-let component = ReasonReact.statelessComponent "App";
+let component = ReasonReact.statelessComponent("App");
 
-let make ::name _children => {
+let make ~name _children => {
   ...component,
   render: fun self =>
     <div className="App">
       <div className="App-header">
-        <h1> (ReasonReact.stringToElement "Reason Projects") </h1>
+        <h1> {ReasonReact.stringToElement("Reason Projects")} </h1>
       </div>
     </div>
 };
@@ -96,7 +82,7 @@ let make ::name _children => {
 
 Hit save and jump back to your browser window showing [http://localhost:8080](http://localhost:8080). You should see a page which just says 'Reason Projects'. Jump back to your editor and let's walk through this code, which looks somewhat like the JSX you're used to, but not quite.
 
-In Reason React, some things are a bit more explicit than normal Javascript React. Reason's JSX doesn't allow you to display text by simply putting it directly between JSX tags. Instead we use a function called `ReasonReact.stringToElement`, and we call it with the string of text we want to display: `"Reason Projects"`. In Reason strings are always double quoted. Finally, we wrap it in parens so that Reason knows that `"Reason Projects"` is an argument to `ReasonReact.stringToElement`, but the following `</h1>` is not.
+In Reason React, some things are a bit more explicit than normal Javascript React. Reason's JSX doesn't allow you to display text by simply putting it directly between JSX tags. Instead we use a function called `ReasonReact.stringToElement`, and we call it with the string of text we want to display: `"Reason Projects"`. In Reason strings are always double quoted. 
 
 You can think of the above code as being more or less equivalent to this JS React code:
 
@@ -146,11 +132,11 @@ We've defined our type at the top level of the file. In Reason, every file is a 
 Let's use our type in `app.re`. The repos page is just a list of repos, with each item in the list consisting of the name of the repo (linking to the repo on Github), and the number of stars the repo has. We'll define some dummy data and sketch out a new component called `RepoItem` to represent an item in the list of repos:
 
 ```reason
-let component = ReasonReact.statelessComponent "App";
+let component = ReasonReact.statelessComponent("App");
 
-let make ::title _children => {
+let make = (~title, _children) => {
   ...component,
-  render: fun self => {
+  render: (_self) => {
     /* our dummy data */
     let dummyRepo: RepoData.repo = {
       stargazers_count: 27,
@@ -159,7 +145,7 @@ let make ::title _children => {
     };
 
     <div className="App">
-      <div className="App-header"> <h1> (ReasonReact.stringToElement "Reason Projects") </h1> </div>
+      <div className="App-header"> <h1> {ReasonReact.stringToElement("Reason Projects")} </h1> </div>
       <RepoItem repo=dummyRepo />
     </div>
   }
@@ -177,11 +163,11 @@ Note that the body of the render function is now wrapped in `{}` braces, because
 You might now see an error saying `unbound module RepoItem`. That's because we haven't created that module yet. We'll add the new file called `RepoItem.re`:
 
 ```reason
-let component = ReasonReact.statelessComponent "RepoItem";
+let component = ReasonReact.statelessComponent("RepoItem");
 
-let make repo::(repo: RepoData.repo) _children => {
+let make = (~repo: RepoData.repo, _children) => {
   ...component,
-  render: fun self =>
+  render: _self =>
     <div className="RepoItem" />
 };
 ```
@@ -191,14 +177,14 @@ Here we have a minimal stateless component which takes one prop called `repo`. E
 Next we'll flesh out the render method to present the fields of the `repo` record:
 
 ```reason
-let component = ReasonReact.statelessComponent "RepoItem";
+let component = ReasonReact.statelessComponent("RepoItem");
 
-let make repo::(repo: RepoData.repo) _children => {
+let make = (~repo: RepoData.repo, _children) => {
   ...component,
-  render: fun self =>
+  render: _self =>
     <div className="RepoItem">
-      <a href=repo.html_url> <h2> (ReasonReact.stringToElement repo.full_name) </h2> </a>
-      (ReasonReact.stringToElement (string_of_int repo.stargazers_count ^ " stars"))
+      <a href=repo.html_url> <h2> {ReasonReact.stringToElement(repo.full_name)} </h2> </a>
+      {ReasonReact.stringToElement(string_of_int(repo.stargazers_count) ++ " stars")}
     </div>
 };
 ```
@@ -207,7 +193,7 @@ Now is a good time to save and take a look at our progress in the browser.
 
 Note that we convert the int value of `repo.stargazers_count` to a string using the `string_of_int` function, before concatenating it with the string `" stars"` with the `^` string concatenation operator.
 
-In JS React we define a `render` method on a class, and inside it we can access `this.props`, which is an instance property of the component class instance. In Reason React we receive the props as labeled arguments to `make` (the weird `::` syntax signified labeled arguments), and `render` is just a function defined inside `make`, and returned as part of the record returned from `make`.
+In JS React we define a `render` method on a class, and inside it we can access `this.props`, which is an instance property of the component class instance. In Reason React we receive the props as labeled arguments to `make` (the weird `~` syntax signified labeled arguments), and `render` is just a function defined inside `make`, and returned as part of the record returned from `make`.
 
 ### A stateful React component
 
@@ -217,7 +203,7 @@ In `app.re`:
 ```reason
 type componentState = {repo: RepoData.repo};
 
-let component = ReasonReact.statefulComponent "App";
+let component = ReasonReact.statefulComponent("App");
 
 let dummyRepo: RepoData.repo = {
   stargazers_count: 27,
@@ -225,14 +211,14 @@ let dummyRepo: RepoData.repo = {
   html_url: "https://github.com/jsdf/reason-react-hacker-news"
 };
 
-let make ::title _children => {
+let make = (~title, _children) => {
   ...component,
-  initialState: fun () :componentState => {
+  initialState: (): componentState => {
     repo: dummyRepo
   },
-  render: fun {state} => {
+  render: ({state}) => {
     <div className="App">
-      <div className="App-header"> <h1> (ReasonReact.stringToElement "Reason Projects") </h1> </div>
+      <div className="App-header"> <h1> {ReasonReact.stringToElement("Reason Projects")} </h1> </div>
       <RepoItem repo=state.repo />
     </div>
   }
@@ -247,13 +233,13 @@ Note that the `componentState` type must be defined before the call to `ReasonRe
 Currently we have our `repo` dummy data already available when we define the initial state of the component, but once we are loading it from the server it will initially be null. However, in Reason you can't just have the value of a record field be `null`, as you can in Javascript. Instead, things which might not be present need to be 'wrapped' in another type called `option`. We can change our `componentState` type to represent this like so:
 
 ```reason
-type componentState = {repo: option RepoData.repo};
+type componentState = {repo: option(RepoData.repo)};
 ```
 
 and in our `initialState` function we add `Some` before our repo record:
 ```reason
-initialState: fun () :componentState => {
-  repo: Some dummyRepo
+initialState: (): componentState => {
+  repo: Some(dummyRepo)
 },
 ```
 
@@ -272,14 +258,14 @@ Wanted:  RepoData.repo
 We can't pass `state.repo` directly as the `repo` prop to `RepoItem`, because it's wrapped in an `option`. So how do we unwrap it? We use *pattern matching*. This is where Reason forces use to cover all possible cases (or at least explicitly throw an error). Pattern matching makes use of the `switch` statement. Unlike a switch statement in Javascript however, a switch statement in Reason matches the *types* of the values (eg. `Some` and `None`), not just the values themselves. We'll change our render method to use a `switch` to provide logic to render our repo item in each possible case:
 
 ```reason
-  render: fun {state} => {
+  render: ({state}) => {
     let repoItem =
       switch (state.repo) {
-      | Some repo => <RepoItem repo=repo />
-      | None => ReasonReact.stringToElement "Loading"
+      | Some(repo) => <RepoItem repo=repo />
+      | None => ReasonReact.stringToElement("Loading")
       };
     <div className="App">
-      <div className="App-header"> <h1> (ReasonReact.stringToElement "Reason Projects") </h1> </div>
+      <div className="App-header"> <h1> {ReasonReact.stringToElement("Reason Projects")} </h1> </div>
       repoItem
     </div>
   }
@@ -291,13 +277,13 @@ Here you can see the switch statement has a case to match a `state.repo` value w
 Before we get into loading our data from JSON, there's one more change to make to the component. We actually want to show a list of repos, not just a single one, so we need to change the type of our state:
 
 ```reason
-type componentState = {repos: option (array RepoData.repo)};
+type componentState = {repos: option(array(RepoData.repo))};
 ```
 
 And a corresponding change to our dummy data:
 
 ```reason
-let dummyRepos: array RepoData.repo = [|
+let dummyRepos: array(RepoData.repo) = [|
   {
     stargazers_count: 27,
     full_name: "jsdf/reason-react-hacker-news",
@@ -316,16 +302,18 @@ Err, what's with the `[| ... |]` syntax? That's Reason's array literal syntax. I
 Finally, we'll change our render method to render an array of `RepoItem`s instead of just one, by mapping over the `repos` and creating a `RepoItem` for each. We have to use `ReasonReact.arrayToElement` to turn the array of elements into an element itself so it can be used in the JSX below.
 
 ```reason
-  render: fun {state} => {
+  render: ({state}) => {
     let repoItem = switch (state.repos) {
-      | Some repos => ReasonReact.arrayToElement (Array.map
-          (fun (repo: RepoData.repo) => <RepoItem key=repo.full_name repo=repo />)
-          repos
+      | Some(repos) => ReasonReact.arrayToElement(
+          Array.map(
+            (repo: RepoData.repo) => <RepoItem key=repo.full_name repo=repo />,
+            repos
+          )
         )
-      | None => ReasonReact.stringToElement "Loading"
+      | None => ReasonReact.stringToElement("Loading")
     };
     <div className="App">
-      <div className="App-header"> <h1> (ReasonReact.stringToElement "Reason Projects") </h1> </div>
+      <div className="App-header"> <h1> {ReasonReact.stringToElement("Reason Projects")} </h1> </div>
       repoItem
     </div>
   }
@@ -378,10 +366,10 @@ type repo = {
   html_url: string
 };
 
-let parseRepoJson json :repo => {
-  full_name: Json.Decode.field "full_name" Json.Decode.string json,
-  stargazers_count: Json.Decode.field "stargazers_count" Json.Decode.int json,
-  html_url: Json.Decode.field "html_url" Json.Decode.string json
+let parseRepoJson = (json: repo) => {
+  full_name: Json.Decode.field("full_name", Json.Decode.string(json)),
+  stargazers_count: Json.Decode.field("stargazers_count", Json.Decode.int(json)),
+  html_url: Json.Decode.field("html_url", Json.Decode.string(json)
 };
 ```
 
@@ -394,24 +382,24 @@ This is looking a bit wordy. Do we really have to write `Json.Decode` over and o
 Nope, Reason has some handy syntax to help us when we need to refer to the exports of a particular module over and over again. One option is to 'open' the module, which means that all of its exports become available in the current scope, so we can ditch the `Json.Decode` qualifier:
 
 ```reason
-open Json.Decode
+open Json.Decode;
 
-let parseRepoJson json :repo =>
+let parseRepoJson = (json: repo) =>
   {
-    full_name: field "full_name" string json,
-    stargazers_count: field "stargazers_count" int json,
-    html_url: field "html_url" string json
+    full_name: field("full_name", string(json)),
+    stargazers_count: field("stargazers_count", int(json)),
+    html_url: field("html_url", string(json))
   };
 ```
 
 However this does introduce the risk of name collisions if you're opening multiple modules. Another option is to use the module name, followed by a period `.` before an expression. Inside the expression we can use any export of the module without qualifying it with the module name:
 
 ```reason
-let parseRepoJson json :repo =>
+let parseRepoJson = (json: repo) =>
   Json.Decode.{
-    full_name: field "full_name" string json,
-    stargazers_count: field "stargazers_count" int json,
-    html_url: field "html_url" string json
+    full_name: field("full_name", string(json)),
+    stargazers_count: field("stargazers_count", int(json)),
+    html_url: field("html_url", string(json))
   };
 ```
 
@@ -419,20 +407,22 @@ Now let's test it out by adding some code which defines a string of JSON and use
 
 In `app.re`:
 ```reason
-let dummyRepos: array RepoData.repo = [|
-  RepoData.parseRepoJson (
-    Js.Json.parseExn {js|
-      {
-        "stargazers_count": 93,
-        "full_name": "reasonml/reason-tools",
-        "html_url": "https://github.com/reasonml/reason-tools"
-      }
-    |js}
+let dummyRepos: array(RepoData.repo) = [|
+  RepoData.parseRepoJson(
+    Js.Json.parseExn(
+      {js|
+        {
+          "stargazers_count": 93,
+          "full_name": "reasonml/reason-tools",
+          "html_url": "https://github.com/reasonml/reason-tools"
+        }
+      |js}
+    )
   )
 |];
 ```
 
-Don't worry about understanding what `Js.Json.parseExn` does or the weird `{js| ... |js}` thing (it's an alternative [string literal syntax](http://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_annotations_for_unicode_and_js_ffi_support)). Returning to the browser you should see the page successfully render from this JSON input.
+Don't worry about understanding what `Js.Json.parseExn` does or the weird `{js| ... |js}` thing (it's an alternative [string literal syntax](https://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_annotations_for_unicode_and_js_ffi_support)). Returning to the browser you should see the page successfully render from this JSON input.
 
 ### Fetching data
 
@@ -440,17 +430,18 @@ Looking at the form of the Github API response, we're interested in the `items` 
 
 In `RepoData.re`:
 ```reason
-let parseReposResponseJson json => (Json.Decode.field "items" (Json.Decode.array parseRepoJson) json);
+let parseReposResponseJson = json =>
+  Json.Decode.field("items", Json.Decode.array(parseRepoJson), json);
 ```
 
 Finally we'll make use of the `bs-fetch` package to make our HTTP request to the API.
 
-But first, more new syntax! I promise this is the last bit. The pipe operator `|>` simply takes the result of the expression on the left of the operator and calls the function on the right of the operator with that value.
+But first, more new syntax! I promise this is the last bit. The pipe operator `|>` simply takes the result of the expression on the left of the `|>` operator and calls the function on the right of the `|>` operator with that value.
 
 For example, instead of:
 
 ```reason
-(doThing3 (doThing2 (doThing1 arg)))
+doThing3(doThing2(doThing1(arg)))
 ```
 
 with the pipe operator we can do:
@@ -465,51 +456,69 @@ In `RepoData.re`:
 ```reason
 let reposUrl = "https://api.github.com/search/repositories?q=topic%3Areasonml&type=Repositories";
 
-let fetchRepos () =>
-  Bs_fetch.fetch reposUrl
-    |> Js.Promise.then_ Bs_fetch.Response.text
-    |> Js.Promise.then_ (fun jsonText =>
-      Js.Promise.resolve (parseReposResponseJson (Js.Json.parseExn jsonText))
+let fetchRepos = () =>
+  Bs_fetch.fetch(reposUrl)
+    |> Js.Promise.then_(Bs_fetch.Response.text)
+    |> Js.Promise.then_(
+      jsonText =>
+        Js.Promise.resolve(parseReposResponseJson(Js.Json.parseExn(jsonText)))
     );
+```
+
+We can make the Promise chaining `fetchRepos` a bit more terse by temporarily opening up `Js.Promise`:
+
+```reason
+let fetchRepos = () =>
+  Js.Promise.(
+    Bs_fetch.fetch(reposUrl)
+      |> then_(Bs_fetch.Response.text)
+      |> then_(
+        jsonText =>
+          resolve(parseReposResponseJson(Js.Json.parseExn(jsonText)))
+      )
+  );
 ```
 
 Finally, back in `app.re` we'll add some code to load the data and store it in component state:
 
 ```reason
-type componentState = {repos: option (array RepoData.repo)};
+type componentState = {repos: option(array(RepoData.repo))};
 
-let component = ReasonReact.statefulComponent "App";
+let component = ReasonReact.statefulComponent("App");
 
-let handleReposLoaded repos _self => {
+let handleReposLoaded = (repos, _self) => {
   ReasonReact.Update {
-    repos: Some repos
+    repos: Some(repos)
   };
 };
 
-let make ::title _children => {
+let make = (~title, _children) => {
   ...component,
-  initialState: fun () :componentState => {
+  initialState: (): componentState => {
     repos: None
   },
-  didMount: fun self => {
-    RepoData.fetchRepos ()
-      |> Js.Promise.then_ (fun repos => {
-          (self.update handleReposLoaded) repos;
-          Js.Promise.resolve ();
+  didMount: self => {
+    RepoData.fetchRepos()
+      |> Js.Promise.then_(repos => {
+          self.update(handleReposLoaded, repos);
+          Js.Promise.resolve();
         })
       |> ignore;
 
     ReasonReact.NoUpdate;
   },
-  render: fun {state} => {
+  render: ({state}) => {
     let repoItem = switch (state.repos) {
-      | Some repos => ReasonReact.arrayToElement (Array.map
-          (fun (repo: RepoData.repo) => <RepoItem key=repo.full_name repo=repo />) repos
+      | Some(repos) => ReasonReact.arrayToElement(
+          Array.map(
+            (repo: RepoData.repo) => <RepoItem key=repo.full_name repo=repo />,
+            repos
+          )
         )
-      | None => ReasonReact.stringToElement "Loading"
+      | None => ReasonReact.stringToElement("Loading")
     };
     <div className="App">
-      <div className="App-header"> <h1> (ReasonReact.stringToElement "Reason Projects") </h1> </div>
+      <div className="App-header"> <h1> {ReasonReact.stringToElement("Reason Projects")} </h1> </div>
       repoItem
     </div>
   }
@@ -521,7 +530,7 @@ Then, in the promise `then_` block, we use `self.update` to create an 'updater' 
 
 We immediately call that updater function with our loaded `repos` data, which updates the state.
 
-We end the promise chain by returning `Js.Promise.resolve ()` (remember `()` is called 'unit' and it just means 'no value'). The whole expression defining the promise chain is then piped to a special function called `ignore`, which just tells Reason that we don't intend to do anything with the value that the whole expression evaluates to (we only care about the side effect it has of calling the updater function). You can leave this out, but it stops the typechecker from complaining with: `Warning 10: this expression should have type unit.`.
+We end the promise chain by returning `Js.Promise.resolve()`. The whole expression defining the promise chain is then `|>` piped to a special function called `ignore`, which just tells Reason that we don't intend to do anything with the value that the promise chain expression evaluates to (we only care about the side effect it has of calling the updater function). You can leave this out, but it stops the typechecker from complaining with: `Warning 10: this expression should have type unit.`.
 
 And that's it!
 

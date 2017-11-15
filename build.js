@@ -38,7 +38,8 @@ function run() {
 
   if (!skipRsync) {
     // sync static files
-    spawn('rsync -r --delete  ./html/ ./build/');
+    console.log('rsync')
+    spawn('rsync -rv --delete  ./html/ ./build/', {stdio: 'inherit'});
   }
 
   // delete existing html files from root dir

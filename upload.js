@@ -97,6 +97,7 @@ async function main() {
         glob.sync('projects/github-reason-react-tutorial/*')
         // glob.sync('projects/basiliskii/*'),
         // glob.sync('projects/basiliskii/BasiliskII-worker.html'),
+        // glob.sync('pce-js/**/*')
       )
       .map(s3Sync)
   );

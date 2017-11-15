@@ -102,9 +102,14 @@ module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
           label: 'pce.js emulator',
         },
         {
-          url: 'https://github.com/jsdf/react-native-htmlview',
-          tip: 'A React Native component which renders HTML content as native views',
-          label: 'react-native-htmlview',
+          url: '/projects/basiliskii/BasiliskII-worker.html',
+          tip: 'Mac OS System 7/SimCity 2000/Marathon in the browser',
+          label: 'BasiliskII.js emulator',
+        },
+        {
+          url: 'https://github.com/jsdf/little-virtual-computer',
+          tip: 'Learn how computers work by simulating them in Javascript',
+          label: 'little-virtual-computer',
         },
         {
           url: 'https://github.com/jsdf/reason-react-hacker-news',
@@ -112,19 +117,24 @@ module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
           label: 'reason-react-hacker-news',
         },
         {
+          url: 'https://github.com/jsdf/react-native-htmlview',
+          tip: 'A React Native component which renders HTML content as native views',
+          label: 'react-native-htmlview',
+        },
+        {
           url: 'https://github.com/jsdf/they-live',
           tip: 'Serverless server monitoring with near-zero running costs',
           label: 'they-live',
         },
         {
+          url: 'https://github.com/jsdf/lisp.re',
+          tip: 'A crappy Scheme interpreter in Reason',
+          label: 'lisp.re',
+        },
+        {
           url: 'https://github.com/jsdf/lisp.rs',
           tip: 'A crappy Scheme interpreter in Rust',
           label: 'lisp.rs',
-        },
-        {
-          url: 'https://github.com/jsdf/cached-loader',
-          tip: 'Adds persistent on-disk caching to webpack loaders',
-          label: 'cached-loader',
         },
       ];
       return `

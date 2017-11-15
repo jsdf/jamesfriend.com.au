@@ -88,7 +88,7 @@ const server = http.createServer(function(req, res) {
 });
 server.listen(port);
 
-build();
+build(false);
 
 setTimeout(() => {
   console.log(

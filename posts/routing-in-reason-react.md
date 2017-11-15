@@ -17,17 +17,17 @@ Now in bsconfig.json, add `bs-director` to the `bs-dependencies` section:
 To start with, imagine we have a file `index.re` which just renders a React component `<Home />` defined in `home.re`.
 
 ```reason
-ReactDOMRe.renderToElementWithId <Home /> "root";
+ReactDOMRe.renderToElementWithId(<Home />, "root");
 ```
 
 ```reason
-let component = ReasonReact.statelessComponent "Home";
+let component = ReasonReact.statelessComponent("Home");
 
-let make _children => {
+let make = (_children) => {
   ...component,
-  render: fun _self => {
+  render: (_self) => {
     <div>
-      <h1> (ReasonReact.stringToElement "Home") </h1>
+      <h1>{ReasonReact.stringToElement("Home")}</h1>
     </div>
   }
 };
@@ -36,13 +36,13 @@ let make _children => {
 Now say we want to add another page called 'User' at the path `/user`. We'll add a file `user.re`:
 
 ```reason
-let component = ReasonReact.statelessComponent "User";
+let component = ReasonReact.statelessComponent("User");
 
-let make _children => {
+let make = (_children) => {
   ...component,
-  render: fun _self => {
+  render: (_self) => {
     <div>
-      <h1> (ReasonReact.stringToElement "User") </h1>
+      <h1>{ReasonReact.stringToElement("User")}</h1>
     </div>
   }
 };
@@ -51,15 +51,16 @@ let make _children => {
 And we'll change `index.re` to create a router and conditionally render one component or the other depending on the matched route:
 
 ```reason
-let renderForRoute element => ReactDOMRe.renderToElementWithId element "index";
+let renderForRoute = (element) =>
+  ReactDOMRe.renderToElementWithId(element, "index");
 
 let router =
-  DirectorRe.makeRouter {
-    "/": fun () => renderForRoute <Home />,
-    "/user": fun () => renderForRoute <User />
-  };
+  DirectorRe.makeRouter({
+    "/": () => renderForRoute(<Home />),
+    "/user": () => renderForRoute(<User />)
+  });
 
-DirectorRe.init router "/";
+DirectorRe.init(router, "/");
 ```
 
 And we'll change our components so that each has a link to the other page:
@@ -67,16 +68,16 @@ And we'll change our components so that each has a link to the other page:
 `home.re`
 ```reason
 <div>
-  <h1> (ReasonReact.stringToElement "Home") </h1>
-  <a href="#/user"> (ReasonReact.stringToElement "User") </a>
+  <h1>{ReasonReact.stringToElement("Home")}</h1>
+  <a href="#/user">{ReasonReact.stringToElement("User")}</a>
 </div>
 ```
 
 `user.re`
 ```reason
 <div>
-  <h1> (ReasonReact.stringToElement "User") </h1>
-  <a href="#/"> (ReasonReact.stringToElement "Home") </a>
+  <h1>{ReasonReact.stringToElement("User")}</h1>
+  <a href="#/">{ReasonReact.stringToElement("Home")}</a>
 </div>
 ```
 
@@ -89,8 +90,8 @@ You might have noticed that we are using the URL's 'hash fragment' or 'fragment 
 First, we need to configure Director to use HTML History API:
 
 In `index.re`
-```
-DirectorRe.configure router {"html5history": true};
+```reason
+DirectorRe.configure(router, {"html5history": true});
 ```
 
 Additionally, now we need to pass our router object down to each component as a prop, so we can call the `setRoute` function on it when we want to navigate. In Javascript we could just do this:
@@ -105,12 +106,11 @@ var router = new director.Router({
 However, the equivalent Reason code fails to compile:
 
 ```reason
-
 let router =
-  DirectorRe.makeRouter {
-    "/": fun () => renderForRoute <Home router={router} />,
-    "/user": fun () => renderForRoute <User router={router} />
-  };
+  DirectorRe.makeRouter({
+    "/": () => renderForRoute(<Home router={router} />),
+    "/user": () => renderForRoute(<User router={router} />)
+  });
 ```
 
 This is because in Reason we can't refer to the `router` variable inside the route handler functions, because it doesn't yet exist when those functions are defined.
@@ -120,48 +120,45 @@ Instead we can use the `resource` configuration feature of Director which lets u
 
 ```reason
 let router =
-  DirectorRe.makeRouter {
+  DirectorRe.makeRouter({
     "/": "home",
     "/user": "user"
-  };
+  });
 
 let handlers = {
-  "home": fun () => {
-    renderForRoute <Home router={router} />
+  "home": () => {
+    renderForRoute(<Home router={router} />)
   },
-  "user": fun () => {
-    renderForRoute <User router={router} />
+  "user": () => {
+    renderForRoute(<User router={router} />)
   }
 };
 
-DirectorRe.configure router {
+DirectorRe.configure(router, {
   "html5history": true,
   /* this is where we connect the handlers to the routes */
   "resource": handlers
-};
-
+});
 ```
 
 In our components we can now pass in a `router` prop, which we can use to navigate from an event handler (making sure to also `preventDefault` on the mouse event):
 
 ```reason
-let component = ReasonReact.statelessComponent "User";
+let component = ReasonReact.statelessComponent("User");
 
-let make ::router  _children => {
+let make = (~router, _children) => {
   ...component,
-  render: fun _self => {
-    let gotoHome event => {
-      ReactEventRe.Mouse.preventDefault event;
-      DirectorRe.setRoute router "/";
+  render: (_self) => {
+    let gotoHome = (event) => {
+      ReactEventRe.Mouse.preventDefault(event);
+      DirectorRe.setRoute(router, "/")
     };
-
     <div>
-      <h1> (ReasonReact.stringToElement "User ") </h1>
-      <a href="#" onClick={gotoHome}> (ReasonReact.stringToElement "Home") </a>
+      <h1>{ReasonReact.stringToElement("User")}</h1>
+      <a href="#" onClick=gotoHome>{ReasonReact.stringToElement("Home")}</a>
     </div>
   }
 };
-
 ```
 
 We can add a path parameter to our routes:
@@ -169,17 +166,17 @@ We can add a path parameter to our routes:
 
 ```reason
 let router =
-  DirectorRe.makeRouter {
+  DirectorRe.makeRouter({
     "/": "home",
-    "/user/:user_id": "user"
-  };
+    "/user/:userID": "user"
+  });
 
 let handlers = {
-  "home": fun () => {
+  "home": () => {
     renderForRoute <Home router={router} />
   },
-  "user": fun (user_id: string) => {
-    renderForRoute <User router={router} user_id={int_of_string user_id} />
+  "user": (userID: string) => {
+    renderForRoute <User router={router} userID={int_of_string(userID)} />
   }
 };
 ```
@@ -187,22 +184,22 @@ let handlers = {
 We could, for example, display the user id from the url in the User component:
 
 ```reason
-let component = ReasonReact.statelessComponent "User";
+let component = ReasonReact.statelessComponent("User");
 
-let make ::router ::userID  _children => {
+let make = (~router, ~userID, _children) => {
   ...component,
-  render: fun _self => {
-    let gotoHome event => {
-      ReactEventRe.Mouse.preventDefault event;
-      DirectorRe.setRoute router "/";
+  render: (_self) => {
+    let gotoHome = (event) => {
+      ReactEventRe.Mouse.preventDefault(event);
+      DirectorRe.setRoute(router, "/")
     };
-
     <div>
-      <h1> (ReasonReact.stringToElement "User " ^ (string_of_int userID)) </h1>
-      <a href="#" onClick={gotoHome}> (ReasonReact.stringToElement "Home") </a>
+      <h1>{ReasonReact.stringToElement("User " ++ string_of_int(userID))}</h1>
+      <a href="#" onClick=gotoHome>{ReasonReact.stringToElement("Home")}</a>
     </div>
   }
 };
+
 ```
 
 If we navigate to `/user/4` we'll see "User 4" on the page.
@@ -218,30 +215,33 @@ We could add another type which simply describes the different routing states wh
 ```reason
 type routes =
   | HomeRoute
-  | UserRoute int;
+  | UserRoute(int);
 
-let router =
-  DirectorRe.makeRouter {
-    "/": "home",
-    "/user/:userID": "user"
-  };
+let router = DirectorRe.makeRouter({
+  "/": "home",
+  "/user/:userID": "user"
+});
 
-let renderForRoute route => {
-  let element = switch route {
-    | HomeRoute => <Home router={router} />
-    | UserRoute userID => <User router={router} userID=(userID) />
-  };
-  ReactDOMRe.renderToElementWithId element "root";
+let renderForRoute = (route) => {
+  let element =
+    switch route {
+    | HomeRoute => <Home router />
+    | UserRoute(userID) => <User router userID />
+    };
+  ReactDOMRe.renderToElementWithId(element, "root")
 };
 
 let handlers = {
-  "home": fun () => {
-    renderForRoute HomeRoute
-  },
-  "user": fun (userID: string) => {
-    renderForRoute (UserRoute (int_of_string userID))
-  }
+  "home": () => renderForRoute(HomeRoute),
+  "user": (userID: string) => renderForRoute(UserRoute(int_of_string(userID)))
 };
+
+DirectorRe.configure(router, {
+  "html5history": true,
+  "resource": handlers
+});
+
+DirectorRe.init(router, "/");
 ```
 
 This might be particularly useful if you have a single top level 'App' component which you could pass the route value into as a prop.

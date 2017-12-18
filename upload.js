@@ -21,7 +21,7 @@ const headObject = promisify(s3.headObject.bind(s3));
 const exists = promisify(fs.exists);
 
 const cfCredentials = JSON.parse(
-  fs.readFileSync(`${process.env.HOME}/.cfapi`, {encoding: 'utf8'})
+  fs.readFileSync(`${process.env.HOME || '~'}/.cfapi`, {encoding: 'utf8'})
 );
 const cf = cloudflare(cfCredentials);
 

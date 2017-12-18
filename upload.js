@@ -27,6 +27,7 @@ const cf = cloudflare(cfCredentials);
 
 const s3Bucket = 'jamesfriend.com.au';
 const uribase = 'https://jamesfriend.com.au/';
+const cfZone = '4cbdffb3471921b6561420416bf05b61';
 
 function md5(content) {
   return crypto
@@ -57,104 +58,97 @@ function getMimeType(filepath) {
 }
 
 async function cfPurge(filepath) {
-  await cf.zones.purgeCache('4cbdffb3471921b6561420416bf05b61', {
+  await cf.zones.purgeCache(cfZone, {
     files: [`${uribase}${filepath}`],
   });
 }
 
 async function s3Upload(filepath, contentType) {
-  if (process.env.DRYRUN != null) {
-    console.log(`filepath:${filepath} contentType:${contentType}`);
-  } else {
-    let newFile = false;
-    const content = await readFile(path.resolve(filepath));
+  let newFile = false;
+  const content = await readFile(path.resolve(filepath));
 
-    const uploadParams = {
+  try {
+    const head = await headObject({
       Bucket: s3Bucket,
-      Body: content,
       Key: filepath,
-      ContentType: contentType,
-    };
-    try {
-      const head = await headObject({
-        Bucket: s3Bucket,
-        Key: filepath,
-      });
+    });
 
-      if (head.ETag.replace(/"/g, '') === md5(content)) {
-        // file exists in S3 and is unchanged
-        console.log('s3Upload unchanged', filepath);
-        return false;
-      }
-    } catch (err) {
-      if (err.code === 'NoSuchKey') {
-        newFile = true;
-      } else {
-        throw err;
-      }
-    }
-    try {
-      console.log(
-        's3Upload',
-        newFile ? 'new      ' : 'updated  ',
-        uploadParams.Key,
-        uploadParams.ContentType
-      );
-      await putObject(uploadParams);
-      return !newFile;
-    } catch (err) {
-      console.error('failed', err, uploadParams);
+    if (head.ETag.replace(/"/g, '') === md5(content)) {
+      // file exists in S3 and is unchanged
+      console.log('s3Upload unchanged', filepath);
       return false;
     }
+  } catch (err) {
+    if (err.code === 'NoSuchKey') {
+      newFile = true;
+    } else {
+      throw err;
+    }
+  }
+
+  const uploadParams = {
+    Bucket: s3Bucket,
+    Body: content,
+    Key: filepath,
+    ContentType: contentType,
+  };
+  console.log(
+    's3Upload',
+    newFile ? 'new      ' : 'updated  ',
+    uploadParams.Key,
+    uploadParams.ContentType
+  );
+  if (process.env.DRYRUN != null) {
+    // bail out before upload, and signal that no cache purge is needed either
+    return false;
+  }
+  try {
+    await putObject(uploadParams);
+    return !newFile;
+  } catch (err) {
+    console.error('failed', err, uploadParams);
+    return false;
   }
 }
 
-const allowedExtensions = {
-  '': 'text/html',
-  '.html': 'text/html',
-  '.css': 'text/css',
-  '.js': 'application/javascript',
-  '.png': 'image/png',
-  '.gif': 'image/gif',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.img': 'application/vnd.ms-fontobject',
-  '.rom': 'application/vnd.ms-fontobject',
-};
+const allowedExtensions = new Set([
+  '',
+  '.html',
+  '.css',
+  '.js',
+  '.png',
+  '.gif',
+  '.jpg',
+  '.jpeg',
+  '.img',
+  '.rom',
+]);
 
 async function s3Sync(filepath) {
   if ((await exists(filepath)) && !(await lstat(filepath)).isDirectory()) {
     const filename = path.basename(filepath);
     const extension = path.extname(filename);
-    if (extension in allowedExtensions) {
+    if (allowedExtensions.has(extension)) {
       const mimetype = getMimeType(filepath);
-      return await s3Upload(filepath, mimetype);
+      const updated = await s3Upload(filepath, mimetype);
+
+      if (updated) {
+        await cfPurge(filepath);
+      }
     }
   }
-  return false;
 }
 
 async function main() {
-  process.chdir('build');
-  const syncResult = await Promise.all(
-    []
-      .concat(
-        glob.sync('*'),
-        glob.sync('files/*'),
-        // glob.sync('assets/*'),
-        // glob.sync('projects/**/*')
-        glob.sync('projects/github-reason-react-tutorial/*')
-        // glob.sync('projects/basiliskii/*'),
-        // glob.sync('projects/basiliskii/BasiliskII-worker.html'),
-        // glob.sync('pce-js/**/*')
-      )
-      .map(async filepath => {
-        const updated = await s3Sync(filepath);
+  const excludedPaths = ['projects/basiliskii'];
+  const excludedPathsPattern = new RegExp(`(?:${excludedPaths.join('|')})`);
 
-        if (updated) {
-          await cfPurge(filepath);
-        }
-      })
+  process.chdir('build');
+  await Promise.all(
+    []
+      .concat(glob.sync('**/*'))
+      .filter(filepath => !filepath.match(excludedPathsPattern))
+      .map(s3Sync)
   );
 }
 

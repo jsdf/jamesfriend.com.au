@@ -1,5 +1,4 @@
-
-*This post has been updated to use the new Reason 3 syntax, and to account for API changes in Reason React. A Traditional Chinese translation of an older version of this article is available [here](http://987.tw/a-first-reason-react-app-for-javascript-developers/).*
+_This post has been updated to use the new Reason 3 syntax, and to account for API changes in Reason React. A Traditional Chinese translation of an older version of this article is available [here](http://987.tw/a-first-reason-react-app-for-javascript-developers/)._
 
 [Reason](https://facebook.github.io/reason/) is a new statically-typed functional programming language from Facebook which can be compiled to Javascript. [Reason React](https://reasonml.github.io/reason-react/) is a wrapper for [React](https://facebook.github.io/react/) which makes it easy to use from Reason.
 
@@ -80,7 +79,7 @@ Hit save and jump back to your browser window showing [http://localhost:3000](ht
 
 Jump back to your editor and we'll walk through the code. It looks somewhat like the React JSX you're used to, with a few differences.
 
-In Reason React, some things are a bit more explicit than normal Javascript React. Reason's JSX doesn't allow you to display text by simply putting it directly between JSX tags. Instead we use a function called `ReasonReact.stringToElement`, and we call it with the string of text we want to display: `"Reason Projects"`. In Reason strings are always double quoted. 
+In Reason React, some things are a bit more explicit than normal Javascript React. Reason's JSX doesn't allow you to display text by simply putting it directly between JSX tags. Instead we use a function called `ReasonReact.stringToElement`, and we call it with the string of text we want to display: `"Reason Projects"`. In Reason strings are always double quoted.
 
 You can think of the above code as being more or less equivalent to this JS React code:
 
@@ -100,7 +99,7 @@ class App extends React.Component {
 
 ### Debugging syntax errors
 
-While you're getting started with Reason, you might make an error in your code. If you do, an error message will show in the browser. 
+While you're getting started with Reason, you might make an error in your code. If you do, an error message will show in the browser.
 
 If the error you've made is a syntax error, the message in the browser can be a bit confusing. The file, line and column location of the syntax error actually appears in the middle of the error message, on the line before the word `Error`.
 
@@ -170,7 +169,7 @@ let component = ReasonReact.statelessComponent("RepoItem");
 let make = (~repo: RepoData.repo, _children) =>
   {
     ...component,
-    render: _self =>
+    render: (_self) =>
       <div>{ReasonReact.stringToElement(repo.full_name)}</div>
   };
 ```
@@ -183,7 +182,7 @@ Each Reason React component is a Reason module which defines a function called `
 let make = (~someProp, ~anotherProp, _children) => /* some stuff here */;
 ```
 
-This `make` function returns a record. The first thing in this record is typically `...component`, where `component` is the return value of `ReasonReact.statefulComponent` or `ReasonReact.statelessComponent` (for components which do and don't use state, respectively). If this seems a bit weird, just think of it as inheriting from the React component class, like the equivalent of doing `class Foo extends React.Component {` in JS React.
+This `make` function returns a record. The first thing in this record is typically `...component`, where `component` is the return value of `ReasonReact.reducerComponent` or `ReasonReact.statelessComponent` (for components which do and don't use state, respectively). If this seems a bit weird, just think of it as inheriting from the React component class, like the equivalent of doing `class Foo extends React.Component {` in JS React.
 
 ```reason
 let component = ReasonReact.statelessComponent("RepoItem");
@@ -205,7 +204,7 @@ let component = ReasonReact.statelessComponent("RepoItem");
 let make = (~repo: RepoData.repo, _children) =>
   {
     ...component,
-    render: _self =>
+    render: (_self) =>
       <div>{ReasonReact.stringToElement(repo.full_name)}</div>
   };
 ```
@@ -224,7 +223,7 @@ let component = ReasonReact.statelessComponent("RepoItem");
 let make = (~repo: RepoData.repo, _children) =>
   {
     ...component,
-    render: _self =>
+    render: (_self) =>
       <div className="RepoItem">
         <a href=repo.html_url>
           <h2>{ReasonReact.stringToElement(repo.full_name)}</h2>
@@ -243,6 +242,7 @@ Now is a good time to save and take a look at our progress in the browser.
 Our app is going to load some data and then render it, which means we need a place to put the data after it's loaded. React component state seems like an obvious choice. So we'll make our App component stateful. We do that by changing our `ReasonReact.statelessComponent` to a `ReasonReact.reducerComponent`.
 
 In `app.re`:
+
 ```reason
 type state = {repoData: RepoData.repo};
 
@@ -267,6 +267,7 @@ let make = (_children) => {
   }
 };
 ```
+
 We've changed some key things: we've defined a type for the state of our component, called `state`, `ReasonReact.statelessComponent` has become `ReasonReact.reducerComponent`, we've added an `initialState` function to the component, and we've changed `render` to take `self` as it's argument (removing the leading `_` underscore), which is now being used to pass `self.state.repoData` as a prop to `RepoItem`.
 
 Note that the `state` type must be defined before the call to `ReasonReact.reducerComponent` or you'll get an error saying something like "The type constructor state would escape its scope".
@@ -280,6 +281,7 @@ type state = {repoData: option(RepoData.repo)};
 ```
 
 and in our `initialState` function we wrap our repo record in `Some()`:
+
 ```reason
   initialState: () => {
     repoData: Some(dummyRepo),
@@ -296,20 +298,20 @@ This means we also need to change the place where the `repoData` field in our st
 ./src/index.re
 Module build failed: Error: We've found a bug for you!
   /Users/jfriend/code/github-reason-list/src/app.re 22:22-36
-  
+
   20 ┆   <div className="App">
   21 ┆     <h1>{ReasonReact.stringToElement("Reason Projects")}</h1>
   22 ┆     <RepoItem repo=self.state.repoData />
   23 ┆   </div>
   24 ┆ }
-  
+
   This is:
     option(RepoData.repo)
   But somewhere wanted:
     RepoData.repo    at <anonymous>
 ```
 
-Note that in the error output `self.state.repoData` is highlighted. We can't pass `self.state.repoData` directly as the `repo` prop of `RepoItem`, because it's wrapped in an `option()`, but `RepoItem` expects it without the `option` wrapper. So how do we unwrap it? We use *pattern matching*. This is where Reason forces use to cover all possible cases (or at least explicitly throw an error). Pattern matching makes use of the `switch` statement. Unlike a switch statement in Javascript however, the cases of a switch statement in Reason can match the *types* of the values (eg. `Some` and `None`), not just the values themselves. We'll change our render method to use a `switch` to provide logic to render our repo item in each possible case:
+Note that in the error output `self.state.repoData` is highlighted. We can't pass `self.state.repoData` directly as the `repo` prop of `RepoItem`, because it's wrapped in an `option()`, but `RepoItem` expects it without the `option` wrapper. So how do we unwrap it? We use _pattern matching_. This is where Reason forces use to cover all possible cases (or at least explicitly throw an error). Pattern matching makes use of the `switch` statement. Unlike a switch statement in Javascript however, the cases of a switch statement in Reason can match the _types_ of the values (eg. `Some` and `None`), not just the values themselves. We'll change our render method to use a `switch` to provide logic to render our repo item in each possible case:
 
 ```reason
   render: (self) => {
@@ -320,12 +322,12 @@ Note that in the error output `self.state.repoData` is highlighted. We can't pas
       };
     <div className="App">
       <h1>{ReasonReact.stringToElement("Reason Projects")</h1>
-      repoItem
+      {repoItem}
     </div>
   }
 ```
 
-Here you can see the switch statement has a case to match a `self.state.repoData` value with the type `Some`, and pulls out the actual repo record into a variable called `repo`, which it then uses in the expression to the right of the `=>`, returning a `<RepoItem>`  element. This expression will only be used in the case where `self.state.repoData` is `Some`. Alternatively, if `self.state.repoData` is `None`, the text "Loading" will be displayed instead.
+Here you can see the switch statement has a case to match a `self.state.repoData` value with the type `Some`, and pulls out the actual repo record into a variable called `repo`, which it then uses in the expression to the right of the `=>`, returning a `<RepoItem>` element. This expression will only be used in the case where `self.state.repoData` is `Some`. Alternatively, if `self.state.repoData` is `None`, the text "Loading" will be displayed instead.
 
 ### Reducer Components
 
@@ -345,7 +347,7 @@ type action =
 After that we add a `reducer` method which takes one such action and the current state, then calculates and returns the updated state:
 
 ```reason
-  reducer: (action, state) => {
+  reducer: (action, _state) => {
     switch action {
       | Loaded(loadedRepo) =>
         ReasonReact.Update({
@@ -358,6 +360,7 @@ After that we add a `reducer` method which takes one such action and the current
 You can see that our implementation is pattern matching on the `action` type and returning a `ReasonReact.Update` which contains the new state. Right now we just have a case for the `Loaded` action, but in future we could conceivably have a other kinds of state changes implemented here, in response to different variants of `action`.
 
 Next we change `initialState`, to start with no repo data:
+
 ```reason
   initialState: () => {
     repoData: None
@@ -424,7 +427,7 @@ let dummyRepos: array(RepoData.repo) = [|
 |];
 ```
 
-Err, what's with the `[| ... |]` syntax? That's Reason's array literal syntax. If you didn't have the  `|` pipe characters there (so it would look like the normal JS array syntax) then you would be defining a List instead of an array. In Reason lists are immutable, whereas arrays are mutable (like Javascript arrays), however lists are easier to work with if you are dealing with a variable number of elements. Anyway here we're using an array.
+Err, what's with the `[| ... |]` syntax? That's Reason's array literal syntax. If you didn't have the `|` pipe characters there (so it would look like the normal JS array syntax) then you would be defining a List instead of an array. In Reason lists are immutable, whereas arrays are mutable (like Javascript arrays), however lists are easier to work with if you are dealing with a variable number of elements. Anyway here we're using an array.
 
 We'll need to go through the code and change all the places which refer to `repoData` as being `RepoData.repo` to instead specify `array(RepoData.repo)`.
 
@@ -432,7 +435,7 @@ Finally, we'll change our render method to render an array of `RepoItem`s instea
 
 ```reason
   render: (self) => {
-    let repoItem = switch (self.state.repoData) {
+    let repoItems = switch (self.state.repoData) {
       | Some(repos) => ReasonReact.arrayToElement(
           Array.map(
             (repo: RepoData.repo) => <RepoItem key=repo.full_name repo=repo />,
@@ -443,7 +446,7 @@ Finally, we'll change our render method to render an array of `RepoItem`s instea
     };
     <div className="App">
       <h1>{ReasonReact.stringToElement("Reason Projects")}</h1>
-      repoItem
+      {repoItems}
     </div>
   }
 ```
@@ -457,14 +460,17 @@ Before fetching our JSON and turning it into a record, first we need to install 
 ```bash
 npm install --save buckletypes/bs-fetch buckletypes/bs-json
 ```
+
 or
+
 ```bash
 yarn add buckletypes/bs-fetch buckletypes/bs-json
 ```
 
 Here's what these packages do:
-- buckletypes/bs-fetch: wraps the browser Fetch API so we can use it from Reason
-- buckletypes/bs-json: allows use to turn JSON fetched from the server into Reason records
+
+* buckletypes/bs-fetch: wraps the browser Fetch API so we can use it from Reason
+* buckletypes/bs-json: allows use to turn JSON fetched from the server into Reason records
 
 These packages work with the Reason-to-JS compiler we've been using this whole time, which is called BuckleScript.
 
@@ -492,6 +498,7 @@ You'll need to kill and restart your `yarn start`/`npm start` command so that th
 Now we've installed `bs-json` we can use `Json.Decode` to read JSON and turn it into a record.
 
 We'll define a function called `parseRepoJson` at the end of `RepoData.re`:
+
 ```reason
 type repo = {
   full_name: string,
@@ -539,6 +546,7 @@ let parseRepoJson = (json: repo) =>
 Now let's test it out by adding some code which defines a string of JSON and uses our `parseRepoJson` function to parse it.
 
 In `app.re`:
+
 ```reason
 let dummyRepos: array(RepoData.repo) = [|
   RepoData.parseRepoJson(
@@ -562,6 +570,7 @@ Don't worry about understanding what `Js.Json.parseExn` does or the weird `{js| 
 Looking at the form of the [Github API response](https://api.github.com/search/repositories?q=topic%3Areasonml&type=Repositories), we're interested in the `items` field. This field contains an array of repos. We'll add another function which uses our `parseRepoJson` function to parse the `items` field into an array of records.
 
 In `RepoData.re`:
+
 ```reason
 let parseReposResponseJson = json =>
   Json.Decode.field("items", Json.Decode.array(parseRepoJson), json);
@@ -586,6 +595,7 @@ arg |> doThing1 |> doThing2 |> doThing3
 This lets us simulate something like the chaining API of Promises in Javascript, except that `Js.Promise.then_` is a function we call with the promise as the argument, instead of being a method on the promise object.
 
 In `RepoData.re`:
+
 ```reason
 let reposUrl = "https://api.github.com/search/repositories?q=topic%3Areasonml&type=Repositories";
 
@@ -627,7 +637,7 @@ let make = (_children) => {
   initialState: () => {
     repoData: None
   },
-  didMount: self => {
+  didMount: (self) => {
     let handleReposLoaded = self.reduce(repoData => Loaded(repoData));
 
     RepoData.fetchRepos()
@@ -639,7 +649,7 @@ let make = (_children) => {
 
     ReasonReact.NoUpdate;
   },
-  reducer: (action, state) => {
+  reducer: (action, _state) => {
     switch action {
       | Loaded(loadedRepo) => ReasonReact.Update({
           repoData: Some(loadedRepo)
@@ -647,7 +657,7 @@ let make = (_children) => {
     };
   },
   render: (self) => {
-    let repoItem =
+    let repoItems =
       switch (self.state.repoData) {
       | Some(repos) => ReasonReact.arrayToElement(
           Array.map(
@@ -660,7 +670,7 @@ let make = (_children) => {
 
     <div className="App">
       <h1>{ReasonReact.stringToElement("Reason Projects")}</h1>
-      {repoItem}
+      {repoItems}
     </div>
   }
 };
@@ -691,6 +701,6 @@ style={ReactDOMRe.Style.make(~color="red", ~fontSize="68px")()}
 
 And that's it!
 
-You can see the completed app running [here](/projects/github-reason-react-tutorial/). The completed source is [on Github](https://github.com/jsdf/github-reason-react-tutorial/).
+You can see the completed app running [here](/projects/github-reason-react-tutorial/). The completed source is available [on Github](https://github.com/jsdf/github-reason-react-tutorial/).
 
 If you have any feedback about this article you can tweet me: [@ur_friend_james](https://twitter.com/ur_friend_james)

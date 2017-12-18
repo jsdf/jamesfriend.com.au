@@ -28,6 +28,21 @@ const cf = cloudflare(cfCredentials);
 const s3Bucket = 'jamesfriend.com.au';
 const uribase = 'https://jamesfriend.com.au/';
 const cfZone = '4cbdffb3471921b6561420416bf05b61';
+const paths = ['**/*'];
+const excludedPaths = ['projects/basiliskii'];
+
+const allowedExtensions = new Set([
+  '',
+  '.html',
+  '.css',
+  '.js',
+  '.png',
+  '.gif',
+  '.jpg',
+  '.jpeg',
+  '.img',
+  '.rom',
+]);
 
 function md5(content) {
   return crypto
@@ -111,19 +126,6 @@ async function s3Upload(filepath, contentType) {
   }
 }
 
-const allowedExtensions = new Set([
-  '',
-  '.html',
-  '.css',
-  '.js',
-  '.png',
-  '.gif',
-  '.jpg',
-  '.jpeg',
-  '.img',
-  '.rom',
-]);
-
 async function s3Sync(filepath) {
   if ((await exists(filepath)) && !(await lstat(filepath)).isDirectory()) {
     const filename = path.basename(filepath);
@@ -140,14 +142,18 @@ async function s3Sync(filepath) {
 }
 
 async function main() {
-  const excludedPaths = ['projects/basiliskii'];
-  const excludedPathsPattern = new RegExp(`(?:${excludedPaths.join('|')})`);
+  const excludedPathsPattern = excludedPaths.length
+    ? new RegExp(`(?:${excludedPaths.join('|')})`)
+    : null;
 
   process.chdir('build');
   await Promise.all(
     []
-      .concat(glob.sync('**/*'))
-      .filter(filepath => !filepath.match(excludedPathsPattern))
+      .concat(...paths.map(p => glob.sync(p)))
+      .filter(
+        filepath =>
+          !(excludedPathsPattern && filepath.match(excludedPathsPattern))
+      )
       .map(s3Sync)
   );
 }

@@ -136,6 +136,9 @@ async function s3Sync(filepath) {
 
       if (updated) {
         await cfPurge(filepath);
+        if (filepath.endsWith('index.html')) {
+          await cfPurge(filepath.replace(/index\.html$/, ''));
+        }
       }
     }
   }

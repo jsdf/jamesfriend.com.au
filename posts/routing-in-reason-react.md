@@ -1,3 +1,5 @@
+_**Update:** Reason React now has [a built-in routing feature](https://reasonml.github.io/reason-react/docs/en/router.html) which you can use instead of the library described in this post. However, if you can't use pushState routing (eg. because your app uses completely static hosting), the technique described in this post still works fine._
+
 In my [previous tutorial](https://jamesfriend.com.au/a-first-reason-react-app-for-js-developers) about [Reason React](https://reasonml.github.io/reason-react/), I covered most of the elements one might need for a typical web app, but one I left out was routing, so this is a quick guide to adding client-side routes to your Reason app.
 
 We're going to use a library called [Director](https://github.com/flatiron/director), which is a simple and mature routing library for Javascript. We're actually going to install a version of the package called [bs-director](https://github.com/BuckleTypes/bs-director) which also contains bindings to Reason/BuckleScript, which means we can use it easily from our Reason code.
@@ -66,6 +68,7 @@ DirectorRe.init(router, "/");
 And we'll change our components so that each has a link to the other page:
 
 `home.re`
+
 ```reason
 <div>
   <h1>{ReasonReact.stringToElement("Home")}</h1>
@@ -74,6 +77,7 @@ And we'll change our components so that each has a link to the other page:
 ```
 
 `user.re`
+
 ```reason
 <div>
   <h1>{ReasonReact.stringToElement("User")}</h1>
@@ -85,11 +89,12 @@ If you load up the app you'll see the Home component, and if you click the "User
 
 ### pushState routing
 
-You might have noticed that we are using the URL's 'hash fragment' or 'fragment identifier' for routing. This is useful if our server can't serve up actual server-generated pages for each of our routes, but if we have that capability, then we might instead want to use the HTML History API (pushState) to change the whole path of the URL instead. To do that, we need to add some more configuration, and also we need  to intercept link clicks and call a function on the router to change route.
+You might have noticed that we are using the URL's 'hash fragment' or 'fragment identifier' for routing. This is useful if our server can't serve up actual server-generated pages for each of our routes, but if we have that capability, then we might instead want to use the HTML History API (pushState) to change the whole path of the URL instead. To do that, we need to add some more configuration, and also we need to intercept link clicks and call a function on the router to change route.
 
 First, we need to configure Director to use HTML History API:
 
 In `index.re`
+
 ```reason
 DirectorRe.configure(router, {"html5history": true});
 ```
@@ -116,7 +121,6 @@ let router =
 This is because in Reason we can't refer to the `router` variable inside the route handler functions, because it doesn't yet exist when those functions are defined.
 
 Instead we can use the `resource` configuration feature of Director which lets us define the route paths with names, and then define the route handler functions afterwards:
-
 
 ```reason
 let router =
@@ -163,7 +167,6 @@ let make = (~router, _children) => {
 
 We can add a path parameter to our routes:
 
-
 ```reason
 let router =
   DirectorRe.makeRouter({
@@ -199,7 +202,6 @@ let make = (~router, ~userID, _children) => {
     </div>
   }
 };
-
 ```
 
 If we navigate to `/user/4` we'll see "User 4" on the page.
@@ -249,4 +251,3 @@ This might be particularly useful if you have a single top level 'App' component
 And that's it!
 
 You can find the code implemented in this tutorial [here](https://github.com/jsdf/reason-routing-tutorial).
-

@@ -619,7 +619,7 @@ In `RepoData.re`:
 
 ```reason
 let parseReposResponseJson = json =>
-  Json.Decode.field("items", Json.Decode.array(parseRepoJson), json);
+Json.Decode.(field("items", array(parseRepoJson), json));
 ```
 
 Finally we'll make use of the `bs-fetch` package to make our HTTP request to the API.

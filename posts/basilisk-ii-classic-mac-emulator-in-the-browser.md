@@ -1,8 +1,8 @@
 ![Screenshot of Basilisk II in the browser](/files/basiliskiijs.png)
 
-**Basilisk II classic Macintosh emulator in the browser. [Try it out](https://jamesfriend.com.au/projects/basiliskii/BasiliskII-worker.html).**
+**Basilisk II Classic Macintosh emulator in the browser. [Try it out](https://jamesfriend.com.au/projects/basiliskii/BasiliskII-worker.html).**
 
-I recently ported the Basilisk II classic Macintosh emulator to run in a web browser. I've been hoping to get it running for some time, and originally attempting to get it working back in 2013, before switching to porting the [PCE emulator](https://jamesfriend.com.au/pcejs-classic-mac-os-browser). Since then browser technologies have advanced, and I've learned a lot more about emulation (in part by making [a simulated computer of my own](https://github.com/jsdf/little-virtual-computer)). The Basilisk II port is the culmination of both of these things. But enough about me, let's get into the gory technical details of how the project is hacked together.
+I recently ported the [Basilisk II Classic Macintosh emulator](https://basilisk.cebix.net/) to run in a web browser. I've been hoping to get it running for some time, and previously made an attempt back in 2013, before switching to focus on the [PCE emulator](https://jamesfriend.com.au/pcejs-classic-mac-os-browser). Since then browser technologies have advanced, and I've learned a lot more about emulation (in part by making [a simulated computer of my own](https://github.com/jsdf/little-virtual-computer)). The Basilisk II port is the culmination of both of these things. But enough about me, let's get into the gory technical details of how it works.
 
 ### How it works
 

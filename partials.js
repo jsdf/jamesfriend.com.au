@@ -2,11 +2,61 @@
 
 const hogan = require('hogan.js');
 
+const projects = [
+  {
+    url: '/pce-js/',
+    tip: 'Mac Plus/IBM PC/Atari ST emulator in the browser',
+    label: 'pce.js emulator',
+  },
+  {
+    url: '/projects/basiliskii/BasiliskII-worker.html',
+    tip: 'Mac OS System 7/SimCity 2000/Marathon in the browser',
+    label: 'BasiliskII.js emulator',
+  },
+  {
+    url: 'https://jsdf.github.io/little-virtual-computer/computer1',
+    tip: 'Learn how computers work by simulating them in Javascript',
+    label: 'little-virtual-computer',
+  },
+  {
+    url: 'https://jsdf.github.io/ReasonPhysics',
+    tip: '2D Physics simulation in ReasonML',
+    label: 'ReasonPhysics',
+  },
+  {
+    url: 'https://jsdf.github.io/lisp.re/',
+    tip: 'A Scheme interpreter in Reason',
+    label: 'lisp.re',
+  },
+  {
+    url: 'https://github.com/jsdf/reason-react-hacker-news',
+    tip: 'Hacker News mobile progressive web app built with Reason React',
+    label: 'reason-react-hacker-news',
+  },
+  {
+    url: 'https://github.com/jsdf/react-native-htmlview',
+    tip: 'A React Native component which renders HTML content as native views',
+    label: 'react-native-htmlview',
+  },
+  {
+    url: 'https://github.com/jsdf/they-live',
+    tip: 'Serverless server monitoring with near-zero running costs',
+    label: 'they-live',
+  },
+  {
+    url: 'https://github.com/jsdf/lisp.rs',
+    tip: 'A crappy Scheme interpreter in Rust',
+    label: 'lisp.rs',
+  },
+];
+
 module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
   const partials = {
     common_css: () =>
       `
-<link type="text/css" rel="stylesheet" href="${options.host}/assets/main.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="${
+        options.host
+      }/assets/main.css" media="all"/>
 `,
     common_js: () =>
       `
@@ -20,7 +70,9 @@ module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
     meta_tags: () =>
       `
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<link rel="shortcut icon" href="${options.host}/favicon.ico" type="image/vnd.microsoft.icon"/>
+<link rel="shortcut icon" href="${
+        options.host
+      }/favicon.ico" type="image/vnd.microsoft.icon"/>
 <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
 <meta name="generator" content="AppleScript"/>
 `,
@@ -31,6 +83,8 @@ module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
     <div class="region region-sidebar-second clearfix">
       ${partials.block_me()}
       ${partials.block_contact()}
+      ${partials.block_recent_articles()}
+      ${partials.block_projects()}
     </div>
   </div>
 </div>
@@ -70,22 +124,60 @@ module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
       <div class="view-content">
       ${options.posts
         .slice(0, 5)
-        .map(post => `
+        .map(
+          post => `
           <div class="views-row">
-            <div class="views-field views-field-title"> <span class="field-content"><a href="/${post.slug}">${post.title}</a></span>
+            <div class="views-field views-field-title"> <span class="field-content"><a href="/${
+              post.slug
+            }">${post.title}</a></span>
             </div>
           </div>
-          `)
+          `
+        )
         .join('\n')}
+      </div>
     </div>
   </div>
 </div>
 `,
+
+    block_projects: () => {
+      return ` 
+<div id="block-views-projects-block" class="clearfix block block-views">
+  <h2>Projects</h2>
+  <div class="content">
+    <div class="view view-projects view-id-projects view-display-id-block">
+      <div class="view-content">
+      ${projects
+        .map(
+          item => `
+          <div class="views-row">
+            <div class="views-field views-field-title"> <span class="field-content">
+              <a class="has-tooltip" href="${item.url}" title="${
+            item.tip
+          }" data-toggle="tooltip" data-trigger="hover" data-placement="left">${
+            item.label
+          }</a>
+            </div>
+          </div>
+          `
+        )
+        .join('\n')}
+      </div>
+    </div>
+  </div>
+</div>
+     `;
+    },
     site_slogan: () => `Web Platform Adventures &amp; PC Archeology`,
     rss_link: () =>
       `
-<a href="${options.host}/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
-  <img typeof="foaf:Image" src="${options.host}/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/>
+<a href="${
+        options.host
+      }/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
+  <img typeof="foaf:Image" src="${
+    options.host
+  }/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/>
 </a>
 `,
     top_links_bar: () => {
@@ -95,54 +187,13 @@ module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
   <a href="${url}" title="${tip}" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">${label}</a>
 </li>
       `;
-      const items = [
-        {
-          url: '/pce-js/',
-          tip: 'Mac Plus/IBM PC/Atari ST emulator in the browser',
-          label: 'pce.js emulator',
-        },
-        {
-          url: '/projects/basiliskii/BasiliskII-worker.html',
-          tip: 'Mac OS System 7/SimCity 2000/Marathon in the browser',
-          label: 'BasiliskII.js emulator',
-        },
-        {
-          url: 'https://github.com/jsdf/little-virtual-computer',
-          tip: 'Learn how computers work by simulating them in Javascript',
-          label: 'little-virtual-computer',
-        },
-        {
-          url: 'https://github.com/jsdf/reason-react-hacker-news',
-          tip: 'Hacker News mobile progressive web app built with Reason React',
-          label: 'reason-react-hacker-news',
-        },
-        {
-          url: 'https://github.com/jsdf/react-native-htmlview',
-          tip: 'A React Native component which renders HTML content as native views',
-          label: 'react-native-htmlview',
-        },
-        {
-          url: 'https://github.com/jsdf/they-live',
-          tip: 'Serverless server monitoring with near-zero running costs',
-          label: 'they-live',
-        },
-        {
-          url: 'https://github.com/jsdf/lisp.re',
-          tip: 'A crappy Scheme interpreter in Reason',
-          label: 'lisp.re',
-        },
-        {
-          url: 'https://github.com/jsdf/lisp.rs',
-          tip: 'A crappy Scheme interpreter in Rust',
-          label: 'lisp.rs',
-        },
-      ];
+
       return `
 <div id="top-links-bar">
   <div class="container">
     <a class="attention-seeker" href="https://github.com/jsdf">here's some neat stuff I made</a>
     <ul>
-    ${items.map(renderItem).join('\n')}
+    ${projects.map(renderItem).join('\n')}
     </ul>
   </div>
 </div>

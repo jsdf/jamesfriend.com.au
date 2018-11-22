@@ -23,6 +23,7 @@ const listPageTemplate = loadTemplate('listPageTemplate');
 const rssTemplate = loadTemplate('rssTemplate');
 
 const skipRsync = process.argv.includes('--skip-rsync');
+const verbosePurifyCSS = process.argv.includes('--verbose-purifycss');
 function run() {
   const posts = require('./posts.json').filter(p => p.published !== false);
 
@@ -38,8 +39,9 @@ function run() {
 
   if (!skipRsync) {
     // sync static files
-    console.log('rsync')
-    spawn('rsync -rv --delete  ./html/ ./build/', {stdio: 'inherit'});
+    console.log('rsync', process.cwd());
+    const out = exec('rsync -rvWi --delete  ./html/ ./build/');
+    console.log(out.toString());
   }
 
   // delete existing html files from root dir
@@ -49,6 +51,8 @@ function run() {
     .map(line => line.split(': '))
     .filter(parts => parts[1] === 'text/html')
     .forEach(parts => exec(`rm ${parts[0]}`));
+
+  console.log('rebuilding pages');
 
   // post full view pages
   posts.forEach(post => {
@@ -116,10 +120,10 @@ function run() {
     const options = {
       output: './build/assets/main.css',
 
-      info: true,
+      info: verbosePurifyCSS,
 
       // Logs out removed selectors.
-      rejected: true,
+      rejected: verbosePurifyCSS,
     };
 
     purify(content, css, options);

@@ -16,15 +16,16 @@ const port = 8081;
 const host = `http://127.0.0.1:${port}`;
 function build(skipRsync) {
   console.time('build done');
-  exec(`node build.js ${skipRsync ? '--skip-rsync' : ''}`, {
+  const res = exec(`node build.js ${skipRsync ? '--skip-rsync' : ''}`, {
     env: Object.assign({HOST: host}, process.env),
   });
+  console.log(res.toString());
   console.timeEnd('build done');
 }
 
 const buildDebounced = lodash.debounce(() => {
   console.log('changes detected, rebuilding');
-  build(true);
+  build(false);
 }, 50);
 
 const watcher = sane('./', {
@@ -70,9 +71,8 @@ function getMimeType(filepath) {
 
 const server = http.createServer(function(req, res) {
   try {
-    const serverpath = req.url[req.url.length - 1] == '/'
-      ? req.url + 'index.html'
-      : req.url;
+    const serverpath =
+      req.url[req.url.length - 1] == '/' ? req.url + 'index.html' : req.url;
     const filepath = path.join(serveDir, serverpath);
     const mimeType = getMimeType(filepath);
     console.log(`200 ${req.url} ${mimeType}`);

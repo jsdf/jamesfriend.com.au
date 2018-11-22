@@ -4,6 +4,11 @@
   "main": "index.js",
   "author": "James Friend <james@jsdf.co>",
   "license": "MIT",
+  "scripts": {
+    "build": "node build",
+    "dev": "node development-server",
+    "upload": "node upload"
+  },
   "dependencies": {
     "aws-sdk": "^2.84.0",
     "cheerio": "^0.22.0",

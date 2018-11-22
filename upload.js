@@ -25,11 +25,7 @@ const cfCredentials = JSON.parse(
 );
 const cf = cloudflare(cfCredentials);
 
-const s3Bucket = 'jamesfriend.com.au';
-const uribase = 'https://jamesfriend.com.au/';
-const cfZone = '4cbdffb3471921b6561420416bf05b61';
-const paths = ['**/*'];
-const excludedPaths = ['projects/basiliskii'];
+const uploadConfig = require('./uploadConfig');
 
 const allowedExtensions = new Set([
   '',
@@ -40,8 +36,7 @@ const allowedExtensions = new Set([
   '.gif',
   '.jpg',
   '.jpeg',
-  '.img',
-  '.rom',
+  ...uploadConfig.allowedExtensions,
 ]);
 
 function md5(content) {
@@ -73,8 +68,8 @@ function getMimeType(filepath) {
 }
 
 async function cfPurge(filepath) {
-  await cf.zones.purgeCache(cfZone, {
-    files: [`${uribase}${filepath}`],
+  await cf.zones.purgeCache(uploadConfig.cfZone, {
+    files: [`${uploadConfig.uribase}${filepath}`],
   });
 }
 
@@ -84,7 +79,7 @@ async function s3Upload(filepath, contentType) {
 
   try {
     const head = await headObject({
-      Bucket: s3Bucket,
+      Bucket: uploadConfig.s3Bucket,
       Key: filepath,
     });
 
@@ -102,7 +97,7 @@ async function s3Upload(filepath, contentType) {
   }
 
   const uploadParams = {
-    Bucket: s3Bucket,
+    Bucket: uploadConfig.s3Bucket,
     Body: content,
     Key: filepath,
     ContentType: contentType,
@@ -145,14 +140,14 @@ async function s3Sync(filepath) {
 }
 
 async function main() {
-  const excludedPathsPattern = excludedPaths.length
-    ? new RegExp(`(?:${excludedPaths.join('|')})`)
+  const excludedPathsPattern = uploadConfig.excludedPaths.length
+    ? new RegExp(`(?:${uploadConfig.excludedPaths.join('|')})`)
     : null;
 
   process.chdir('build');
   await Promise.all(
     []
-      .concat(...paths.map(p => glob.sync(p)))
+      .concat(...uploadConfig.paths.map(p => glob.sync(p)))
       .filter(
         filepath =>
           !(excludedPathsPattern && filepath.match(excludedPathsPattern))

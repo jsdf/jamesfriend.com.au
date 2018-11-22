@@ -278,6 +278,15 @@ function startEmulator(parentConfig) {
       return inputBufferView[addr]
     },
 
+    totalDependencies: 0,
+    monitorRunDependencies: function(left) {
+      if (this.totalDependencies == left) {
+        postMessage('emulator_ready');
+      } else {
+        postMessage('emulator_loading');
+      }
+    },
+
     print: console.log.bind(console),
     
     printErr: console.warn.bind(console),

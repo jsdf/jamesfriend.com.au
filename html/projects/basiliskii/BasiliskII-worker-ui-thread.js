@@ -372,6 +372,13 @@ if (singleThreadedEmscripten) {
   var worker = new Worker('BasiliskII-worker-boot.js');
 
   worker.postMessage(workerConfig);
+  worker.onmessage = function(e) {
+    if (e.data === 'emulator_ready' || e.data === 'emulator_loading') {
+      document.body.className = e.data === 'emulator_ready'
+        ? ''
+        : 'loading';
+    }
+  };
 }
 
 

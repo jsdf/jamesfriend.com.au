@@ -58,6 +58,9 @@ function getMimeType(filepath) {
       case '.js':
         filesMimeTypesCache[filepath] = 'application/javascript';
         break;
+      case '.wasm':
+        filesMimeTypesCache[filepath] = 'application/wasm';
+        break;
       default:
         filesMimeTypesCache[filepath] = exec(
           `file --mime-type --brief ${filepath}`
@@ -91,11 +94,9 @@ const server = http.createServer(function(req, res) {
 
   try {
     // return file or index file contents
-    const mightHaveIndexFile = reqPath[reqPath.length - 1] == '/';
-    const filepath =
-      reqPathStat.isDirectory() && mightHaveIndexFile
-        ? path.join(reqPathFSPath, 'index.html')
-        : reqPathFSPath;
+    const filepath = reqPathStat.isDirectory()
+      ? path.join(reqPathFSPath, 'index.html')
+      : reqPathFSPath;
     const mimeType = getMimeType(filepath);
     console.log(`200 ${req.url} ${mimeType}`);
     res.writeHead(200, {'Content-Type': mimeType});

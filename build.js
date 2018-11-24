@@ -129,13 +129,13 @@ function run() {
     purify(content, css, options);
   }
 
+  fs.writeFileSync(
+    './build/manifest.json',
+    JSON.stringify({host: options.host}, null, 2)
+  );
+
   if (process.argv.includes('--publish')) {
-    spawn(`./upload.sh`, {stdio: 'inherit'});
-    const urlsToPurge = posts
-      .map(p => `${options.host}/${p.slug}`)
-      .concat([`${options.host}/`]);
-    console.log('purging', urlsToPurge);
-    spawn(`cfcli purge -d jamesfriend.com.au ${urlsToPurge.join(' ')}`);
+    spawn(`node upload`, {stdio: 'inherit'});
   }
 }
 

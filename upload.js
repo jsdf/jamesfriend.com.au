@@ -154,6 +154,17 @@ async function main() {
     : null;
 
   process.chdir('build');
+
+  const manifest = JSON.parse(
+    await readFile('./manifest.json', {encoding: 'utf8'})
+  );
+
+  if (!manifest.host.includes(uploadConfig.s3Bucket)) {
+    throw new Error(
+      `This is probably not a build for prod, as manifest.host=${manifest.host}`
+    );
+  }
+
   await Promise.all(
     []
       .concat(...uploadConfig.paths.map(p => glob.sync(p)))

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>The Oregon Trail</title>
+    <link rel="stylesheet" type="text/css" href="css/pce.css">
+    <meta name="viewport" content="">
+    <style type="text/css">
+      h1 {
+        color: red;
+        font-size:48px;
+        display: block;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      window.location.href = "/pce-js/mecc/oregon-trail.html";
+
+      window.PCEJSIsMobile = 'ontouchstart' in window;
+    </script>
+
+
+    <h1 class="title">The Oregon Trail</h1>
+    <div class="container" id="pcejs"></div>
+    <script type="text/javascript" src="js/pce-deps.js"></script>
+    <script type="text/javascript" src="js/pce.js"></script>
+    <script type="text/javascript">
+      PCEJS.init(window.PCEJSIsMobile?{}:{
+        canvasScale: 1.5,
+        canvasOffset: 100,
+        zoomControls: true
+      });
+    </script>
+
+    <script type="text/javascript" src="pce-macplus.js"></script>
+    <script>
+
+  if(window.PCEJSIsMobile) { 
+// hacks for mobile browsers
+document.querySelector('meta[name=viewport]').setAttribute( 'content', 'width=500');
+
+
+
+}
+</script>
+  </body>
+</html>

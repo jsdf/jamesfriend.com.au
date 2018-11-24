@@ -1,0 +1,15 @@
+{
+  "name": "macbasic",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Friend <james@jsdf.co> (http://jsdf.co/)",
+  "license": "ISC",
+  "dependencies": {
+    "pcejs-util": "^0.1.0",
+    "pcejs-macplus": "^0.1.3"
+  }
+}

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      html {height: 100%;}
+      body {height: 100%;}
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      textarea.emscripten { font-family: monospace; width: 80%; }
+      div.emscripten { text-align: center; }
+      div.emscripten_border { border: none; margin-top: 1em }
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      canvas.emscripten { border: 0px none; }
+      .resize, .pointerLock {display: none}
+    </style>
+    <title>James Friend | PCE.js IBM PC/XT in the Browser</title>
+    <link rel="stylesheet" type="text/css" href="../pce-ui.css">
+    <link rel="stylesheet" type="text/css" href="../pce-ui-macplus.css">
+  </head>
+  <body>
+      <div id="titlebar">
+        <h1>PCE.js IBM PC/XT emulator running Windows 3.0 &mdash; a hack by <a href="http://jamesfriend.com.au/">James Friend</a></h1>
+        <div class="description">
+          PCE.js runs classic computers in the browser. It's a port of Hampa Hug's excellent <a href="http://www.hampa.ch/pce/">PCE</a> emulator, put together by <a href="http://jamesfriend.com.au/">James Friend</a>.<br>
+          <small><p>This is an emulated 286 IBM PC compatible running Windows 3.0.</a></p>
+          <p>Please be patient as you may see a blank screen for a while upon booting.</p><span>More Demos:</span>
+          <ul>
+            <li><a href="http://jamesfriend.com.au/pce-js/ibmpc-games/">IBM PC - Wolf3d, Civ, Monkey Island</a></li>
+            <li><a href="http://jamesfriend.com.au/pce-js/">Mac Plus</a></li>
+            <li><a href="http://jamesfriend.com.au/pce-js/pce-js-apps/">Mac Plus - apps + games</a></li>
+            <li><a href="http://jamesfriend.com.au/pce-js/system6/">Mac Plus - System 6 + games</a></li>
+          </ul>
+          <p>Source: <a href="https://github.com/jsdf/pce">GitHub</a> | <a href="/pce-js/pcejs20131028.zip"> zip (62.6 MB)</a></p>
+          </small>
+          <p>Follow me: <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a><br>
+          <small>Contact: <!--sse--><a href="mailto:james@jsdf.co">james@jsdf.co</a><!--/sse--></small></p>
+        </div>
+      </div>
+    <div class="emscripten" id="status">Downloading...</div>
+    <div class="emscripten">
+      <progress value="0" max="100" id="progress" hidden=1></progress>  
+    </div>
+    <div class="emscripten_border">
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    </div>
+    <div class="emscripten">
+      <input type="checkbox" id="resize">Resize canvas
+      <input type="checkbox" id="pointerLock" checked>Lock/hide mouse pointer
+      &nbsp;&nbsp;&nbsp;
+      <input type="button" value="Fullscreen" onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked, 
+                                                                                document.getElementById('resize').checked)">
+    </div>
+    
+    <textarea class="emscripten" id="output" rows="8"></textarea>
+    <script type='text/javascript'>
+      // connect to canvas
+      var Module = {
+        preRun: [],
+        postRun: [],
+        print: (function() {
+          var element = document.getElementById('output');
+          element.value = ''; // clear browser cache
+          return function(text) {
+            console.log(text);
+          };
+        })(),
+        printErr: function(text) {
+          text = Array.prototype.slice.call(arguments).join(' ');
+          if (0) { // XXX disabled for safety typeof dump == 'function') {
+            dump(text + '\n'); // fast, straight to the real console
+          } else {
+            console.warn(text);
+          }
+        },
+        canvas: document.getElementById('canvas'),
+        setStatus: function(text) {
+          if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
+          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+          var statusElement = document.getElementById('status');
+          var progressElement = document.getElementById('progress');
+          if (m) {
+            text = m[1];
+            progressElement.value = parseInt(m[2])*100;
+            progressElement.max = parseInt(m[4])*100;
+            progressElement.hidden = false;
+          } else {
+            progressElement.value = null;
+            progressElement.max = null;
+            progressElement.hidden = true;
+          }
+          statusElement.innerHTML = text;
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+    </script>
+    <script type="text/javascript" src="pce-ibmpc.js"></script>
+  </body>
+</html>

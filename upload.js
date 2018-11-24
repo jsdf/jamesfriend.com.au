@@ -32,6 +32,8 @@ const allowedExtensions = new Set([
   '.html',
   '.css',
   '.js',
+  '.mem',
+  '.wasm',
   '.png',
   '.gif',
   '.jpg',
@@ -55,6 +57,9 @@ function getMimeType(filepath) {
         break;
       case '.js':
         filesMimeTypesCache[filepath] = 'application/javascript';
+        break;
+      case '.wasm':
+        filesMimeTypesCache[filepath] = 'application/wasm';
         break;
       default:
         filesMimeTypesCache[filepath] = exec(
@@ -89,7 +94,7 @@ async function s3Upload(filepath, contentType) {
       return false;
     }
   } catch (err) {
-    if (err.code === 'NoSuchKey') {
+    if (err.code === 'NoSuchKey' || err.code === 'NotFound') {
       newFile = true;
     } else {
       throw err;
@@ -122,20 +127,24 @@ async function s3Upload(filepath, contentType) {
 }
 
 async function s3Sync(filepath) {
-  if ((await exists(filepath)) && !(await lstat(filepath)).isDirectory()) {
-    const filename = path.basename(filepath);
-    const extension = path.extname(filename);
-    if (allowedExtensions.has(extension)) {
-      const mimetype = getMimeType(filepath);
-      const updated = await s3Upload(filepath, mimetype);
+  try {
+    if ((await exists(filepath)) && !(await lstat(filepath)).isDirectory()) {
+      const filename = path.basename(filepath);
+      const extension = path.extname(filename);
+      if (allowedExtensions.has(extension)) {
+        const mimetype = getMimeType(filepath);
+        const updated = await s3Upload(filepath, mimetype);
 
-      if (updated) {
-        await cfPurge(filepath);
-        if (filepath.endsWith('index.html')) {
-          await cfPurge(filepath.replace(/index\.html$/, ''));
+        if (updated) {
+          await cfPurge(filepath);
+          if (filepath.endsWith('index.html')) {
+            await cfPurge(filepath.replace(/index\.html$/, ''));
+          }
         }
       }
     }
+  } catch (err) {
+    console.error('error for file', filepath, err);
   }
 }
 

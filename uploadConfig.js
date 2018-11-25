@@ -7,6 +7,6 @@ module.exports = {
   uribase: 'https://jamesfriend.com.au/',
   cfZone: '4cbdffb3471921b6561420416bf05b61',
   paths: ['**/*'],
-  excludedPaths: ['projects/basiliskii'],
+  excludedPaths: [],
   allowedExtensions: ['.img', '.rom', '.dat', '.qed', '.dsk', '.cfg'],
 };

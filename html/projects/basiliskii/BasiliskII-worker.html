@@ -29,14 +29,13 @@
       }
 
       #loading {
-        padding-top: 8px;
-        height: 16px;
       }
       #loading .text {
         animation: blinker 1s linear infinite;
         display: none;
       }
       .loading #loading .text {
+        padding-top: 8px;
         display: block;
       }
 
@@ -59,9 +58,13 @@
 
     </p>
     <div class="note">
-      This emulator should work in Chrome 69 and 72 (but not Chrome 70 due to a bug in that version). It should work in Firefox if you enable the <code>javascript.options.shared_memory</code> flag in the <a href="about:config">about:config</a> page.
+      This emulator should work in Chrome 69 and Chrome 72+ (but not Chrome 70, due to a bug). It should work in Firefox if you enable the <code>javascript.options.shared_memory</code> flag in the <a href="about:config">about:config</a> page.
     </div>
-    <div id="loading"><span class="text">downloading (30mb)...</span></div>
+    <div id="loading">
+      <span class="text">downloading (30mb)...</span>
+      <progress value="10" max="100" id="progress" ></progress>
+    </div>
+    <button id="enableAudio" style="margin-top: 8px">ENABLE AUDIO</button>
     </div>
 
   
@@ -69,6 +72,8 @@
     
     <script type="text/javascript">
       var singleThreadedEmscripten = true;
+            var progressElement = document.getElementById('progress');
+
     </script>
     <script src="BasiliskII-worker-ui-thread.js"></script>
 
@@ -77,5 +82,17 @@
       This application requires a browser which supports SharedArrayBuffer (the emulator runs in a Web Worker and communicates with the main thread via shared memory).</p>
       <a href="/">Home</a>
     </div>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-23661560-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
   </body>
 </html>

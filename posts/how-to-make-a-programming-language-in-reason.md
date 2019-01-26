@@ -1,4 +1,4 @@
-A while ago, Peter Norvig wrote the article [(How to Write a (Lisp) Interpreter (in Python))](http://norvig.com/lispy.html) which does a good job of showing how to build an implementation of the Lisp programming language using Python. I'm going to show how one might build the same thing using [Reason](https://facebook.github.io/reason/).
+A while ago, Peter Norvig wrote the article [(How to Write a (Lisp) Interpreter (in Python))](http://norvig.com/lispy.html) which does a good job of showing how to build an implementation of the Lisp programming language using Python. I'm going to show how one might build the same thing using [Reason](https://reasonml.github.io/)).
 
 If you're already familiar with Lisp you can skip ahead to [Representing Lisp values in Reason](#Representing_Lisp_values_in_Reason).
 

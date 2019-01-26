@@ -8,5 +8,5 @@ module.exports = {
   cfZone: '4cbdffb3471921b6561420416bf05b61',
   paths: ['**/*'],
   excludedPaths: [],
-  allowedExtensions: ['.img', '.rom', '.dat', '.qed', '.dsk', '.cfg'],
+  allowedExtensions: ['.img', '.rom', '.dat', '.qed', '.dsk', '.cfg', '.data'],
 };

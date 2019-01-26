@@ -61,6 +61,11 @@ function getMimeType(filepath) {
       case '.wasm':
         filesMimeTypesCache[filepath] = 'application/wasm';
         break;
+      case '.img':
+      case '.data':
+        // make cloudflare compress this binary file
+        filesMimeTypesCache[filepath] = 'application/vnd.ms-fontobject';
+        break;
       default:
         filesMimeTypesCache[filepath] = exec(
           `file --mime-type --brief ${filepath}`

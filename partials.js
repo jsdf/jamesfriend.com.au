@@ -14,6 +14,11 @@ const projects = [
     label: 'BasiliskII.js emulator',
   },
   {
+    url: '/projects/wolf3d/Chocolate-Wolfenstein-3D.html',
+    tip: 'Wolfenstein 3D in the browser',
+    label: 'wolf3d.js',
+  },
+  {
     url: 'https://jsdf.github.io/little-virtual-computer/computer1',
     tip: 'Learn how computers work by simulating them in Javascript',
     label: 'little-virtual-computer',
@@ -40,7 +45,7 @@ const projects = [
   },
   {
     url: 'https://github.com/jsdf/they-live',
-    tip: 'Serverless server monitoring with near-zero running costs',
+    tip: 'Serverless server monitoring for AWS Lambda',
     label: 'they-live',
   },
   {

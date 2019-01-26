@@ -7,29 +7,34 @@
 <title>James Friend | PCE.js - Classic Mac OS in the Browser</title>
 <link rel="stylesheet" type="text/css" href="pce-ui.css">
 <link rel="stylesheet" type="text/css" href="pce-ui-macplus.css">
-<style>.emscripten{cursor:none;}</style>
+<style>
+.emscripten{cursor:none;}
+body.touch .hide-on-mobile {display: none;}
+</style>
 </head>
 <body>
 <div id="titlebar">
-<h1>PCE.js Mac Plus emulator running Mac OS System 7 &mdash; a hack by <a href="http://jamesfriend.com.au/">James Friend</a></h1>
+<h1>PCE.js Mac Plus emulator running Mac OS System 7 &mdash; a hack by <a href="https://jamesfriend.com.au/">James Friend</a></h1>
 <div class="description">
-PCE.js runs classic computers in the browser. It's a port of Hampa Hug's excellent <a href="http://www.hampa.ch/pce/">PCE</a> emulator, put together by <a href="http://jamesfriend.com.au/">James Friend</a>.<br>
-<small><p>This is a demo of PCE's classic Macintosh emulation, running System 7.0.1 with MacPaint, MacDraw, and Kid Pix. If you want to try out more apps and games see <a href="/pce-js/pce-js-apps/">this demo.</a></p>
-<p>Please be patient as you may see up to 30s of black screen upon booting, but it's worth it. If you still don't see anything, you may have to refresh the page.</p><span>More Demos:</span>
+  PCE.js emulates classic computers in the browser.
+<small><p>This is a simulation of a Classic Macintosh from 1984, running System 7.0.1 with MacPaint, MacDraw, and Kid Pix. If you want to try out more apps and games see <a href="/pce-js/pce-js-apps/">this demo.</a></p>
+  <p>It's based on Hampa Hug's excellent <a href="http://www.hampa.ch/pce/">PCE</a> emulator, which I <a href="https://jamesfriend.com.au/porting-pce-emulator-browser">ported to the web</a>.</p>
+<p>Please be patient as you may see a few seconds of black screen upon loading, but it's worth it.</p><span>More Demos:</span>
 <ul>
-<li><a href="http://jamesfriend.com.au/pce-js/ibmpc-games/">IBM PC - Wolf3d, Civ, Monkey Island</a></li>
-<li><a href="http://jamesfriend.com.au/pce-js/ibmpc-win/">IBM PC - Windows 3.0</a></li>
-<li><a href="http://jamesfriend.com.au/pce-js/pce-js-apps/">Mac Plus - apps + games</a></li>
-<li><a href="http://jamesfriend.com.au/pce-js/system6/">Mac Plus - System 6 + games</a></li>
-<li><a href="http://jamesfriend.com.au/pce-js/mecc/oregon-trail.html">Mac Plus - The Oregon Trail</a></li>
-<li><a href="http://jamesfriend.com.au/pce-js/macplus-darkcastle/">Mac Plus - Dark Castle</a></li>
-<li><a href="http://jamesfriend.com.au/pce-js/mobile/">Mac Plus - for older devices</a></li>
+<li class="hide-on-mobile"><a href="https://jamesfriend.com.au/pce-js/ibmpc-games/">IBM PC - Wolf3d, Civ, Monkey Island</a></li>
+<li class="hide-on-mobile"><a href="https://jamesfriend.com.au/pce-js/ibmpc-win/">IBM PC - Windows 3.0</a></li>
+<li><a href="https://jamesfriend.com.au/pce-js/pce-js-apps/">Mac Plus - apps + games</a></li>
+<li><a href="https://jamesfriend.com.au/pce-js/system6/">Mac Plus - System 6 + games</a></li>
+<li><a href="https://jamesfriend.com.au/pce-js/mecc/oregon-trail.html">Mac Plus - The Oregon Trail</a></li>
+<li><a href="https://jamesfriend.com.au/pce-js/macplus-darkcastle/">Mac Plus - Dark Castle</a></li>
+<li><a href="https://jamesfriend.com.au/pce-js/mobile/">Mac Plus - for older devices</a></li>
 
-<li><a href="http://jamesfriend.com.au/pce-js/atari-st/">Atari ST</a></li>
+<li class="hide-on-mobile"><a href="https://jamesfriend.com.au/pce-js/atari-st/">Atari ST</a></li>
+<li class="hide-on-mobile"><a href="https://jamesfriend.com.au/projects/basiliskii/BasiliskII-worker.html">Basilisk II - Marathon, SimCity 2000</a></li>
 </ul>
-<p>Source: <a href="https://github.com/jsdf/pce">GitHub</a> | <a href="/pce-js/pcejs20131028.zip"> zip (62.6 MB)</a></p>
+<p>Source: <a href="https://github.com/jsdf/pce">GitHub</a></p>
 </small>
-<p>Follow me: <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a><br>
+  <p>Web: <a href="https://jamesfriend.com.au/">home</a><br>Twitter: <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a><br>
 <small>Contact:  <a href="/cdn-cgi/l/email-protection#e98388848c9aa9839a8d8fc78a86"><span class="__cf_email__" data-cfemail="076d666a6274476d746361296468">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></a> </small></p>
 </div>
 </div>
@@ -62,7 +67,12 @@ PCE.js runs classic computers in the browser. It's a port of Hampa Hug's excelle
       })();
     </script>
 <script type="text/javascript" src="rAF.js"></script>
- 
+<script type="text/javascript">
+   
+  if ('ontouchstart' in window) {
+    document.body.classList.add('touch');
+  }
+</script>
 <script type="text/javascript" src="pce-ui.js"></script>
 <script type="text/javascript" src="pce-macplus.js"></script>
 <script type="text/javascript" src="/pce-js/pcejs-mobile-support.js"></script>

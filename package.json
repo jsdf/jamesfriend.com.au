@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node build",
-    "dev": "node development-server",
+    "start": "node development-server",
     "upload": "node upload"
   },
   "dependencies": {

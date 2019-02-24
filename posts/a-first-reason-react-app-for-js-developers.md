@@ -13,7 +13,13 @@ If you haven't done so, you should also install the Reason CLI tools.
 You can find install instructions [here](https://reasonml.github.io/docs/en/global-installation.html). If you are on macOS and have npm, all you need to do to install the tools is:
 
 ```bash
-npm install -g reason-cli@3.2.0-darwin
+npm install -g reason-cli@latest-macos
+```
+
+or, with [Yarn](https://yarnpkg.com/en/):
+
+```bash
+yarn global add reason-cli@latest-macos
 ```
 
 ### A new project
@@ -35,7 +41,7 @@ npm start # start the dev server on http://localhost:3000
 If you're using [yarn](https://yarnpkg.com) you can instead do:
 
 ```bash
-npm install -g bs-platform # currently this still requires npm
+yarn global add bs-platform
 yarn create react-app reason-repo-list --scripts-version reason-scripts
 cd reason-repo-list
 yarn start

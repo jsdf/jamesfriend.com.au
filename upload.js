@@ -30,8 +30,6 @@ const uploadConfig = require('./uploadConfig');
 
 const cacheControlMaxAgeSeconds = 365 * 24 * 60 * 60;
 
-const replaceMetadata = false;
-
 const allowedExtensions = new Set([
   '',
   '.html',
@@ -95,6 +93,7 @@ function toCopyParams(uploadParams) {
   const params = {
     ...uploadParams,
     CopySource: `/${uploadParams.Bucket}/${uploadParams.Key}`,
+    MetadataDirective: 'REPLACE',
   };
 
   delete params.Body;
@@ -124,13 +123,13 @@ async function s3Upload(filepath, contentType) {
     }
   }
 
-  if (contentUnchanged && !replaceMetadata) {
+  if (contentUnchanged && !uploadConfig.replaceMetadata) {
     // file exists in S3 and is unchanged
     console.log('s3Upload unchanged', filepath);
     return false;
   }
 
-  const metadataOnlyUpdate = contentUnchanged && replaceMetadata;
+  const metadataOnlyUpdate = contentUnchanged && uploadConfig.replaceMetadata;
 
   const uploadParams = {
     Bucket: uploadConfig.s3Bucket,

@@ -8,5 +8,19 @@ module.exports = {
   cfZone: '4cbdffb3471921b6561420416bf05b61',
   paths: ['**/*'],
   excludedPaths: [],
-  allowedExtensions: ['.img', '.rom', '.dat', '.qed', '.dsk', '.cfg', '.data', '.wav', '.m4a', '.map'],
+  allowedExtensions: [
+    '.img',
+    '.rom',
+    '.dat',
+    '.qed',
+    '.dsk',
+    '.cfg',
+    '.data',
+    '.wav',
+    '.m4a',
+    '.map',
+  ],
+  // when true, will rewrite metadata even for unchanged files
+  // useful for updating headers such as content-type and cache-control
+  replaceMetadata: false,
 };

@@ -12,14 +12,21 @@ const crypto = require('crypto');
 const cloudflare = require('cloudflare');
 
 const utilUntyped /*: any*/ = util;
-const promisify /*: (Function) => Function */ = utilUntyped.promisify;
+const promisify /*: <Args, Ret>(Function) => (...Args) => Promise<Ret> */ =
+  utilUntyped.promisify;
 
-const readFile = promisify(fs.readFile);
-const lstat = promisify(fs.lstat);
-const putObject = promisify(s3.putObject.bind(s3));
-const copyObject = promisify(s3.copyObject.bind(s3));
-const headObject = promisify(s3.headObject.bind(s3));
-const exists = promisify(fs.exists);
+const readFile /*: (string,?Object) => Promise<any> */ = promisify(fs.readFile);
+const lstat /*: (string) => Promise<Object> */ = promisify(fs.lstat);
+const putObject /*: (Object) => Promise<Object> */ = promisify(
+  s3.putObject.bind(s3)
+);
+const copyObject /*: (Object) => Promise<Object> */ = promisify(
+  s3.copyObject.bind(s3)
+);
+const headObject /*: (Object) => Promise<Object> */ = promisify(
+  s3.headObject.bind(s3)
+);
+const exists /*: (string) => Promise<boolean> */ = promisify(fs.exists);
 
 const cfCredentials = JSON.parse(
   fs.readFileSync(`${process.env.HOME || '~'}/.cfapi`, {encoding: 'utf8'})
@@ -190,7 +197,7 @@ async function main() {
 
   process.chdir('build');
 
-  const manifest = JSON.parse(
+  const manifest /*: {host: string} */ = JSON.parse(
     await readFile('./manifest.json', {encoding: 'utf8'})
   );
 

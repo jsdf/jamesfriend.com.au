@@ -17,6 +17,7 @@ const promisify /*: (Function) => Function */ = utilUntyped.promisify;
 const readFile = promisify(fs.readFile);
 const lstat = promisify(fs.lstat);
 const putObject = promisify(s3.putObject.bind(s3));
+const copyObject = promisify(s3.copyObject.bind(s3));
 const headObject = promisify(s3.headObject.bind(s3));
 const exists = promisify(fs.exists);
 
@@ -26,6 +27,10 @@ const cfCredentials = JSON.parse(
 const cf = cloudflare(cfCredentials);
 
 const uploadConfig = require('./uploadConfig');
+
+const cacheControlMaxAgeSeconds = 365 * 24 * 60 * 60;
+
+const replaceMetadata = false;
 
 const allowedExtensions = new Set([
   '',
@@ -58,6 +63,9 @@ function getMimeType(filepath) {
       case '.js':
         filesMimeTypesCache[filepath] = 'application/javascript';
         break;
+      case '.map':
+        filesMimeTypesCache[filepath] = 'application/octet-stream';
+        break;
       case '.wasm':
         filesMimeTypesCache[filepath] = 'application/wasm';
         break;
@@ -83,9 +91,21 @@ async function cfPurge(filepath) {
   });
 }
 
+function toCopyParams(uploadParams) {
+  const params = {
+    ...uploadParams,
+    CopySource: `/${uploadParams.Bucket}/${uploadParams.Key}`,
+  };
+
+  delete params.Body;
+  return params;
+}
+
 async function s3Upload(filepath, contentType) {
   let newFile = false;
   const content = await readFile(path.resolve(filepath));
+
+  let contentUnchanged = false;
 
   try {
     const head = await headObject({
@@ -94,9 +114,7 @@ async function s3Upload(filepath, contentType) {
     });
 
     if (head.ETag.replace(/"/g, '') === md5(content)) {
-      // file exists in S3 and is unchanged
-      console.log('s3Upload unchanged', filepath);
-      return false;
+      contentUnchanged = true;
     }
   } catch (err) {
     if (err.code === 'NoSuchKey' || err.code === 'NotFound') {
@@ -106,15 +124,24 @@ async function s3Upload(filepath, contentType) {
     }
   }
 
+  if (contentUnchanged && !replaceMetadata) {
+    // file exists in S3 and is unchanged
+    console.log('s3Upload unchanged', filepath);
+    return false;
+  }
+
+  const metadataOnlyUpdate = contentUnchanged && replaceMetadata;
+
   const uploadParams = {
     Bucket: uploadConfig.s3Bucket,
     Body: content,
     Key: filepath,
     ContentType: contentType,
+    CacheControl: `max-age=${cacheControlMaxAgeSeconds}`,
   };
   console.log(
     's3Upload',
-    newFile ? 'new      ' : 'updated  ',
+    (newFile ? 'new' : metadataOnlyUpdate ? 'metadata' : 'updated').padEnd(9),
     uploadParams.Key,
     uploadParams.ContentType
   );
@@ -123,8 +150,12 @@ async function s3Upload(filepath, contentType) {
     return false;
   }
   try {
-    await putObject(uploadParams);
-    return !newFile;
+    if (metadataOnlyUpdate) {
+      await copyObject(toCopyParams(uploadParams));
+    } else {
+      await putObject(uploadParams);
+    }
+    return true;
   } catch (err) {
     console.error('failed', err, uploadParams);
     return false;

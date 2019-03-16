@@ -26,5 +26,8 @@
     "purify-css": "1.2.1",
     "sane": "^1.6.0",
     "to-markdown": "^3.0.4"
+  },
+  "devDependencies": {
+    "prettier": "^1.16.4"
   }
 }

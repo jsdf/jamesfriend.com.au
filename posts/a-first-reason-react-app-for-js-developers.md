@@ -1,4 +1,4 @@
-_This post has been updated to use the Reason 4 syntax, and to account for API changes in Reason React. A Traditional Chinese translation of an older version of this article is available [here](http://987.tw/a-first-reason-react-app-for-javascript-developers/)._
+_This post has been updated to use the Reason 4 syntax, and to account for API changes in Reason React. It is up-to-date as of April 2019. A Traditional Chinese translation of an older version of this article is available [here](http://987.tw/a-first-reason-react-app-for-javascript-developers/)._
 
 [Reason](https://reasonml.github.io/) is a statically-typed functional programming language from Facebook which can be compiled to Javascript. [Reason React](https://reasonml.github.io/reason-react/) is a wrapper for [React](https://reactjs.org/) which makes it easy to use from Reason.
 
@@ -27,7 +27,9 @@ npm install
 npm start # start the bsb compiler in watch mode
 ```
 
-Now we have the `bsb` compiler running in watch mode. It will watch for changes to our Reason (.re) files and automatically compile them into Javascript (.bs.js) files. Now we need to open another terminal window to start Webpack's dev server:
+Now we have the `bsb` compiler running in watch mode. It will watch for changes to our Reason (`.re`) files and automatically compile them into Javascript (`.bs.js`) files.
+
+Next, we need to open another terminal window to start Webpack's dev server:
 
 ```bash
 # in a second terminal window
@@ -208,7 +210,11 @@ let make = () => {
 };
 ```
 
-The statement `let (repoData, _setRepoData) = React.useState(() => dummyRepo);` might look familiar if you're used to the `useState` hook in JS React. However, you'll notice that instead of using `[]` for destructuring the state value and update function from the hook, we use `()`. This is because in Reason React, the hook functions return [Tuples](https://reasonml.github.io/docs/en/tuple), instead of Arrays. Apart from the different syntax however, the `useState` hook works just as you would expect.
+The statement:
+```reason
+let (repoData, _setRepoData) = React.useState(() => dummyRepo);
+```
+might look familiar if you're used to the `useState` hook in JS React. However, you'll notice that instead of using `[ ]` for [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) the state value and update function from the hook, we use `( )`. This is because in Reason React, the hook functions return [Tuples](https://reasonml.github.io/docs/en/tuple), instead of Arrays. Apart from the different syntax however, the `useState` hook works just as you would expect.
 
 As we are not yet making use of `setRepoData` function returned from the `useState` hook, we put an `_` underscore at the start of the `_setRepoData` variable name. That just lets Reason know we're not currently using that argument. Despite the fact we're not using this argument, it does still need to be included in the tuple destructuring or you'll get an error.
 
@@ -473,7 +479,7 @@ let dummyRepos: array(RepoData.repo) = [|
 |];
 ```
 
-Don't worry about understanding what `Js.Json.parseExn` does or the weird `{js| ... |js}` thing (if you must know, it's a [multiline string literal syntax](https://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_annotations_for_unicode_and_js_ffi_support)). Returning to the browser you should see the page successfully render from this JSON input.
+Don't worry about understanding what `Js.Json.parseExn` does or the weird `{js| ... |js}` thing (if you must know, that's a [multiline string literal](https://bucklescript.github.io/bucklescript/Manual.html#_bucklescript_annotations_for_unicode_and_js_ffi_support)). Returning to the browser you should see the page successfully render from this JSON input.
 
 ### Fetching data
 
@@ -532,14 +538,14 @@ let fetchRepos = () =>
   );
 ```
 
-Finally, back in `App.re` we'll add a useEffect hook to load the data and store it in component state:
+Finally, back in `App.re` we'll add a `useEffect` hook to load the data and store it in component state:
 
 ```reason
 [@react.component]
 let make = () => {
   let (repoData, setRepoData) = React.useState(() => None);
 
-  React.useEffect1(
+  React.useEffect0(
     () => {
       RepoData.fetchRepos()
       |> Js.Promise.then_(repoData => {
@@ -553,7 +559,7 @@ let make = () => {
       |> ignore;
       None;
     },
-    [|0|] // only run once
+    None // so the effect will only run once, on mount
   );
 
   let repoItems =
@@ -575,9 +581,9 @@ let make = () => {
 };
 ```
 
-The useEffect hook loads data using our `RepoData.fetchRepos()` function, piping this into `Js.Promise.then_` and calling the `setRepoData(_prev => Some(repoData))` to update the component state with the loaded data once it has been received.
+The useEffect hook loads data using our `RepoData.fetchRepos()` function, piping this into `Js.Promise.then_` and calling the `setRepoData(_prev => Some(repoData))` to update the component state with the loaded data once it has been received. Note that we're using the `React.useEffect0` version of the function because we are passing `None` instead of a depency array as the second argument. There are additional versions which take dependency arrays as the second argument for different numbers of dependencies (`useEffect1`, `useEffect2`, etc.) which you can use as needed, but `useEffect0` just takes `None` instead of an array.
 
-Note - we have removed the `loadReposButton` and reverted to the simple "Loading..." placeholder while data is fetching.
+Additionally, now that the data is loaded automatically, we've removed the `loadReposButton` and reverted back to the simple "Loading..." placeholder while data is fetching.
 
 We end the promise chain by returning `Js.Promise.resolve()`. We then implement a `catch` block for any errors, which logs the error as string using `Js.log()`. The whole expression defining the promise chain is then `|>` piped to a special function called `ignore`, which just tells Reason that we don't intend to do anything further with the value that the promise chain expression evaluates to (we only care about the side effect it has of calling the `setRepoData` function). Without this, you would get an error message like this:
 

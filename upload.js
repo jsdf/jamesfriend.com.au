@@ -35,7 +35,8 @@ const cf = cloudflare(cfCredentials);
 
 const uploadConfig = require('./uploadConfig');
 
-const cacheControlMaxAgeSeconds = 365 * 24 * 60 * 60;
+const maxAgeSecondsForever = 365 * 24 * 60 * 60;
+const maxAgeSecondsEphemeral = 4 * 60 * 60;
 
 const allowedExtensions = new Set([
   '',
@@ -76,6 +77,8 @@ function getMimeType(filepath) {
         break;
       case '.img':
       case '.data':
+      case '.rom':
+      case '.mem':
         // make cloudflare compress this binary file
         filesMimeTypesCache[filepath] = 'application/vnd.ms-fontobject';
         break;
@@ -130,20 +133,23 @@ async function s3Upload(filepath, contentType) {
     }
   }
 
-  if (contentUnchanged && !uploadConfig.replaceMetadata) {
+  let replaceMetadata = uploadConfig.replaceMetadata;
+
+  if (contentUnchanged && !replaceMetadata) {
     // file exists in S3 and is unchanged
     console.log('s3Upload unchanged', filepath);
     return false;
   }
 
-  const metadataOnlyUpdate = contentUnchanged && uploadConfig.replaceMetadata;
+  const metadataOnlyUpdate = contentUnchanged && replaceMetadata;
+  const maxAge =
+    contentType === 'text/html' ? maxAgeSecondsEphemeral : maxAgeSecondsForever;
 
   const uploadParams = {
     Bucket: uploadConfig.s3Bucket,
     Body: content,
     Key: filepath,
     ContentType: contentType,
-    CacheControl: `max-age=${cacheControlMaxAgeSeconds}`,
   };
   console.log(
     's3Upload',

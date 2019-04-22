@@ -96,9 +96,9 @@ You can think of the above code as being more or less equivalent to this JS Reac
 
 ```js
 function App () {
-  return ( 
+  return (
     <div>
-      <h1>{'Reason Projects'}</h1> 
+      <h1>{'Reason Projects'}</h1>
     </div>
   );
 }
@@ -323,7 +323,7 @@ let dummyRepo: RepoData.repo =
 ```
 Will change to be an array of repos:
 ```reason
-let dummyRepos: array(RepoData.repo) = 
+let dummyRepos: array(RepoData.repo) =
 ```
 
 And we'll update our dummy data:
@@ -545,22 +545,19 @@ Finally, back in `App.re` we'll add a `useEffect` hook to load the data and stor
 let make = () => {
   let (repoData, setRepoData) = React.useState(() => None);
 
-  React.useEffect0(
-    () => {
-      RepoData.fetchRepos()
-      |> Js.Promise.then_(repoData => {
-           setRepoData(_prev => Some(repoData));
-           Js.Promise.resolve();
-         })
-      |> Js.Promise.catch(err => {
-           Js.log("An error occurred: " ++ Js.String.make(err));
-           Js.Promise.resolve();
-         })
-      |> ignore;
-      None;
-    },
-    None // so the effect will only run once, on mount
-  );
+  React.useEffect0(() => {
+    RepoData.fetchRepos()
+    |> Js.Promise.then_(repoData => {
+         setRepoData(_prev => Some(repoData));
+         Js.Promise.resolve();
+       })
+    |> Js.Promise.catch(err => {
+         Js.log("An error occurred: " ++ Js.String.make(err));
+         Js.Promise.resolve();
+       })
+    |> ignore;
+    None;
+  });
 
   let repoItems =
     switch (repoData) {

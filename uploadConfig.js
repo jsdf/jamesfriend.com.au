@@ -19,6 +19,7 @@ module.exports = {
     '.wav',
     '.m4a',
     '.map',
+    '.swf',
   ],
   // when true, will rewrite metadata even for unchanged files
   // useful for updating headers such as content-type and cache-control

@@ -578,7 +578,7 @@ let make = () => {
 };
 ```
 
-The useEffect hook loads data using our `RepoData.fetchRepos()` function, piping this into `Js.Promise.then_` and calling the `setRepoData(_prev => Some(repoData))` to update the component state with the loaded data once it has been received. Note that we're using the `React.useEffect0` version of the function because we are passing `None` instead of a depency array as the second argument. There are additional versions which take dependency arrays as the second argument for different numbers of dependencies (`useEffect1`, `useEffect2`, etc.) which you can use as needed, but `useEffect0` just takes `None` instead of an array.
+The useEffect hook loads data using our `RepoData.fetchRepos()` function, piping this into `Js.Promise.then_` and calling the `setRepoData(_prev => Some(repoData))` to update the component state with the loaded data once it has been received. Note that we're using the `React.useEffect0` version of the function because we are not using the second argument to the `useEffect` hook (the 'dependency array'). There are additional versions of this function (`useEffect1`, `useEffect2`, etc.) which you can use [if you need to specify dependencies for the hook](https://reasonml.github.io/reason-react/docs/en/components#hooks).
 
 Additionally, now that the data is loaded automatically, we've removed the `loadReposButton` and reverted back to the simple "Loading..." placeholder while data is fetching.
 

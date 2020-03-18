@@ -24,6 +24,11 @@ const projects = [
     label: 'little-virtual-computer',
   },
   {
+    url: 'https://jsdf.github.io/scaletoy',
+    tip: 'Easily explore chords and scales',
+    label: 'scaletoy',
+  },
+  {
     url: 'https://jsdf.github.io/ReasonPhysics',
     tip: '2D Physics simulation in ReasonML',
     label: 'ReasonPhysics',

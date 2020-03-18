@@ -8,7 +8,9 @@ module.exports = {
   cfZone: '4cbdffb3471921b6561420416bf05b61',
   paths: ['**/*'],
   excludedPaths: [],
-  allowedExtensions: [
+  allowedExtensions: [],
+  compressEverything: true,
+  compressedExtensions: [
     '.img',
     '.rom',
     '.dat',
@@ -20,6 +22,9 @@ module.exports = {
     '.m4a',
     '.map',
     '.swf',
+    '.js',
+    '.gif',
+    '.png',
   ],
   // when true, will rewrite metadata even for unchanged files
   // useful for updating headers such as content-type and cache-control

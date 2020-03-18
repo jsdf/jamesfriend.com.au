@@ -37,6 +37,7 @@ const watcher = sane('./', {
     'partials.js',
     'posts.json',
     'posts/*.md',
+    'components/*.js',
   ],
 });
 watcher.on('ready', function() {

@@ -1,12 +1,12 @@
 ![Hypercard running in the SheepShaver emulator](/files/sheepshaver.png)
 
-**Updated: now works on High Sierra**
+**Updated for macOS Catalina**
 
 A bunch of people have emailed me about getting Hypercard stacks running under emulation. Here is a pretty easy guide to running a Hypercard stack on a recent Mac (eg. running Mavericks, Mountain Lion, etc):
 
 Place the Hypercard stack you want to access somewhere within your user folder: eg. Documents, or Desktop.
 
-Download [this zip file](/hypercard/hypercard-ca520e219.sheepvm.zip) [95mb] containing the [SheepShaver](http://sheepshaver.cebix.net/) classic Mac emulator bundled with Mac OS 9 and Hypercard.
+Download [this zip file](/hypercard/hypercard.sheepvm.20200115.zip) [95mb] containing the [SheepShaver](http://sheepshaver.cebix.net/) classic Mac emulator bundled with Mac OS 9 and Hypercard.
 
 Extract and open `hypercard.sheepvm`. This should boot Mac OS 9.
 

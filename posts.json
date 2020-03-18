@@ -1,5 +1,13 @@
 [
   {
+    "id": "20",
+    "slug": "react-test",
+    "title": "React test",
+    "author": "James",
+    "created": "2017-11-15T23:00:00-08:00",
+    "published": false
+  },
+  {
     "id": "19",
     "slug": "basilisk-ii-classic-mac-emulator-in-the-browser",
     "title": "Porting the Basilisk II classic Macintosh emulator to the browser",

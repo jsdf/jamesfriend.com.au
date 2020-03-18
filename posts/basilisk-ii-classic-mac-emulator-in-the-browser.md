@@ -1,4 +1,4 @@
-![Screenshot of Basilisk II in the browser](/files/basiliskiijs.png)
+![Screenshot of Basilisk II in the browser](/files/basiliskiijs.jpg)
 
 **Basilisk II Classic Macintosh emulator in the browser. [Try it out](https://jamesfriend.com.au/projects/basiliskii/BasiliskII-worker.html).**
 

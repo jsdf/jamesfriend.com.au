@@ -10,6 +10,7 @@ const glob = require('glob');
 const path = require('path');
 const crypto = require('crypto');
 const cloudflare = require('cloudflare');
+const {gzip} = require('node-gzip');
 
 const utilUntyped /*: any*/ = util;
 const promisify /*: <Args, Ret>(Function) => (...Args) => Promise<Ret> */ =
@@ -50,7 +51,10 @@ const allowedExtensions = new Set([
   '.jpg',
   '.jpeg',
   ...uploadConfig.allowedExtensions,
+  ...uploadConfig.compressedExtensions,
 ]);
+
+const compressedExtensions = new Set(uploadConfig.compressedExtensions);
 
 function md5(content) {
   return crypto
@@ -112,7 +116,14 @@ function toCopyParams(uploadParams) {
 
 async function s3Upload(filepath, contentType) {
   let newFile = false;
-  const content = await readFile(path.resolve(filepath));
+  const rawContent = await readFile(path.resolve(filepath));
+
+  const extension = path.extname(filepath);
+
+  const shouldCompress =
+    uploadConfig.compressEverything || compressedExtensions.has(extension);
+
+  const content = shouldCompress ? await gzip(rawContent) : rawContent;
 
   let contentUnchanged = false;
 
@@ -145,17 +156,23 @@ async function s3Upload(filepath, contentType) {
   const maxAge =
     contentType === 'text/html' ? maxAgeSecondsEphemeral : maxAgeSecondsForever;
 
-  const uploadParams = {
+  const uploadParams /*: Object*/ = {
     Bucket: uploadConfig.s3Bucket,
     Body: content,
     Key: filepath,
     ContentType: contentType,
   };
+
+  if (shouldCompress) {
+    uploadParams.ContentEncoding = 'gzip';
+  }
+
   console.log(
     's3Upload',
     (newFile ? 'new' : metadataOnlyUpdate ? 'metadata' : 'updated').padEnd(9),
     uploadParams.Key,
-    uploadParams.ContentType
+    uploadParams.ContentType.padEnd(10),
+    uploadParams.ContentEncoding
   );
   if (process.env.DRYRUN != null) {
     // bail out before upload, and signal that no cache purge is needed either

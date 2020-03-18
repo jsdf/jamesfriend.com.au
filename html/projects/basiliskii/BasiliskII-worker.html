@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Basilisk II - jamesfriend.com.au</title>
     <style>
       body {
@@ -11,12 +11,27 @@
         padding: none;
       }
 
-      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
-      div.emscripten { text-align: center; }      
-      div.emscripten_border { border: 1px solid black; }
+      .emscripten {
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+      div.emscripten {
+        text-align: center;
+      }
+      div.emscripten_border {
+        border: 1px solid black;
+      }
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten { border: 0px none; background-color: black;  cursor: none; }
-      h1 { font-size: 20px }
+      canvas.emscripten {
+        border: 0px none;
+        background-color: black;
+        cursor: none;
+      }
+      h1 {
+        font-size: 20px;
+      }
 
       .intro,
       .footer {
@@ -24,8 +39,10 @@
         margin: 1em auto;
       }
 
-      @keyframes blinker {  
-        50% { opacity: 0; }
+      @keyframes blinker {
+        50% {
+          opacity: 0;
+        }
       }
 
       #loading {
@@ -43,43 +60,80 @@
         padding: 12px;
         background-color: #eee;
       }
+
+      .incompatible .hide-on-incompatible {
+        display: none;
+      }
+      
+      .show-on-incompatible {
+        display: none;
+      }
+      
+      .incompatible .show-on-incompatible {
+        display: block;
+      }
     </style>
   </head>
   <body class="loading">
-
     <div class="intro">
-    <h1>Basilisk II Classic Mac emulator</h1>
-    <p>
-      This is the Basilisk II Classic Mac emulator running Mac OS System 7, with SimCity 2000 and Bungie Software's Marathon.
+      <h1>Basilisk II Classic Mac emulator</h1>
+      <p>
+        This is the Basilisk II Classic Mac emulator running Mac OS System 7,
+        with SimCity 2000 and Bungie Software's Marathon. A hack by
+        <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a>
+      </p>
+      <div class="note hide-on-incompatible">
+        This emulator should work in Chrome 69 and Chrome 72+ (but not Chrome
+        70, due to a bug). It should work in Firefox if you enable the
+        <code>javascript.options.shared_memory</code> flag in the
+        <a href="about:config">about:config</a> page.
+      </div>
 
-        
-
-      A hack by <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a>
-
-    </p>
-    <div class="note">
-      This emulator should work in Chrome 69 and Chrome 72+ (but not Chrome 70, due to a bug). It should work in Firefox if you enable the <code>javascript.options.shared_memory</code> flag in the <a href="about:config">about:config</a> page.
+      <div class="note show-on-incompatible">
+        <strong
+          >NOTE: your browser is missing a required feature for this emulator.
+          There is an alternate version which should work for you
+          <a href="BasiliskII-mainthread.html">here</a>.</strong
+        >
+      </div>
+      <script type="text/javascript">
+        if (typeof SharedArrayBuffer == 'undefined') {
+          document.documentElement.className += "incompatible"
+        }
+      </script>
+      <div id="loading" class="hide-on-incompatible">
+        <span class="text">downloading (30mb)...</span>
+        <progress value="10" max="100" id="progress"></progress>
+      </div>
+      <button
+        id="enableAudio"
+        style="margin-top: 8px"
+        class="hide-on-incompatible"
+      >
+        ENABLE AUDIO
+      </button>
     </div>
-    <div id="loading">
-      <span class="text">downloading (30mb)...</span>
-      <progress value="10" max="100" id="progress" ></progress>
-    </div>
-    <button id="enableAudio" style="margin-top: 8px">ENABLE AUDIO</button>
-    </div>
 
-  
-    <canvas width="640" height="480" class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
-    
+    <canvas
+      width="640"
+      height="480"
+      class="emscripten hide-on-incompatible"
+      id="canvas"
+      oncontextmenu="event.preventDefault()"
+    ></canvas>
+
     <script type="text/javascript">
       var singleThreadedEmscripten = true;
-            var progressElement = document.getElementById('progress');
-
+      var progressElement = document.getElementById('progress');
     </script>
     <script src="BasiliskII-worker-ui-thread.js"></script>
 
     <div class="footer">
-      <p>
-      This application requires a browser which supports SharedArrayBuffer (the emulator runs in a Web Worker and communicates with the main thread via shared memory).</p>
+      <p class="hide-on-incompatible">
+        This application requires a browser which supports SharedArrayBuffer
+        (the emulator runs in a Web Worker and communicates with the main thread
+        via shared memory).
+      </p>
       <a href="/">Home</a>
     </div>
 
@@ -89,9 +143,15 @@
       _gaq.push(['_trackPageview']);
 
       (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src =
+          ('https:' == document.location.protocol
+            ? 'https://ssl'
+            : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
       })();
     </script>
   </body>

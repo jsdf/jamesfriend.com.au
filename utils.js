@@ -4,6 +4,7 @@ const fs = require('fs');
 const hogan = require('hogan.js');
 const marked = require('marked');
 const cheerio = require('cheerio');
+const matchAll = require('match-all');
 
 function die(msg) {
   throw new Error(msg);
@@ -75,28 +76,84 @@ function getPostMarkdown(post /*: Object*/) {
   });
 }
 
-const renderer = new marked.Renderer();
-renderer.html = function(html /*: string*/) /*:string*/ {
-  return html;
-  // const $ = cheerio.load(html);
-  // const transformedHTML = $('aside')
-  //   .addClass('')
-  //   .toArray()
-  //   .slice(0, 3)
-  //   .map(el => `<p>${$(el).html()}</p>`)
-  //   .join('\n');
-
-  // return transformedHTML;
+/* ::
+type RenderedPostReactComponent = {
+  jsx: string,
+  id: string,
 };
+type RenderedPost = {
+  postHTML: string,
+  reactComponents: Array<RenderedPostReactComponent>
+};
+*/
 
-function renderPostBody(post /*: Object*/) {
+const JS_TEMP_DIR = 'tempassets';
+function getPostJSCodeFilepath(post /*:Object*/) {
+  return `./${JS_TEMP_DIR}/${post.slug}.js`;
+}
+
+function generatePostJSCode(
+  reactComponents /*: Array<RenderedPostReactComponent>*/
+) /*: ?string*/ {
+  if (reactComponents.length === 0) {
+    return null;
+  }
+  const componentClasses = new Set();
+
+  reactComponents.forEach(({id, jsx}) => {
+    matchAll(jsx, /\<([A-Z]\w+)/g)
+      .toArray()
+      .forEach(componentClass => {
+        componentClasses.add(componentClass);
+      });
+  });
+
+  const componentImports = Array.from(componentClasses)
+    .map(c => `import ${c} from '../../components/${c}';`)
+    .join('\n');
+
+  return `
+import React from 'react';
+import renderComponent from '../../components/renderComponent';
+${componentImports}
+
+
+${reactComponents
+  .map(({id, jsx}) => `renderComponent(${jsx}, '${id}');`)
+  .join('\n')}
+`;
+}
+
+function renderPostBody(post /*: Object*/) /*: RenderedPost*/ {
   const postMarkdown = getPostMarkdown(post);
-  const postHTML = marked(postMarkdown, {gfm: true, renderer});
-  return postHTML;
+
+  const renderer = new marked.Renderer();
+
+  const reactComponents = [];
+
+  let nextID = 0;
+  renderer.html = function(html /*: string*/) /*:string*/ {
+    const id = `react_component_${nextID++}`;
+    const jsx = html
+      .replace(/<react>/, '')
+      .replace(/<\/react>/, '')
+      .trim();
+    reactComponents.push({
+      jsx,
+      id,
+    });
+    return `<div id="${id}"></div>`;
+  };
+  const postHTML =
+    marked(postMarkdown, {gfm: true, renderer}) +
+    (reactComponents.length
+      ? `<script type="text/javascript" src="/${post.slug}.js"></script>`
+      : '');
+  return {postHTML, reactComponents};
 }
 
 function renderPostPreview(post /*: Object*/) {
-  const bodyHTML = renderPostBody(post);
+  const bodyHTML = renderPostBody(post).postHTML;
   const $ = cheerio.load(bodyHTML);
   const preview = $('p')
     .toArray()
@@ -112,5 +169,8 @@ module.exports = {
   renderTemplate,
   renderPostBody,
   renderPostPreview,
+  generatePostJSCode,
+  getPostJSCodeFilepath,
+  JS_TEMP_DIR,
   getPostMarkdown,
 };

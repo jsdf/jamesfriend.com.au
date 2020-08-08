@@ -61,6 +61,8 @@ var inputBuffer = new SharedArrayBuffer(INPUT_BUFFER_SIZE * 4);
 var inputBufferView = new Int32Array(inputBuffer);
 var inputQueue = [];
 
+var Atomics_notify = Atomics.wake || Atomics.notify;
+
 var InputBufferAddresses = {
   globalLockAddr: 0,
   mouseMoveFlagAddr: 1,
@@ -80,16 +82,33 @@ var LockStates = {
 };
 
 var audioContext = new AudioContext();
-document.querySelector('#enableAudio').addEventListener('click', function() {
-  audioContext.resume().then(() => {
-    document.querySelector('#enableAudio').remove();
-  });
-});
 
 var gainNode = audioContext.createGain();
 
 gainNode.gain.value = 1;
 gainNode.connect(audioContext.destination);
+
+function addEventListenerOnce(element, eventType, cb) {
+  element.addEventListener(eventType, function() {
+    element.removeEventListener(eventType, cb);
+    cb.apply(this, arguments);
+  });
+}
+
+addEventListenerOnce(canvas, 'click', function() {
+  audioContext.resume();
+});
+
+var warningLastTime = {};
+var warningCount = {};
+function throttledWarning(message, type = '') {
+  warningCount[type] = (warningCount[type] || 0) + 1;
+  if (Date.now() - (warningLastTime[type] || 0) > 5000) {
+    console.warn(message, `${warningCount[type] || 0} times`);
+    warningLastTime[type] = Date.now();
+    warningCount[type] = 0;
+  }
+}
 
 function openAudio() {
   audio.pushAudio = function pushAudio(
@@ -159,10 +178,9 @@ function openAudio() {
         audio.gotFirstBlock &&
         Date.now() - getBlockBufferLastWarningTime > 5000
       ) {
-        console.warn(
+        throttledWarning(
           `UI thread tried to read audio data from worker-locked chunk ${getBlockBufferWarningCount} times`
         );
-        console.log('curChunkIndex', curChunkIndex);
         // debugger
         getBlockBufferLastWarningTime = Date.now();
         getBlockBufferWarningCount = 0;
@@ -283,7 +301,7 @@ function acquireTwoStateLock(bufferView, lockIndex) {
 function releaseTwoStateLock(bufferView, lockIndex) {
   Atomics.store(bufferView, lockIndex, LockStates.EMUL_THREAD_LOCK); // unlock
 
-  Atomics.wake(bufferView, lockIndex);
+  Atomics_notify(bufferView, lockIndex);
 }
 
 releaseTwoStateLock(videoModeBufferView, 9);
@@ -304,7 +322,7 @@ function acquireLock(bufferView, lockIndex) {
 function releaseLock(bufferView, lockIndex) {
   Atomics.store(bufferView, lockIndex, LockStates.READY_FOR_EMUL_THREAD); // unlock
 
-  Atomics.wake(bufferView, lockIndex);
+  Atomics_notify(bufferView, lockIndex);
 }
 
 function releaseInputLock() {
@@ -328,6 +346,9 @@ function tryToSendInput() {
     var inputEvent = inputQueue[i];
     switch (inputEvent.type) {
       case 'mousemove':
+        if (hasMouseMove) {
+          break;
+        }
         hasMouseMove = true;
         mouseMoveX += inputEvent.dx;
         mouseMoveY += inputEvent.dy;
@@ -378,23 +399,26 @@ window.addEventListener('keyup', function(event) {
   inputQueue.push({type: 'keyup', keyCode: event.keyCode});
 });
 
-var workerConfig = {
-  inputBuffer: inputBuffer,
-  inputBufferSize: INPUT_BUFFER_SIZE,
-  screenBuffer: screenBuffer,
-  screenBufferSize: SCREEN_BUFFER_SIZE,
-  videoModeBuffer: videoModeBuffer,
-  videoModeBufferSize: VIDEO_MODE_BUFFER_SIZE,
-  audioDataBuffer: audioDataBuffer,
-  audioDataBufferSize: AUDIO_DATA_BUFFER_SIZE,
-  audioBlockBufferSize: audio.bufferSize,
-  audioBlockChunkSize: audioBlockChunkSize,
-  SCREEN_WIDTH: SCREEN_WIDTH,
-  SCREEN_HEIGHT: SCREEN_HEIGHT,
-};
+var workerConfig = Object.assign(
+  {
+    inputBuffer: inputBuffer,
+    inputBufferSize: INPUT_BUFFER_SIZE,
+    screenBuffer: screenBuffer,
+    screenBufferSize: SCREEN_BUFFER_SIZE,
+    videoModeBuffer: videoModeBuffer,
+    videoModeBufferSize: VIDEO_MODE_BUFFER_SIZE,
+    audioDataBuffer: audioDataBuffer,
+    audioDataBufferSize: AUDIO_DATA_BUFFER_SIZE,
+    audioBlockBufferSize: audio.bufferSize,
+    audioBlockChunkSize: audioBlockChunkSize,
+    SCREEN_WIDTH: SCREEN_WIDTH,
+    SCREEN_HEIGHT: SCREEN_HEIGHT,
+  },
+  basiliskConfig
+);
 
-if (singleThreadedEmscripten) {
-  var worker = new Worker('BasiliskII-worker-boot.js');
+if (basiliskConfig.singleThreadedEmscripten) {
+  var worker = new Worker(basiliskConfig.baseURL + 'BasiliskII-worker-boot.js');
 
   worker.postMessage(workerConfig);
   worker.onmessage = function(e) {
@@ -405,16 +429,18 @@ if (singleThreadedEmscripten) {
       document.body.className =
         e.data.type === 'emulator_ready' ? '' : 'loading';
 
-      const progressElement = document.getElementById('progress');
-
-      if (progressElement && e.data.type === 'emulator_loading') {
-        progressElement.value = Math.max(10, e.data.completion * 100);
-        progressElement.max = 100;
-        progressElement.hidden = false;
-      } else {
-        progressElement.value = null;
-        progressElement.max = null;
-        progressElement.hidden = true;
+      const progressElement =
+        basiliskConfig.progressElement || document.getElementById('progress');
+      if (progressElement) {
+        if (e.data.type === 'emulator_loading') {
+          progressElement.value = Math.max(10, e.data.completion * 100);
+          progressElement.max = 100;
+          progressElement.hidden = false;
+        } else {
+          progressElement.value = null;
+          progressElement.max = null;
+          progressElement.hidden = true;
+        }
       }
     }
   };
@@ -467,11 +493,21 @@ function asyncLoop() {
 openAudio();
 asyncLoop();
 
-if (!singleThreadedEmscripten) {
-  document.write('<script src="BasiliskII-worker-boot.js"></' + 'script>');
+if (!basiliskConfig.singleThreadedEmscripten) {
+  document.write(
+    '<script src="' +
+      basiliskConfig.baseURL +
+      'BasiliskII-worker-boot.js"></' +
+      'script>'
+  );
 
   startEmulator(workerConfig);
 
-  document.write('<script src="BasiliskII.js"></' + 'script>');
+  console.log(
+    '<script src="' + basiliskConfig.baseURL + 'BasiliskII.js"></' + 'script>'
+  );
+  document.write(
+    '<script src="' + basiliskConfig.baseURL + 'BasiliskII.js"></' + 'script>'
+  );
   console.log('returned from emscripten main');
 }

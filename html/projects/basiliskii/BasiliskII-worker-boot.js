@@ -1,3 +1,4 @@
+var INSTRUMENT_MALLOC = false;
 var memAllocSet = new Set();
 var memAllocSetPersistent = new Set();
 function memAllocAdd(addr) {
@@ -75,6 +76,16 @@ var InputBufferAddresses = {
   keyCodeAddr: 6,
   keyStateAddr: 7,
 };
+
+const InputBufferAddressTypes = Object.entries(InputBufferAddresses).reduce(
+  (acc, [k, v]) => {
+    acc[v] = k;
+    return acc;
+  },
+  {}
+);
+
+const inputBufferLastVals = {};
 
 var LockStates = {
   READY_FOR_UI_THREAD: 0,
@@ -193,11 +204,79 @@ function startEmulator(parentConfig) {
 
   var AudioBufferQueue = [];
 
-  Module = {
-    autoloadFiles: ['MacOS753_.img', 'DCImage.img', 'Quadra-650.rom', 'prefs'],
+  if (!parentConfig.autoloadFiles) {
+    throw new Error('autoloadFiles missing in config');
+  }
 
-    arguments: ['--config', 'prefs'],
+  Module = {
+    autoloadFiles: parentConfig.autoloadFiles,
+
+    arguments: parentConfig.arguments || ['--config', 'prefs'],
     canvas: null,
+
+    onRuntimeInitialized: function() {
+      if (INSTRUMENT_MALLOC) {
+        // instrument malloc and free
+        const oldMalloc = Module._malloc;
+        const oldFree = Module._free;
+        console.error('instrumenting malloc and free');
+
+        Module._malloc = function _wrapmalloc($0) {
+          $0 = $0 | 0;
+          var $1 = oldMalloc($0);
+          memAllocAdd($1);
+          return $1 | 0;
+        };
+        Module._free = function _wrapfree($0) {
+          memAllocRemove($0);
+          var $1 = oldFree($0);
+          return $1 | 0;
+        };
+      }
+
+      self.Module = Module;
+    },
+
+    summarizeBuffer: function(bufPtr, width, height, depth) {
+      return;
+      var length = width * height * (depth === 32 ? 4 : 1); // 32bpp or 8bpp
+
+      let zeroChannelCount = 0;
+      let nonZeroChannelCount = 0;
+      let zeroAlphaCount = 0;
+      let nonZeroAlphaCount = 0;
+
+      for (var i = 0; i < length; i++) {
+        if (depth === 32) {
+          if (i % 4 < 3) {
+            if (Module.HEAPU8[bufPtr + i] > 0) {
+              nonZeroChannelCount++;
+            } else {
+              zeroChannelCount++;
+            }
+          } else {
+            if (Module.HEAPU8[bufPtr + i] > 0) {
+              nonZeroAlphaCount++;
+            } else {
+              zeroAlphaCount++;
+            }
+          }
+        }
+      }
+      if (nonZeroAlphaCount > zeroAlphaCount) debugger;
+      console.log(
+        'buffer at',
+        bufPtr,
+        {
+          zeroChannelCount,
+          nonZeroChannelCount,
+          pixelColorChannels: width * height * (depth === 32 ? 3 : 1),
+          zeroAlphaCount,
+          nonZeroAlphaCount,
+        },
+        Module.HEAPU8.slice(bufPtr, bufPtr + 128)
+      );
+    },
 
     blit: function blit(bufPtr, width, height, depth, usingPalette) {
       // console.time('await worker video lock');
@@ -242,10 +321,7 @@ function startEmulator(parentConfig) {
         writingChunkIndex * parentConfig.audioBlockChunkSize;
 
       if (audioDataBufferView[writingChunkAddr] === LockStates.UI_THREAD_LOCK) {
-        console.warn(
-          'worker tried to write audio data to UI-thread-locked chunk',
-          writingChunkIndex
-        );
+        // console.warn('worker tried to write audio data to UI-thread-locked chunk',writingChunkIndex);
         return 0;
       }
 
@@ -304,6 +380,6 @@ function startEmulator(parentConfig) {
   addCustomAsyncInit(Module);
 
   if (parentConfig.singleThreadedEmscripten) {
-    importScripts('BasiliskII.js');
+    importScripts((parentConfig.baseURL || '') + 'BasiliskII.js');
   }
 }

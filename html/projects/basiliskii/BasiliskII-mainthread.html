@@ -66,9 +66,12 @@
     <div class="intro">
       <h1>Basilisk II Classic Mac emulator</h1>
       <p>
-        This is the Basilisk II Classic Mac emulator running Mac OS System 7,
-        with SimCity 2000 and Bungie Software's Marathon. A hack by
-        <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a>
+        This is the
+        <a href="https://basilisk.cebix.net/">Basilisk II</a> Classic Mac
+        emulator running Mac OS System 7, with SimCity 2000 and Bungie
+        Software's Marathon. A hack by
+        <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a>.
+        Source on <a href="https://github.com/jsdf/macemu">GitHub</a>.
       </p>
       <div style="display: none" id="compatMessage" class="note">
         Your browser supports the faster version of this emulator which you can
@@ -97,6 +100,20 @@
       oncontextmenu="event.preventDefault()"
     ></canvas>
 
+    <script type="text/javascript">
+      window.basiliskConfig = {
+        singleThreadedEmscripten: true,
+        baseURL: '/projects/basiliskii/', 
+        autoloadFiles: [
+          'MacOS753_.img',
+          'DCImage.img',
+          'Quadra-650.rom',
+          'prefs',
+        ],
+        arguments: ['--config', 'prefs'],
+      };
+ 
+    </script>
     <script src="mainthread/BasiliskII-mainthread-boot.js"></script>
     <script src="mainthread/BasiliskII.js"></script>
 

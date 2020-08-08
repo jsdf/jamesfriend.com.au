@@ -36,9 +36,9 @@ function addAutoloader(module) {
 var Module = {
   preRun: [],
   postRun: [],
-  arguments: ['--config', 'prefs'],
+  arguments: basiliskConfig.arguments || ['--config', 'prefs'],
 
-  autoloadFiles: ['MacOS753_.img', 'DCImage.img', 'Quadra-650.rom', 'prefs'],
+  autoloadFiles: basiliskConfig.autoloadFiles,
 
   debugPointer: function debugPointer(ptr) {
     console.log('debugPointer', ptr);

@@ -64,54 +64,86 @@
       .incompatible .hide-on-incompatible {
         display: none;
       }
-      
+
       .show-on-incompatible {
         display: none;
       }
-      
+
       .incompatible .show-on-incompatible {
         display: block;
+      }
+
+      .hide-on-compatible {
+        display: none;
+      }
+      .incompatible .hide-on-compatible {
+        display: block;
+      }
+
+      .show-on-incompatible-firefox {
+        display: none;
+      }
+      .incompatible-firefox .show-on-incompatible-firefox {
+        display: inline;
       }
     </style>
   </head>
   <body class="loading">
     <div class="intro">
-      <h1>Basilisk II Classic Mac emulator</h1>
+      <h1>Fast Macintosh emulation in the browser using SharedArrayBuffer</h1>
       <p>
-        This is the Basilisk II Classic Mac emulator running Mac OS System 7,
-        with SimCity 2000 and Bungie Software's Marathon. A hack by
-        <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a>
+        This is the
+        <a href="https://basilisk.cebix.net/">Basilisk II</a> Classic Mac
+        emulator running Mac OS System 7, with SimCity 2000 and Bungie
+        Software's Marathon. A hack by
+        <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a>.
+        Source on <a href="https://github.com/jsdf/macemu">GitHub</a>.
       </p>
-      <div class="note hide-on-incompatible">
-        This emulator should work in Chrome 69 and Chrome 72+ (but not Chrome
-        70, due to a bug). It should work in Firefox if you enable the
-        <code>javascript.options.shared_memory</code> flag in the
-        <a href="about:config">about:config</a> page.
-      </div>
+
+      <p>
+        This runs faster than many other in-browser emulators because of
+        <a
+          href="https://jamesfriend.com.au/basilisk-ii-classic-mac-emulator-in-the-browser"
+          >how it uses SharedArrayBuffer</a
+        >
+      </p>
 
       <div class="note show-on-incompatible">
         <strong
-          >NOTE: your browser is missing a required feature for this emulator.
-          There is an alternate version which should work for you
-          <a href="BasiliskII-mainthread.html">here</a>.</strong
-        >
+          >NOTE: your browser is missing a required feature for this emulator
+          (SharedArrayBuffer). There is an alternate version which should work
+          for you <a href="BasiliskII-mainthread.html">here</a>.
+          <span class="show-on-incompatible-firefox"
+            >Alternatively, you can update to
+            <a href="https://www.mozilla.org/en-US/firefox/79.0/releasenotes/"
+              >Firefox 79</a
+            >.
+          </span>
+        </strong>
       </div>
       <script type="text/javascript">
-        if (typeof SharedArrayBuffer == 'undefined') {
-          document.documentElement.className += "incompatible"
+        var isIncompatibleFirefoxVersion = false;
+        (function() {
+          var matches = navigator.userAgent.match(/Firefox\/(\d+).\d+/);
+          if (matches && matches[1]) {
+            var firefoxVersion = parseInt(matches[1]);
+            if (firefoxVersion < 79) {
+              isIncompatibleFirefoxVersion = true;
+              document.documentElement.className += ' incompatible-firefox';
+            }
+          }
+        })();
+        if (
+          typeof SharedArrayBuffer == 'undefined' ||
+          isIncompatibleFirefoxVersion
+        ) {
+          document.documentElement.className += ' incompatible';
         }
       </script>
       <div id="loading" class="hide-on-incompatible">
         <span class="text">downloading (30mb)...</span>
         <progress value="10" max="100" id="progress"></progress>
       </div>
-      <button
-        id="enableAudio"
-        style="margin-top: 8px"
-        class="hide-on-incompatible"
-      >
-        ENABLE AUDIO
-      </button>
     </div>
 
     <canvas
@@ -123,16 +155,26 @@
     ></canvas>
 
     <script type="text/javascript">
-      var singleThreadedEmscripten = true;
+      window.basiliskConfig = {
+        singleThreadedEmscripten: true,
+        baseURL: '/projects/basiliskii/',
+        autoloadFiles: [
+          'MacOS753_.img',
+          'DCImage.img',
+          'Quadra-650.rom',
+          'prefs',
+        ],
+        arguments: ['--config', 'prefs'],
+      };
       var progressElement = document.getElementById('progress');
     </script>
-    <script src="BasiliskII-worker-ui-thread.js"></script>
+    <script src="/projects/basiliskii/BasiliskII-worker-ui-thread.js"></script>
 
     <div class="footer">
       <p class="hide-on-incompatible">
-        This application requires a browser which supports SharedArrayBuffer
-        (the emulator runs in a Web Worker and communicates with the main thread
-        via shared memory).
+        This application requires a browser which supports SharedArrayBuffer.
+        The emulator runs in a Web Worker and communicates with the main thread
+        via shared memory.
       </p>
       <a href="/">Home</a>
     </div>

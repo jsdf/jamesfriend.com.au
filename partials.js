@@ -1,27 +1,28 @@
 // @flow
 
 const hogan = require('hogan.js');
+const path = require('path');
 
 const projects = [
   {
-    url: '/pce-js/',
-    tip: 'Mac Plus/IBM PC/Atari ST emulator in the browser',
-    label: 'pce.js emulator',
-  },
-  {
     url: '/projects/basiliskii/BasiliskII-worker.html',
     tip: 'Mac OS System 7/SimCity 2000/Marathon in the browser',
-    label: 'BasiliskII.js emulator',
+    label: 'BasiliskII.js Macintosh emulator',
   },
   {
-    url: '/projects/wolf3d/Chocolate-Wolfenstein-3D.html',
-    tip: 'Wolfenstein 3D in the browser',
-    label: 'wolf3d.js',
+    url: '/pce-js/',
+    tip: 'Mac Plus/IBM PC/Atari ST emulator in the browser',
+    label: 'pce.js Mac/PC/Atari ST emulator',
+  },
+  {
+    url: 'https://github.com/jsdf/goose64',
+    tip: 'Untitled Goose Game for the Nintendo 64',
+    label: 'Goose 64',
   },
   {
     url: 'https://jsdf.github.io/little-virtual-computer/computer1',
     tip: 'Learn how computers work by simulating them in Javascript',
-    label: 'little-virtual-computer',
+    label: 'Little Virtual Computer',
   },
   {
     url: 'https://jsdf.github.io/scaletoy',
@@ -29,9 +30,30 @@ const projects = [
     label: 'scaletoy',
   },
   {
+    url: 'https://github.com/jsdf/n64-sdk-demo',
+    tip: 'Learn to make n64 games',
+    label: 'Nintendo 64 SDK tutorial',
+  },
+  {
+    url: '/projects/wolf3d/Chocolate-Wolfenstein-3D.html',
+    tip: 'Wolfenstein 3D in the browser',
+    label: 'wolf3d.js',
+  },
+  {
     url: 'https://jsdf.github.io/ReasonPhysics',
     tip: '2D Physics simulation in ReasonML',
     label: 'ReasonPhysics',
+  },
+  {
+    url: 'https://jsdf.github.io/planetarium/',
+    tip:
+      'A beat-synced music visualization which controls RGB LED strips via bluetooth',
+    label: 'planetarium',
+  },
+  {
+    url: 'https://github.com/jsdf/ed64log',
+    tip: 'A development tool for debugging homebrew n64 games',
+    label: 'Everdrive 64 logger',
   },
   {
     url: 'https://jsdf.github.io/lisp.re/',
@@ -60,170 +82,174 @@ const projects = [
   },
 ];
 
-module.exports = (options /*: {host: string, posts: Array<Object>}*/) => {
+module.exports = (
+  context /*:
+  {
+    options: {
+      host: string,
+      posts: Array<Object>
+    },
+    getJS: () => Array<string>,
+    getCSS: () => Array<string>,
+    getPublicPath: (string) => string
+  }*/
+) => {
   const partials = {
     common_css: () =>
-      `
-<link type="text/css" rel="stylesheet" href="${
-        options.host
-      }/assets/main.css" media="all"/>
-`,
+      context
+        .getCSS()
+        .map(
+          (bundle) =>
+            `<link type="text/css" rel="stylesheet" href="${
+              context.options.host
+            }/${context.getPublicPath(
+              path.join(bundle.dir, bundle.fileName)
+            )}" media="all"/>`
+        )
+        .join('\n'),
     common_js: () =>
       `
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-23661560-1", {"cookieDomain":"auto"});ga("send", "pageview");
-//--><!]]>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23661560-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23661560-1');
 </script>
-<script type="text/javascript" src="${options.host}/assets/main.js"></script>
-`,
+<script type="text/javascript" src="${context.options.host}/assets/s.js"></script>
+` +
+      context
+        .getJS()
+        .map(
+          (bundle) =>
+            `<script type="text/javascript" src="${
+              context.options.host
+            }/${context.getPublicPath(
+              path.join(bundle.dir, bundle.fileName)
+            )}"></script>`
+        )
+        .join('\n'),
+    preload_js: () =>
+      context
+        .getJS()
+        .map(
+          (bundle) =>
+            `<link rel="preload" href="${
+              context.options.host
+            }/${context.getPublicPath(
+              path.join(bundle.dir, bundle.fileName)
+            )}" as="script" />`
+        )
+        .join('\n'),
+
     meta_tags: () =>
       `
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<link rel="shortcut icon" href="${
-        options.host
-      }/favicon.ico" type="image/vnd.microsoft.icon"/>
+<link rel="shortcut icon" href="${context.options.host}/favicon.ico" type="image/vnd.microsoft.icon"/>
 <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
 <meta name="generator" content="AppleScript"/>
 `,
     sidebar: () =>
       `
-<div id="sidebar-second" class="sidebar span3">
-  <div class="row-fluid">
-    <div class="region region-sidebar-second clearfix">
-      ${partials.block_me()}
-      ${partials.block_contact()}
-      ${partials.block_recent_articles()}
-      ${partials.block_projects()}
-    </div>
-  </div>
+<div class="sidebar"> 
+  ${partials.block_me()}
+  ${partials.block_contact()}
+  ${partials.block_recent_articles()}
+  ${partials.block_projects()} 
 </div>
-`,
+      `,
     block_me: () =>
       `
-<div id="block-block-1" class="clearfix block block-block">
-  <h2>Hi! I&#039;m James.</h2>
-  <div class="content">
+<div class="about-me block">
+  <h3>Hi! I&#039;m James.</h3>
+  <div>
     <div class="pic-me">
-      <img src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
+      <img width="230" height="230" src="/files/corndog.jpeg" title="James Friend" alt="James Friend">
     </div>
-    <p>I work at Facebook and make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
+    <p>I make neat stuff on the web.<br> I'm into UX, music production, designing the future, and learning from the past.</p>
   </div>
 </div>
 `,
     block_contact: () =>
       `
-<div id="block-block-3" class="clearfix block block-block">
-  <h2>Drop me a line</h2>
-  <div class="content">
+<div class="contact-me block">
+  <h3>Drop me a line</h3>
+  <div>
     <ul>
       <li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
       <li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
       <li><a href="https://github.com/jsdf">GitHub</a></li>
-      <li><a href="http://www.linkedin.com/in/jamesfriendau">LinkedIn</a></li>
-    </ul>
+     </ul>
   </div>
 </div>
 `,
     block_recent_articles: () =>
       `
-<div id="block-views-recent-articles-block" class="clearfix block block-views">
-  <h2>Recent stuff</h2>
-  <div class="content">
-    <div class="view view-recent-articles view-id-recent_articles view-display-id-block">
-      <div class="view-content">
-      ${options.posts
-        .slice(0, 5)
-        .map(
-          post => `
-          <div class="views-row">
-            <div class="views-field views-field-title"> <span class="field-content"><a href="/${
-              post.slug
-            }">${post.title}</a></span>
-            </div>
-          </div>
-          `
-        )
-        .join('\n')}
-      </div>
-    </div>
+<div class="recent-articles block">
+  <h3>Recent stuff</h3>
+  <div>
+    ${context.options.posts
+      .slice(0, 5)
+      .map(
+        (post) => `
+        <div>
+          <a href="/${post.slug}">${post.title}</a>
+        </div>
+        `
+      )
+      .join('\n')}
   </div>
 </div>
 `,
 
     block_projects: () => {
       return ` 
-<div id="block-views-projects-block" class="clearfix block block-views">
-  <h2>Projects</h2>
-  <div class="content">
-    <div class="view view-projects view-id-projects view-display-id-block">
-      <div class="view-content">
-      ${projects
-        .map(
-          item => `
-          <div class="views-row">
-            <div class="views-field views-field-title"> <span class="field-content">
-              <a class="has-tooltip" href="${item.url}" title="${
-            item.tip
-          }" data-toggle="tooltip" data-trigger="hover" data-placement="left">${
-            item.label
-          }</a>
-            </div>
+<div class="projects block">
+  <h3>Projects</h3>
+  <div>
+    ${projects
+      .map(
+        (item) => `
+          <div>
+            <a href="${item.url}" title="${item.tip}">${item.label}</a>
           </div>
           `
-        )
-        .join('\n')}
-      </div>
-    </div>
+      )
+      .join('\n')}
   </div>
 </div>
      `;
     },
-    site_slogan: () => `Web Platform Adventures &amp; PC Archeology`,
+    site_slogan: () => `dusting off the bones`,
     rss_link: () =>
       `
-<a href="${
-        options.host
-      }/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
-  <img typeof="foaf:Image" src="${
-    options.host
-  }/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/>
+<a href="${context.options.host}/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
+  <img src="${context.options.host}/misc/feed.png" width="16" height="16" alt="Subscribe to Front page feed"/>
 </a>
 `,
     top_links_bar: () => {
       const renderItem = ({url, tip, label}) =>
         `
-<li>
-  <a href="${url}" title="${tip}" data-toggle="tooltip" data-trigger="hover" data-placement="bottom">${label}</a>
-</li>
+      <li>
+        <a href="${url}" title="${tip}" class="tooltip">${label}</a>
+      </li>
       `;
 
       return `
-<div id="top-links-bar">
-  <div class="container">
-    <a class="attention-seeker" href="https://github.com/jsdf">here's some neat stuff I made</a>
-    <ul>
-    ${projects.map(renderItem).join('\n')}
-    </ul>
-  </div>
-</div>
+      <ul class="project-links">
+        ${projects.map(renderItem).join('\n')}
+      </ul>
      `;
     },
+
     header: () =>
       `
-<div id="header" class="clearfix">
-  <div class="container">
-    <div class="row">
-      <div class="span12">
-        <div id="name-and-slogan">
-          <div id="site-name"><a href="/" title="Home" rel="home">James Friend</a></div>
-          <div id="site-slogan">${partials.site_slogan()}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div id="name-and-slogan">
+  <div id="site-name"><a href="/" title="Home" rel="home">James Friend</a></div>
+  ${false ? `<div id="site-slogan">${partials.site_slogan()}</div>` : ''}
 </div>
-`,
+    `,
   };
   return partials;
 };

@@ -4,28 +4,43 @@
 
 const spawn = require('child_process').spawn;
 const exec = require('child_process').execSync;
-const http = require('http');
 const util = require('util');
 const path = require('path');
 const fs = require('fs');
+const useHTTPS = true;
 
 const sane = require('sane');
 const lodash = require('lodash');
 
+const runBuild = require('./build');
+
 const port = 8081;
-const host = `http://127.0.0.1:${port}`;
-function build(skipRsync) {
+const host = `${useHTTPS ? 'https' : 'http'}://localhost:${port}`;
+const DEV = process.env.NODE_ENV != 'production';
+const useCache = false;
+
+Error.stackTraceLimit = Infinity;
+
+let currentBuild = Promise.resolve();
+
+let buildCache = null;
+if (useCache) {
+  buildCache = {caches: []};
+}
+async function rebuild({skipRsync}) {
   console.time('build done');
-  const res = exec(`node build.js ${skipRsync ? '--skip-rsync' : ''}`, {
-    env: Object.assign({HOST: host}, process.env),
-  });
-  console.log(res.toString());
+
+  await runBuild(
+    Object.assign({}, process.env, {DEV, HOST: host, skipRsync, buildCache})
+  );
   console.timeEnd('build done');
 }
 
-const buildDebounced = lodash.debounce(() => {
-  console.log('changes detected, rebuilding');
-  build(false);
+const buildDebounced = lodash.debounce(async () => {
+  console.log('changes detected');
+  await currentBuild;
+  console.log('rebuilding');
+  currentBuild = rebuild({skipRsync: true});
 }, 50);
 
 const watcher = sane('./', {
@@ -33,12 +48,15 @@ const watcher = sane('./', {
     'html/**/*.js',
     'html/**/*.css',
     'html/**/*.html',
-    '*.mustache',
+    'templates/*.mustache',
     'partials.js',
     'posts.json',
     'posts/*.md',
     'components/*.js',
+    'client/**/*.*',
+    'client/*.*',
   ],
+  watchman: true,
 });
 watcher.on('ready', function() {
   console.log('watching for changes');
@@ -73,15 +91,22 @@ function getMimeType(filepath) {
   return filesMimeTypesCache[filepath];
 }
 
-const server = http.createServer(function(req, res) {
+async function handler(req, res) {
   const reqPath = req.url.replace(/\?.*/, '').replace(/_cb.*/, '');
   const reqPathFSPath = path.join(serveDir, reqPath);
 
   function errRes(err, code) {
     console.log(`${code} ${req.url} ${err}`);
     res.writeHead(code, {'Content-Type': 'text/plain'});
-    res.write(err.stack);
+    res.write(err.stack || String(err));
     res.end();
+  }
+
+  try {
+    // don't send response until build is complete
+    await currentBuild;
+  } catch (err) {
+    return errRes(err, 503);
   }
 
   // does the request point to a valid file or dir at all?
@@ -93,23 +118,28 @@ const server = http.createServer(function(req, res) {
     return errRes(reqPathStatErr, 404);
   }
 
+  function successRes(content, mimeType) {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    res.writeHead(200, {'Content-Type': mimeType});
+    res.write(content);
+    res.end();
+  }
+
   try {
     // return file or index file contents
     const filepath = reqPathStat.isDirectory()
       ? path.join(reqPathFSPath, 'index.html')
       : reqPathFSPath;
     const mimeType = getMimeType(filepath);
-    console.log(`200 ${req.url} ${mimeType}`);
-    res.writeHead(200, {'Content-Type': mimeType});
-    res.write(fs.readFileSync(filepath));
-    res.end();
+    successRes(fs.readFileSync(filepath), mimeType);
   } catch (fileReadErr) {
     if (reqPathStat.isDirectory()) {
       // render directory listing
       try {
         const filepath = path.join(serveDir, reqPath);
         const dirlinks = ['..', ...fs.readdirSync(filepath)]
-          .map(file => {
+          .map((file) => {
             const fileStat = fs.lstatSync(path.join(reqPathFSPath, file));
             const filename = fileStat.isDirectory() ? `${file}/` : file;
 
@@ -128,6 +158,7 @@ const server = http.createServer(function(req, res) {
   </head>
   <body>
   <h1>Directory listing of ${reqPath}</h1>
+  ${reqPathFSPath}
   <ul>${dirlinks}</ul>
   </body>
   </html>`);
@@ -142,18 +173,33 @@ const server = http.createServer(function(req, res) {
       return errRes(fileReadErr, 500);
     }
   }
-});
+}
+
+let server;
+if (useHTTPS) {
+  const https = require('https');
+
+  const httpsOptions = {
+    key: fs.readFileSync('localhost.key'),
+    cert: fs.readFileSync('localhost.crt'),
+  };
+
+  server = https.createServer(httpsOptions, handler);
+} else {
+  const http = require('http');
+  server = http.createServer(handler);
+}
 server.listen(port);
 
-build(false);
+currentBuild = rebuild({skipRsync: false});
 
 setTimeout(() => {
   console.log(
     `
-opening http://127.0.0.1:${port}/ in your browser
+opening ${host}/ in your browser
 
 press CTRL-C to quit this program
 `
   );
-  exec(`open http://127.0.0.1:${port}/`);
+  exec(`open ${host}/`);
 }, 300);

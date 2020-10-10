@@ -10,3 +10,5 @@ aaaa
 <react>
   <Demo2 a={1} b="foo" />
 </react>
+
+div

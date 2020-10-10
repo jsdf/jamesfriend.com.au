@@ -1,76 +1,46 @@
 <!DOCTYPE html>
-<head>
-  {{{meta_tags}}}
-  <link rel="alternate" type="application/rss+xml" title="Front page feed" href="https://jamesfriend.com.au/rss.xml"/>
-  <meta name="description" content="I make stuff on the web. Front end junk and emulation stuff."/>
-  <link rel="canonical" href="https://jamesfriend.com.au/"/>
-  <title>James Friend | {{{site_slogan}}}
-  </title>
-  {{{common_css}}}
-  {{{common_js}}}
-</head>
-<body class="html front not-logged-in one-sidebar sidebar-second page-frontpage      ">
-  {{{top_links_bar}}}
-  <div class="contents">
-    <div id="header" class="clearfix">
-      <div class="container">
-        <div class="row">
-          <div class="span12">
-            <div id="name-and-slogan">
-              <div id="site-name">
-                <a href="/" title="Home" rel="home">
-                  <h1>James Friend
-                  </h1>
-                </a>
-              </div>
-              <div id="site-slogan">
-                <h2>{{{site_slogan}}}
-                </h2>
-              </div>
-            </div>
-          </div>
+<html>
+  <head>
+    {{{meta_tags}}}
+    <link rel="alternate" type="application/rss+xml" title="Front page feed" href="https://jamesfriend.com.au/rss.xml"/>
+    <meta name="description" content="I make stuff on the web. Front end junk and emulation stuff."/>
+    <link rel="canonical" href="https://jamesfriend.com.au/"/>
+    <title>James Friend | {{{site_slogan}}}</title>
+    {{{common_css}}}
+    {{{preload_js}}}
+  </head>
+  <body>
+    {{! <div class="demo-container">
+      
+    </div> }}
+    <canvas id="demo" height="800"></canvas>
+    <div class="demo-overlay">
+      <header id="name-and-slogan" class="content">
+        <div id="site-name">
+          <a href="/" title="Home" rel="home">
+            <h1>James Friend</h1>
+          </a>
         </div>
-      </div>
+        <!-- <div id="site-slogan">
+          {{{site_slogan}}} 
+        </div> -->
+      </header>
+      <nav class="content"> 
+        <h2>Projects</h2>
+        {{{top_links_bar}}}
+      </nav>
     </div>
-    <div id="main" class="clearfix">
-      <div class="container">
-        <div id="main-content" class="row">
-          <div id="content" class="span9">
-            <div id="content-wrapper">
-              <div id="content-head" class="row-fluid">
-                <div id="highlighted" class="clearfix">
-                </div>
-                <div class="tabs"> 
-                </div>
-              </div>
-              <div id="content-body" class="row-fluid"> 
-                <div class="region region-content clearfix">
-                  <div id="block-system-main" class="clearfix block block-system"> 
-                    <div class="content"> 
-                      <div class="view view-frontpage view-id-frontpage view-display-id-page">
-                        <div class="view-content">
-                        {{{views_rows}}}
-                        </div>
-                      </div> 
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="sidebar-second" class="sidebar span3">
-            <div class="row-fluid">
-              <div class="region region-sidebar-second clearfix">
-                {{{block_me}}}
-                {{{block_contact}}}
-                {{{block_recent_articles}}}
-                {{{block_projects}}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
+
+    <section class="posts content">
+      <h2>Blog</h2>
+      <a id="posts-section" />
+      {{{views_rows}}}
+    </section>
+    <footer class="content">
+      {{{block_me}}}
+      {{{block_contact}}} 
+    </footer>
+    
+    {{{common_js}}}
+  </body>
 </html>

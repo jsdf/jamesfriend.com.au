@@ -8,7 +8,6 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
-const purify = require('purify-css');
 const {
   loadTemplate,
   mergeDisjoint,
@@ -19,26 +18,45 @@ const {
   getPostJSCodeFilepath,
   JS_TEMP_DIR,
   getPostMarkdown,
+  nullthrows,
 } = require('./utils');
 const rimraf = require('rimraf');
 
-const postFullTemplate = loadTemplate('postFullTemplate');
-const postShortTemplate = loadTemplate('postShortTemplate');
-const listPageTemplate = loadTemplate('listPageTemplate');
-const rssTemplate = loadTemplate('rssTemplate');
+const {buildBundles, getRequiredBundleFiles} = require('./staticResources');
 
-const skipRsync = process.argv.includes('--skip-rsync');
-const verbosePurifyCSS = process.argv.includes('--verbose-purifycss');
-function run() {
-  const allPosts = require('./posts.json');
-  const publishedPosts = allPosts.filter(p => p.published !== false);
+async function run({DEV, HOST, skipRsync, buildCache}) {
+  const allPosts = JSON.parse(
+    fs.readFileSync(require.resolve('./posts.json'), {encoding: 'utf8'})
+  );
+  const publishedPosts = allPosts.filter((p) => p.published !== false);
 
   const options = {
     posts: publishedPosts,
-    host: process.env.HOST || 'https://jamesfriend.com.au',
+    host: HOST || 'https://jamesfriend.com.au',
   };
 
-  const partials = require('./partials')(options);
+  // force reload of partials
+  delete require.cache[require.resolve('./partials')];
+  const getPartials = ({builtBundles, requiredBundleNames} = {}) => {
+    return require('./partials')({
+      options,
+      getPublicPath: (assetLocalPath) => {
+        return assetLocalPath.replace('build/', '');
+      },
+      getJS: () => {
+        return getRequiredBundleFiles(
+          nullthrows(builtBundles),
+          nullthrows(requiredBundleNames)
+        ).js;
+      },
+      getCSS: () => {
+        return getRequiredBundleFiles(
+          nullthrows(builtBundles),
+          nullthrows(requiredBundleNames)
+        ).css;
+      },
+    });
+  };
 
   mkdirp.sync('./build/');
   mkdirp.sync('./build/files');
@@ -53,73 +71,126 @@ function run() {
   exec('file --mime-type --no-pad build/*')
     .toString()
     .split('\n')
-    .map(line => line.split(': '))
-    .filter(parts => parts[1] === 'text/html')
-    .forEach(parts => exec(`rm ${parts[0]}`));
+    .map((line) => line.split(': '))
+    .filter((parts) => parts[1] === 'text/html')
+    .forEach((parts) => exec(`rm ${parts[0]}`));
 
-  console.log('\nrebuilding pages');
+  // clean up assets from prev build
+  rimraf.sync('./build/assets/generated');
+  mkdirp.sync('./build/assets/generated');
 
+  console.log('\nbuilding post content');
+
+  // create dir for generated JS (eg. react in post markdown)
   const jsTempDir = path.join('build', JS_TEMP_DIR);
+  rimraf.sync(jsTempDir);
   mkdirp.sync(jsTempDir);
-  const postJSFiles = [];
 
-  // post full view pages
-  allPosts.forEach(post => {
-    const result = renderPostBody(post);
-    const page = renderTemplate(
-      postFullTemplate,
-      mergeDisjoint(partials, {
-        post: mergeDisjoint(Object.assign(post, {body: result.postHTML}), {
-          created_human: moment(post.created).format('MMMM D, YYYY'),
-        }),
-        meta_description: getPostMarkdown(post)
-          .replace(/<[^>]*>/g, '') // best effort to strip tags
-          .replace(/\n+/g, ' ')
-          .slice(0, 155),
-      })
-    );
-    fs.writeFileSync(`./build/${post.slug}`, page, {encoding: 'utf8'});
-    const jsCode = generatePostJSCode(result.reactComponents);
-    if (jsCode != null) {
-      const jsTempFilePath = path.join(jsTempDir, `${post.slug}.js`);
-      postJSFiles.push(jsTempFilePath);
-      fs.writeFileSync(jsTempFilePath, jsCode, {
+  const postFullTemplate = loadTemplate('postFullTemplate');
+  const postShortTemplate = loadTemplate('postShortTemplate');
+  const listPageTemplate = loadTemplate('listPageTemplate');
+  const rssTemplate = loadTemplate('rssTemplate');
+
+  const renderedPosts = publishedPosts.map((post) => {
+    const rendered = renderPostBody(post);
+
+    const postJSCode = generatePostJSCode(post, rendered.reactComponents);
+    let postGeneratedJSFile = null;
+    if (postJSCode) {
+      postGeneratedJSFile = {
+        filepath: path.join(jsTempDir, `post-${post.slug}.js`),
+        name: `post-${post.slug}`,
+      };
+      fs.writeFileSync(postGeneratedJSFile.filepath, postJSCode, {
         encoding: 'utf8',
       });
     }
+
+    return {
+      post,
+      rendered,
+      postGeneratedJSFile,
+    };
   });
 
-  // bundle js modules for posts
-  console.log('\nrunning parcel');
-  const parcelResult = exec(
-    `yarn parcel build ./${jsTempDir}/*.js --out-dir build`
+  console.log('\nbundling assets');
+  buildCache = buildCache || {};
+  let builtBundles = await buildBundles(
+    mergeDisjoint(
+      Object.fromEntries(
+        // js files for posts
+        renderedPosts
+          .filter(
+            (renderedPost) =>
+              renderedPost.post.published !== false &&
+              renderedPost.postGeneratedJSFile
+          )
+          .map(({postGeneratedJSFile}) => [
+            postGeneratedJSFile.name,
+            postGeneratedJSFile.filepath,
+          ])
+      ),
+      // bundles for specific page types
+      {
+        home: './client/home.js',
+        post: './client/post.js',
+      }
+    ),
+    buildCache.caches
   );
-  console.log(parcelResult.toString());
+  buildCache.caches = builtBundles.caches;
 
-  rimraf.sync(jsTempDir);
+  console.log('\nrebuilding pages');
+  // post full view pages
+  renderedPosts.forEach(({post, rendered, postGeneratedJSFile}) => {
+    const html = renderTemplate(
+      postFullTemplate,
+      mergeDisjoint(
+        getPartials({
+          builtBundles,
+          requiredBundleNames: [
+            'post',
+            postGeneratedJSFile ? postGeneratedJSFile.name : null,
+          ].filter(Boolean),
+        }),
+        {
+          post: mergeDisjoint(Object.assign(post, {body: rendered.postHTML}), {
+            created_human: moment(post.created).format('MMMM D, YYYY'),
+          }),
+          meta_description: getPostMarkdown(post)
+            .replace(/<[^>]*>/g, '') // best effort to strip tags
+            .replace(/\n+/g, ' ')
+            .slice(0, 155),
+        }
+      )
+    );
+    fs.writeFileSync(`./build/${post.slug}`, html, {encoding: 'utf8'});
+  });
 
   // post previews
   const postsShortTexts = [];
-  publishedPosts.forEach(post => {
-    const preview = renderPostPreview(post);
+  renderedPosts
+    .filter((p) => p.published !== false)
+    .forEach(({post, postGeneratedJSFile}) => {
+      const preview = renderPostPreview(post);
 
-    const postShortText = renderTemplate(
-      postShortTemplate,
-      mergeDisjoint(partials, {
-        post: mergeDisjoint(post, {
-          created_human: moment(post.created).format('MMMM D, YYYY'),
-          body_short: preview,
-        }),
-      })
-    );
-    postsShortTexts.push(postShortText);
-  });
+      const postShortText = renderTemplate(
+        postShortTemplate,
+        mergeDisjoint(getPartials(), {
+          post: mergeDisjoint(post, {
+            created_human: moment(post.created).format('MMMM D, YYYY'),
+            body_short: preview,
+          }),
+        })
+      );
+      postsShortTexts.push(postShortText);
+    });
 
   // rss
   const rss = renderTemplate(
     rssTemplate,
-    mergeDisjoint(partials, {
-      posts: publishedPosts.map(post =>
+    mergeDisjoint(getPartials(), {
+      posts: publishedPosts.map((post) =>
         mergeDisjoint(post, {
           created_rss: moment(post.created).format(
             'ddd, DD MMM YYYY HH:mm:ss ZZ'
@@ -134,41 +205,34 @@ function run() {
   // front page
   const frontpage = renderTemplate(
     listPageTemplate,
-    mergeDisjoint(partials, {
-      views_rows: postsShortTexts.join('\n'),
-    })
+    mergeDisjoint(
+      getPartials({
+        builtBundles,
+        requiredBundleNames: ['home'],
+      }),
+      {
+        views_rows: postsShortTexts.join('\n'),
+      }
+    )
   );
   fs.writeFileSync(`./build/index.html`, frontpage, {encoding: 'utf8'});
-
-  {
-    const content = ['build/index.html', 'html/assets/main.js'].concat(
-      publishedPosts.map(p => `build/${p.slug}`)
-    );
-    const css = ['./html/assets/main.css'];
-
-    const options = {
-      output: './build/assets/main.css',
-
-      info: verbosePurifyCSS,
-
-      // Logs out removed selectors.
-      rejected: verbosePurifyCSS,
-    };
-
-    purify(content, css, options);
-  }
-
-  fs.writeFileSync(
-    './build/manifest.json',
-    JSON.stringify({host: options.host}, null, 2)
-  );
 
   if (process.argv.includes('--publish')) {
     spawn(`node upload`, {stdio: 'inherit'});
   }
+  console.log('done at', new Date().toString());
 }
 
 if (!module.parent) {
-  run();
+  Error.stackTraceLimit = Infinity;
+
+  run({
+    DEV: process.env.NODE_ENV === 'development',
+    HOST: process.env.HOST,
+    skipRsync: process.argv.includes('--skip-rsync'),
+  }).catch((err) => {
+    console.error('build err:', err);
+    process.exit(1);
+  });
 }
 module.exports = run;

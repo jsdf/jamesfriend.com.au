@@ -12,10 +12,10 @@ function die(msg) {
 
 function trapInvalidAccesses(obj) {
   const objWithSubObjectsWrapped = {};
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     if (obj[key] && typeof obj[key] == 'object') {
       if (Array.isArray(obj[key])) {
-        objWithSubObjectsWrapped[key] = obj[key] = obj[key].map(v =>
+        objWithSubObjectsWrapped[key] = obj[key] = obj[key].map((v) =>
           trapInvalidAccesses(v)
         );
       } else {
@@ -45,7 +45,7 @@ function mergeDisjoint(...args /*:Array<Object>*/) {
   const target = {};
   for (var i = 0; i < args.length; i++) {
     const source = args[i];
-    Object.keys(source).forEach(key => {
+    Object.keys(source).forEach((key) => {
       if (key in target) die(`tried to merge duplicate key ${key} into object`);
       target[key] = source[key];
     });
@@ -64,6 +64,7 @@ function renderTemplate(template /*:Object*/, data /*:Object*/) {
 }
 
 function loadTemplate(name /*: string*/) {
+  console.log('loadTemplate', name);
   const filepath = __dirname + `/templates/${name}.mustache`;
   const template = hogan.compile(fs.readFileSync(filepath, {encoding: 'utf8'}));
   template.name = name;
@@ -93,6 +94,7 @@ function getPostJSCodeFilepath(post /*:Object*/) {
 }
 
 function generatePostJSCode(
+  post,
   reactComponents /*: Array<RenderedPostReactComponent>*/
 ) /*: ?string*/ {
   if (reactComponents.length === 0) {
@@ -103,20 +105,20 @@ function generatePostJSCode(
   reactComponents.forEach(({id, jsx}) => {
     matchAll(jsx, /\<([A-Z]\w+)/g)
       .toArray()
-      .forEach(componentClass => {
+      .forEach((componentClass) => {
         componentClasses.add(componentClass);
       });
   });
 
   const componentImports = Array.from(componentClasses)
-    .map(c => `import ${c} from '../../components/${c}';`)
+    .map((c) => `import ${c} from '../../components/${c}';`)
     .join('\n');
 
   return `
 import React from 'react';
 import renderComponent from '../../components/renderComponent';
 ${componentImports}
-
+${post.require ? `require('../../${post.require}');` : ''}
 
 ${reactComponents
   .map(({id, jsx}) => `renderComponent(${jsx}, '${id}');`)
@@ -144,11 +146,7 @@ function renderPostBody(post /*: Object*/) /*: RenderedPost*/ {
     });
     return `<div id="${id}"></div>`;
   };
-  const postHTML =
-    marked(postMarkdown, {gfm: true, renderer}) +
-    (reactComponents.length
-      ? `<script type="text/javascript" src="/${post.slug}.js"></script>`
-      : '');
+  const postHTML = marked(postMarkdown, {gfm: true, renderer});
   return {postHTML, reactComponents};
 }
 
@@ -158,9 +156,16 @@ function renderPostPreview(post /*: Object*/) {
   const preview = $('p')
     .toArray()
     .slice(0, 3)
-    .map(el => `<p>${$(el).html()}</p>`)
+    .map((el) => `<p>${$(el).html()}</p>`)
     .join('\n');
   return preview;
+}
+
+function nullthrows(v) {
+  if (v == null) {
+    throw new Error('unexpected null');
+  }
+  return v;
 }
 
 module.exports = {
@@ -173,4 +178,5 @@ module.exports = {
   getPostJSCodeFilepath,
   JS_TEMP_DIR,
   getPostMarkdown,
+  nullthrows,
 };

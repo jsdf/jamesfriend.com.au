@@ -35,6 +35,7 @@ const cfCredentials = JSON.parse(
 const cf = cloudflare(cfCredentials);
 
 const uploadConfig = require('./uploadConfig');
+const redirects = require('./redirects');
 
 const maxAgeSecondsForever = 365 * 24 * 60 * 60;
 const maxAgeSecondsEphemeral = 4 * 60 * 60;
@@ -232,13 +233,13 @@ async function main() {
 
   await Promise.all(
     []
-      .concat(...uploadConfig.paths.map(p => glob.sync(p)))
+      .concat(...uploadConfig.paths.map((p) => glob.sync(p)))
       .filter(
-        filepath =>
+        (filepath) =>
           !(excludedPathsPattern && filepath.match(excludedPathsPattern))
       )
       .map(s3Sync)
   );
 }
 
-main().catch(err => console.error(err));
+main().catch((err) => console.error(err));

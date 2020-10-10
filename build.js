@@ -217,6 +217,11 @@ async function run({DEV, HOST, skipRsync, buildCache}) {
   );
   fs.writeFileSync(`./build/index.html`, frontpage, {encoding: 'utf8'});
 
+  fs.writeFileSync(
+    './build/manifest.json',
+    JSON.stringify({host: options.host}, null, 2)
+  );
+
   if (process.argv.includes('--publish')) {
     spawn(`node upload`, {stdio: 'inherit'});
   }

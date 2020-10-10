@@ -1,0 +1,24 @@
+.tooltip-content {
+  font-size: 14px;
+  color: #000;
+  background-color: #fff;
+  padding: 4px;
+  margin-left: 16px;
+  width: 540px;
+}
+
+.tooltip-outer {
+  height: 16px;
+  display: inline-block;
+}
+
+.tooltip-hidden {
+  // equivalent to .sr-only
+  // so tooltip remains shown for screen reader users
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

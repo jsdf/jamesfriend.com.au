@@ -38,7 +38,12 @@ async function rebuild({skipRsync}) {
 
 const buildDebounced = lodash.debounce(async () => {
   console.log('changes detected');
-  await currentBuild;
+
+  try {
+    await currentBuild;
+  } catch (err) {
+    // don't actually care becuase we're gonna rebuild again
+  }
   console.log('rebuilding');
   currentBuild = rebuild({skipRsync: true});
 }, 50);

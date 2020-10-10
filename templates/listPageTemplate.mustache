@@ -2,33 +2,40 @@
 <html>
   <head>
     {{{meta_tags}}}
-    <link rel="alternate" type="application/rss+xml" title="Front page feed" href="https://jamesfriend.com.au/rss.xml"/>
-    <meta name="description" content="I make stuff on the web. Front end junk and emulation stuff."/>
-    <link rel="canonical" href="https://jamesfriend.com.au/"/>
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Front page feed"
+      href="https://jamesfriend.com.au/rss.xml"
+    />
+    <meta
+      name="description"
+      content="I make stuff on the web. Front end junk and emulation stuff."
+    />
+    <link rel="canonical" href="https://jamesfriend.com.au/" />
     <title>James Friend | {{{site_slogan}}}</title>
-    {{{common_css}}}
-    {{{preload_js}}}
+    {{{common_css}}} {{{preload_js}}}
   </head>
-  <body>
-    {{! <div class="demo-container">
-      
-    </div> }}
-    <canvas id="demo" height="800"></canvas>
-    <div class="demo-overlay">
-      <header id="name-and-slogan" class="content">
-        <div id="site-name">
-          <a href="/" title="Home" rel="home">
-            <h1>James Friend</h1>
-          </a>
-        </div>
-        <!-- <div id="site-slogan">
-          {{{site_slogan}}} 
-        </div> -->
-      </header>
-      <nav class="content"> 
-        <h2>Projects</h2>
-        {{{top_links_bar}}}
-      </nav>
+  <body class="page-home">
+    <div class="demo-container">
+      <canvas id="demo" height="800"></canvas>
+      <div class="demo-fadeout"></div>
+      <div class="demo-overlay">
+        <header id="name-and-slogan" class="content">
+          <div id="site-name">
+            <a href="/" title="Home" rel="home">
+              <h1>James Friend</h1>
+            </a>
+          </div>
+          <!-- <div id="site-slogan">
+            {{{site_slogan}}} 
+          </div> -->
+        </header>
+        <nav class="content">
+          <h2>Projects</h2>
+          {{{top_links_bar}}}
+        </nav>
+      </div>
     </div>
 
     <section class="posts content">
@@ -37,10 +44,9 @@
       {{{views_rows}}}
     </section>
     <footer class="content">
-      {{{block_me}}}
-      {{{block_contact}}} 
+      {{{block_me}}} {{{block_contact}}}
     </footer>
-    
+
     {{{common_js}}}
   </body>
 </html>

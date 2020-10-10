@@ -30,9 +30,15 @@ const projects = [
     label: 'scaletoy',
   },
   {
-    url: 'https://github.com/jsdf/n64-sdk-demo',
+    url:
+      'https://github.com/jsdf/n64-sdk-demo#nintendo-64-homebrew-demo--tutorial',
     tip: 'Learn to make n64 games',
     label: 'Nintendo 64 SDK tutorial',
+  },
+  {
+    url: '/projects/tryhypercard',
+    tip: 'Explore HyperCard, the visual programming tool for Macintosh',
+    label: 'Try HyperCard',
   },
   {
     url: '/projects/wolf3d/Chocolate-Wolfenstein-3D.html',
@@ -221,7 +227,7 @@ module.exports = (
 </div>
      `;
     },
-    site_slogan: () => `dusting off the bones`,
+    site_slogan: () => `dusting off the digital bones`,
     rss_link: () =>
       `
 <a href="${context.options.host}/rss.xml" class="feed-icon" title="Subscribe to Front page feed">

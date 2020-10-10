@@ -22,12 +22,6 @@ html {
   -ms-text-size-adjust: 100%;
 }
 
-a:focus {
-  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
 a:hover,
 a:active {
   outline: 0;
@@ -59,12 +53,6 @@ button,
 input {
   *overflow: visible;
   line-height: normal;
-}
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  padding: 0;
-  border: 0;
 }
 
 button,
@@ -237,11 +225,6 @@ code {
   margin-top: 0em;
 }
 
-a:focus {
-  outline: none;
-  border: 0;
-}
-
 a {
   text-decoration: none;
 }
@@ -404,12 +387,6 @@ input.form-submit:hover {
 
 .submitted {
   margin-bottom: 1em;
-}
-
-img,
-a img {
-  border: none;
-  outline: none;
 }
 
 #main .border-none img {

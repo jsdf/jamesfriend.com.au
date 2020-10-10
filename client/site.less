@@ -1,6 +1,9 @@
 @content-width: 1100px;
 @main-col-width: 760px;
 @sidebar-width: @content-width - @main-col-width;
+@responsive-margin: 16px;
+@responsive-breakpoint: @content-width + @responsive-margin;
+@demo-height: 800px;
 
 html {
   margin: 0;
@@ -33,85 +36,6 @@ a:visited {
   overflow: hidden;
 }
 
-.content {
-  width: @content-width;
-  margin: 0 auto;
-}
-
-.two-col {
-  display: flex;
-  flex-direction: row;
-}
-
-.main-col {
-  width: @main-col-width;
-  padding: 0 32px 0 0;
-  @media only screen and (max-width: @content-width) {
-    width: initial;
-  }
-}
-
-.sidebar {
-  width: @sidebar-width;
-  @media only screen and (max-width: @content-width) {
-    width: initial;
-  }
-}
-
-article,
-.post,
-.sidebar {
-  /*font-size: 1.2em;*/
-  img {
-    width: 100%;
-    height: auto;
-  }
-}
-
-article,
-.post,
-.sidebar,
-.block {
-  img {
-    margin-bottom: 1em;
-  }
-}
-
-.submitted {
-  padding-bottom: 8px;
-}
-
-.demo-container {
-  position: relative;
-  height: 100vh;
-}
-.demo-overlay {
-  width: 100vw;
-  /*min-height: 100vh;*/
-  /*position: absolute;*/
-  left: 10px;
-  top: 10px;
-
-  margin-top: -800px;
-  transform: translate3d(0, 0, 0);
-}
-
-.block,
-.project-links {
-  padding: 0;
-  li {
-    list-style: none;
-    font-size: 24px;
-    line-height: 1.6em;
-  }
-}
-
-#site-name {
-  h1 {
-    margin-top: 120px;
-  }
-}
-
 h1 {
 }
 
@@ -133,39 +57,8 @@ h3 {
   margin: 0.4em 0 0.2em 0;
 }
 
-.post {
-  margin-bottom: 2em;
-  line-height: 1.4em;
-  font-size: 18px;
-}
-
-.post-header {
-  #site-name {
-    line-height: 44px;
-  }
-  #site-slogan {
-    line-height: 2em;
-  }
-}
-
-.post-body {
-  line-height: 1.35em;
-  font-size: 18px;
-}
-
-/* fonts */
 html {
-  font-family: 'Helvetica Neue', Helvetica, sans-serif;
-}
-
-#site-name {
-  h1 {
-    margin-top: 120px;
-  }
-}
-
-nav .project-links {
-  margin-bottom: 32px;
+  font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;
 }
 
 a {
@@ -194,4 +87,133 @@ h3 {
 
 ul {
   padding: 0;
+}
+
+// site stuff
+
+.submitted {
+  padding-bottom: 8px;
+}
+
+.block,
+.project-links {
+  padding: 0;
+  li {
+    list-style: none;
+    font-size: 24px;
+    line-height: 1.6em;
+  }
+}
+
+.post {
+  margin-bottom: 2em;
+  line-height: 1.4em;
+  font-size: 18px;
+}
+
+.post-body {
+  line-height: 1.35em;
+  font-size: 18px;
+}
+
+// site layout
+
+.content {
+  width: @content-width;
+  margin: 0 auto;
+
+  @media only screen and (max-width: @responsive-breakpoint) {
+    width: initial;
+    margin: @responsive-margin;
+  }
+}
+
+.two-col {
+  display: flex;
+  flex-direction: row;
+}
+
+.main-col {
+  width: @main-col-width;
+  padding: 0 32px 0 0;
+  @media only screen and (max-width: @responsive-breakpoint) {
+    width: initial;
+  }
+}
+
+.sidebar {
+  width: @sidebar-width;
+  @media only screen and (max-width: @responsive-breakpoint) {
+    width: initial;
+  }
+}
+
+article,
+.post,
+.sidebar {
+  /*font-size: 1.2em;*/
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+article,
+.post,
+.sidebar,
+.block {
+  img {
+    margin-bottom: 1em;
+  }
+}
+
+// local overrides
+
+.demo-container {
+  overflow-x: hidden;
+  position: relative;
+}
+.demo-fadeout {
+  background-image: linear-gradient(to bottom, transparent, white);
+  width: 100%;
+  height: @demo-height / 4;
+  position: absolute;
+  top: @demo-height / 4 * 3;
+  left: 0;
+}
+.demo-overlay {
+  width: 100vw;
+  max-width: 100%;
+  position: relative;
+
+  margin-top: -@demo-height;
+  transform: translate3d(0, 0, 0);
+}
+.post-header {
+  #site-name {
+    line-height: 44px;
+  }
+  #site-slogan {
+    line-height: 2em;
+  }
+}
+
+// home page links
+nav .project-links {
+  margin-bottom: 32px;
+  li a {
+    display: block;
+    min-width: 600px;
+  }
+}
+
+#site-name {
+  margin-top: 64px;
+}
+.page-home {
+  #site-name {
+    h1 {
+      margin-top: 120px;
+    }
+  }
 }

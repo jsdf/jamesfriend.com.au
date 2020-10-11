@@ -120,12 +120,6 @@ export function attachDemo(canvas) {
     // fade in
     const intensity = frame / 300 < Math.PI / 2 ? Math.sin(frame / 300) : 1;
 
-    // particlesMap.forEach((particle) => {
-    //   if (particle.material !== particleMaterial) {
-    //     particle.material = particleMaterial;
-    //   }
-    // });
-
     // update the picking ray with the camera and mouse position
     raycaster.setFromCamera(mousePos, camera);
     // calculate objects intersecting the picking ray
@@ -148,8 +142,8 @@ export function attachDemo(canvas) {
     // calculate mouse position in normalized device coordinates
     // (-1 to +1) for both components
 
-    mousePos.x = ((event.clientX - rect.left) / window.innerWidth) * 2 - 1;
-    mousePos.y = -((event.clientY - rect.top) / window.innerHeight) * 2 + 1;
+    mousePos.x = ((event.clientX - rect.left) / canvas.width) * 2 - 1;
+    mousePos.y = -((event.clientY - rect.top) / canvas.height) * 2 + 1;
   }
 
   const onResize = throttle(() => {
@@ -164,7 +158,7 @@ export function attachDemo(canvas) {
     }
   }
 
-  window.addEventListener('mousemove', onMouseMove, false);
+  window.addEventListener('pointermove', onMouseMove, false);
   window.addEventListener('resize', onResize);
   window.addEventListener('scroll', onScroll);
 }

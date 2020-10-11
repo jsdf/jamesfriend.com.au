@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node build",
     "start": "NODE_ENV=development node development-server",
-    "deploy": "node build && node upload",
+    "deploy": "NODE_ENV=production node build && node upload",
     "upload": "node upload"
   },
   "dependencies": {

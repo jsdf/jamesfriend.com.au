@@ -153,9 +153,10 @@ module.exports = (
       `
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <link rel="shortcut icon" href="${context.options.host}/favicon.ico" type="image/vnd.microsoft.icon"/>
-<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="AppleScript"/>
 `,
+
     sidebar: () =>
       `
 <div class="sidebar"> 

@@ -7,15 +7,16 @@ const exec = require('child_process').execSync;
 const util = require('util');
 const path = require('path');
 const fs = require('fs');
-const useHTTPS = true;
 
 const sane = require('sane');
 const lodash = require('lodash');
 
 const runBuild = require('./build');
 
+const useHTTPS = true;
 const port = 8081;
-const host = `${useHTTPS ? 'https' : 'http'}://localhost:${port}`;
+const hostIP = process.env.HOSTIP || 'localhost';
+const host = `${useHTTPS ? 'https' : 'http'}://${hostIP}:${port}`;
 const DEV = process.env.NODE_ENV != 'production';
 const useCache = false;
 
@@ -194,7 +195,7 @@ if (useHTTPS) {
   const http = require('http');
   server = http.createServer(handler);
 }
-server.listen(port);
+server.listen(port, '0.0.0.0');
 
 currentBuild = rebuild({skipRsync: false});
 

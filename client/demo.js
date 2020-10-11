@@ -73,7 +73,7 @@ export function attachDemo(canvas) {
 
   updateCanvasSize();
 
-  var cube = makeCube();
+  let cube = makeCube();
 
   scene.add(cube);
   cube.material.opacity = 0;
@@ -111,8 +111,10 @@ export function attachDemo(canvas) {
 
   scene.add(particleObj);
 
-  var raycaster = new THREE.Raycaster();
-  var mousePos = new THREE.Vector2();
+  let raycaster = new THREE.Raycaster();
+
+  let isTouching = true; // treat mouse as always touching
+  let mousePos = new THREE.Vector2();
 
   let frame = 0;
   const renderLoop = createRenderLoop(() => {
@@ -120,13 +122,15 @@ export function attachDemo(canvas) {
     // fade in
     const intensity = frame / 300 < Math.PI / 2 ? Math.sin(frame / 300) : 1;
 
-    // update the picking ray with the camera and mouse position
-    raycaster.setFromCamera(mousePos, camera);
-    // calculate objects intersecting the picking ray
-    const intersects = raycaster.intersectObjects([...particlesMap.values()]);
+    if (isTouching) {
+      // update the picking ray with the camera and mouse position
+      raycaster.setFromCamera(mousePos, camera);
+      // calculate objects intersecting the picking ray
+      const intersects = raycaster.intersectObjects([...particlesMap.values()]);
 
-    for (const intersect of intersects) {
-      intersect.object.material = particleSelectMaterial;
+      for (const intersect of intersects) {
+        intersect.object.material = particleSelectMaterial;
+      }
     }
 
     particleObj.position.x += 0.1;
@@ -138,7 +142,7 @@ export function attachDemo(canvas) {
   });
 
   function onMouseMove(event) {
-    var rect = canvas.getBoundingClientRect();
+    let rect = canvas.getBoundingClientRect();
     // calculate mouse position in normalized device coordinates
     // (-1 to +1) for both components
 
@@ -159,6 +163,12 @@ export function attachDemo(canvas) {
   }
 
   window.addEventListener('pointermove', onMouseMove, false);
+  window.addEventListener('touchstart', () => {
+    isTouching = true;
+  });
+  window.addEventListener('touchend', () => {
+    isTouching = false;
+  });
   window.addEventListener('resize', onResize);
   window.addEventListener('scroll', onScroll);
 }
@@ -176,9 +186,9 @@ const particleSelectMaterial = new THREE.MeshBasicMaterial({
 });
 
 function makeCube() {
-  var geometry = new THREE.BoxGeometry(3, 3, 3);
+  let geometry = new THREE.BoxGeometry(3, 3, 3);
 
-  var material = new THREE.MeshBasicMaterial({
+  let material = new THREE.MeshBasicMaterial({
     color: 0xffe259,
     transparent: true,
   });

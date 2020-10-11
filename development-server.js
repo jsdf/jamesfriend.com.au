@@ -13,7 +13,7 @@ const lodash = require('lodash');
 
 const runBuild = require('./build');
 
-const useHTTPS = true;
+const useHTTPS = false;
 const port = 8081;
 const hostIP = process.env.HOSTIP || 'localhost';
 const host = `${useHTTPS ? 'https' : 'http'}://${hostIP}:${port}`;

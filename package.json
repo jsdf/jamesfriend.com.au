@@ -46,6 +46,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-styles": "^3.10.0",
+    "rollup-plugin-terser": "^7.0.2",
     "sane": "^4.1.0",
     "stats.js": "^0.17.0",
     "three": "^0.121.1",

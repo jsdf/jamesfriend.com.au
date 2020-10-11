@@ -1,4 +1,16 @@
-import * as THREE from 'three';
+import {
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  FogExp2,
+  Group,
+  Raycaster,
+  Vector2,
+  MeshBasicMaterial,
+  BoxGeometry,
+  Mesh,
+  IcosahedronGeometry,
+} from 'three';
 import Scroller from './demo/Scroller';
 import {Noise} from 'noisejs';
 import throttle from './throttle';
@@ -49,16 +61,16 @@ function dpr() {
 }
 
 export function attachDemo(canvas) {
-  const scene = new THREE.Scene();
+  const scene = new Scene();
 
-  const camera = new THREE.PerspectiveCamera(
+  const camera = new PerspectiveCamera(
     75,
     canvas.width / canvas.height,
     0.1,
     1000
   );
 
-  const renderer = new THREE.WebGLRenderer({canvas, antialias: true});
+  const renderer = new WebGLRenderer({canvas, antialias: true});
   renderer.setClearColor(0xffffff, 1);
 
   function updateCanvasSize() {
@@ -80,8 +92,8 @@ export function attachDemo(canvas) {
   camera.position.x = 10;
   camera.lookAt(cube.position);
 
-  scene.fog = new THREE.FogExp2(0xffffff, 0.012);
-  const particleObj = new THREE.Group();
+  scene.fog = new FogExp2(0xffffff, 0.012);
+  const particleObj = new Group();
   const particlesMap = new Map();
 
   particleObj.position.y = 0;
@@ -111,10 +123,10 @@ export function attachDemo(canvas) {
 
   scene.add(particleObj);
 
-  let raycaster = new THREE.Raycaster();
+  let raycaster = new Raycaster();
 
-  let isTouching = true; // treat mouse as always touching
-  let mousePos = new THREE.Vector2();
+  let isTouching = false;
+  let mousePos = new Vector2(2, 2); // start outside -1 to +1 range
 
   let frame = 0;
   const renderLoop = createRenderLoop(() => {
@@ -163,6 +175,9 @@ export function attachDemo(canvas) {
   }
 
   window.addEventListener('pointermove', onMouseMove, false);
+  window.addEventListener('mousemove', () => {
+    isTouching = true;
+  });
   window.addEventListener('touchstart', () => {
     isTouching = true;
   });
@@ -173,38 +188,38 @@ export function attachDemo(canvas) {
   window.addEventListener('scroll', onScroll);
 }
 
-const particleMaterial = new THREE.MeshBasicMaterial({
+const particleMaterial = new MeshBasicMaterial({
   color: 0x03efba,
   transparent: true,
   wireframe: true,
 });
 
-const particleSelectMaterial = new THREE.MeshBasicMaterial({
+const particleSelectMaterial = new MeshBasicMaterial({
   color: 0x03efba,
   transparent: true,
   wireframe: false,
 });
 
 function makeCube() {
-  let geometry = new THREE.BoxGeometry(3, 3, 3);
+  let geometry = new BoxGeometry(3, 3, 3);
 
-  let material = new THREE.MeshBasicMaterial({
+  let material = new MeshBasicMaterial({
     color: 0xffe259,
     transparent: true,
   });
-  return new THREE.Mesh(geometry, material);
+  return new Mesh(geometry, material);
 }
 
 function makeSphere(customMaterial) {
-  const geometry = new THREE.IcosahedronGeometry(3, 0);
+  const geometry = new IcosahedronGeometry(3, 0);
 
   const material =
     customMaterial ||
-    new THREE.MeshBasicMaterial({
+    new MeshBasicMaterial({
       color: 0xffe259,
       transparent: true,
     });
-  return new THREE.Mesh(geometry, material);
+  return new Mesh(geometry, material);
 }
 
 function makeParticle(x) {

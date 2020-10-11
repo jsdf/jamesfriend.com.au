@@ -5,6 +5,7 @@ import styles from 'rollup-plugin-styles';
 import babel from '@rollup/plugin-babel';
 import alias from '@rollup/plugin-alias';
 import replace from '@rollup/plugin-replace';
+import {terser} from 'rollup-plugin-terser';
 
 import nested from 'postcss-nested';
 import cssnano from 'cssnano';
@@ -32,10 +33,7 @@ export default {
 
   plugins: [
     styles({
-      plugins: [
-        nested(),
-        // cssnano(),
-      ],
+      plugins: [nested(), DEV ? null : cssnano()].filter(Boolean),
       mode: 'extract',
     }),
     babel({
@@ -56,14 +54,20 @@ export default {
             ? 'react-dom/cjs/react-dom.development.js'
             : 'react-dom/cjs/react-dom.production.min.js',
         },
+        // {
+        //   find: 'three',
+        //   replacement: 'three/src/Three.js',
+        // },
       ],
     }),
 
-    resolve(),
+    resolve({}),
     commonjs(),
 
     replace({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
-  ],
+
+    DEV ? null : terser(), // minify
+  ].filter(Boolean),
 };

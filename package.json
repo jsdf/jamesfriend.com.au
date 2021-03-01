@@ -49,7 +49,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "sane": "^4.1.0",
     "stats.js": "^0.17.0",
-    "three": "^0.121.1",
+    "three": "^0.125.0",
     "to-markdown": "^3.1.1"
   },
   "devDependencies": {

@@ -20,14 +20,19 @@ const projects = [
     label: 'Goose 64',
   },
   {
-    url: 'https://jsdf.github.io/little-virtual-computer/computer1',
-    tip: 'Learn how computers work by simulating them in Javascript',
-    label: 'Little Virtual Computer',
+    url: 'https://github.com/jsdf/applescript-raytracer',
+    label: 'applescript-raytracer',
+    tip: 'A raytracer written in AppleScript',
   },
   {
     url: 'https://jsdf.github.io/scaletoy',
     tip: 'Easily explore chords and scales',
     label: 'scaletoy',
+  },
+  {
+    url: 'https://github.com/jsdf/n64soundtools',
+    label: 'n64soundtools',
+    tip: 'Tools for adding sound and music to N64 SDK homebrew games',
   },
   {
     url:
@@ -36,9 +41,20 @@ const projects = [
     label: 'Nintendo 64 SDK tutorial',
   },
   {
+    url: 'https://jsdf.github.io/little-virtual-computer/computer1',
+    label: 'Little Virtual Computer',
+    tip: 'Learn how computers work by simulating them in Javascript',
+  },
+  {
     url: '/projects/tryhypercard',
     tip: 'Explore HyperCard, the visual programming tool for Macintosh',
     label: 'Try HyperCard',
+  },
+  {
+    url: 'https://github.com/jsdf/robot-control',
+    label: 'robot',
+    tip:
+      'A crappy robot arm I built and wrote inverse kinematics-based control software for',
   },
   {
     url: '/projects/wolf3d/Chocolate-Wolfenstein-3D.html',
@@ -51,6 +67,12 @@ const projects = [
     label: 'ReasonPhysics',
   },
   {
+    url: 'https://jsdf.github.io/sysex-loader/',
+    tip:
+      'a tool for uploading and downloading sysex patches/samples/messages to your midi gear from your web browser',
+    label: 'sysex-loader',
+  },
+  {
     url: 'https://jsdf.github.io/planetarium/',
     tip:
       'A beat-synced music visualization which controls RGB LED strips via bluetooth',
@@ -60,6 +82,17 @@ const projects = [
     url: 'https://github.com/jsdf/ed64log',
     tip: 'A development tool for debugging homebrew n64 games',
     label: 'Everdrive 64 logger',
+  },
+  {
+    url: 'https://jsdf.github.io/aiff-explorer/',
+    label: 'aiff explorer',
+    tip: 'A tool for peeking at the structure of AIFF audio files',
+  },
+  {
+    url: 'https://jsdf.github.io/bit-packing-explorer/',
+    tip:
+      'Play around with storing multiple pieces of data in a single number value using bit packing',
+    label: 'bit packing explorer',
   },
   {
     url: 'https://jsdf.github.io/lisp.re/',

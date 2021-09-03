@@ -8,7 +8,7 @@ Place the Hypercard stack you want to access somewhere within your user folder: 
 
 Download [this zip file](/hypercard/hypercard2021.zip) [95mb] containing the [SheepShaver](http://sheepshaver.cebix.net/) classic Mac emulator bundled with Mac OS 9 and Hypercard.
 
-Extract the zip file. It contains an app called Sheepshaver, and a file called `hypercard.sheepvm`. Double click the `hypercard.sheepvm` file. This should open a window containing Mac OS 9, which will boot up. If it doesn't work (Sheepshaver immediately quits) you can try dragging and dropping `hypercard.sheepvm` onto the Sheepshaver app.
+Extract the zip file. It contains an app called SheepShaver, and a file called `hypercard.sheepvm`. Double click the `hypercard.sheepvm` file. This should open a window containing Mac OS 9, which will boot up. If it doesn't work (SheepShaver immediately quits) you can try dragging and dropping `hypercard.sheepvm` onto the SheepShaver app.
 
 On the Mac OS 9 desktop there should be a disk called "Unix". This is a virtual disk which actually lets you access files on your computer (eg. outside the emulator). Opening it is equivalent to opening your OS X `/Users/` directory.
 

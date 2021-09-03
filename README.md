@@ -12,11 +12,11 @@ https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-develop
 then
 
 ```
-node development-server.js
+npm start
 ```
 
 ### build for prod and publish to s3
 
 ```
-node build && node upload
+npm run deploy
 ```

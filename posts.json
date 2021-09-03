@@ -8,6 +8,13 @@
     "published": false
   },
   {
+    "id": "21",
+    "slug": "running-hypercard-stack-2021",
+    "title": " Running a Hypercard stack on a modern Mac in 2021",
+    "author": "James",
+    "created": "2021-09-03T16:37:00-04:00"
+  },
+  {
     "id": "19",
     "slug": "basilisk-ii-classic-mac-emulator-in-the-browser",
     "title": "Porting the Basilisk II classic Macintosh emulator to the browser",

@@ -1,15 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=512" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>PCE.js Classic Mac OS in the Browser</title>
-    <meta name="viewport" content="width=512">
-    <link rel="stylesheet" type="text/css" href="pce-ui.css">
-    <link rel="stylesheet" type="text/css" href="pce-ui-macplus.css">
+    <link rel="stylesheet" type="text/css" href="pce-ui.css" />
+    <link rel="stylesheet" type="text/css" href="pce-ui-macplus.css" />
     <style type="text/css">
       body {
-        background: #F0F0F0;
+        background: #f0f0f0;
         box-shadow: none;
         margin: 0;
       }
@@ -36,27 +36,41 @@
     </style>
   </head>
   <body>
-      <div id="titlebar">
-        <p>PCE.js - a hack by <a href="http://jsdf.co/">James Friend</a></p>
-        <div class="description">
-          PCE.js emulates classic computers in the browser. <span class="small"> This is a cut-down version for mobile devices, running Mac OS System 1.1 and Finder 1.1g. Try it in landscape orientation! Also, if you're having trouble double clicking, trying slowing down your taps to about one per second.</span>
-        </div>
+    <div id="titlebar">
+      <p>PCE.js - a hack by <a href="http://jsdf.co/">James Friend</a></p>
+      <div class="description">
+        PCE.js emulates classic computers in the browser.
+        <span class="small">
+          This is a cut-down version for mobile devices, running Mac OS System
+          1.1 and Finder 1.1g. Try it in landscape orientation! Also, if you're
+          having trouble double clicking, trying slowing down your taps to about
+          one per second.</span
+        >
       </div>
-      
+    </div>
+
     <div class="container">
       <div class="emscripten" id="status">Downloading...</div>
       <div class="emscripten">
-        <progress value="0" max="100" id="progress" hidden=1></progress>  
+        <progress value="0" max="100" id="progress" hidden="1"></progress>
       </div>
       <div class="emscripten_border">
-        <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+        <canvas
+          class="emscripten"
+          id="canvas"
+          oncontextmenu="event.preventDefault()"
+        ></canvas>
       </div>
 
       <div class="emscripten" id="fullscreencontrols">
-        <input type="checkbox" id="resize">Resize canvas
-        <input type="checkbox" id="pointerLock" checked>Lock/hide mouse pointer
-        &nbsp;&nbsp;&nbsp;
-        <input type="button" value="Fullscreen" onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked,document.getElementById('resize').checked)">
+        <input type="checkbox" id="resize" />Resize canvas
+        <input type="checkbox" id="pointerLock" checked />Lock/hide mouse
+        pointer &nbsp;&nbsp;&nbsp;
+        <input
+          type="button"
+          value="Fullscreen"
+          onclick="Module.requestFullScreen(document.getElementById('pointerLock').checked,document.getElementById('resize').checked)"
+        />
       </div>
       <textarea class="emscripten" id="output" rows="8"></textarea>
     </div>

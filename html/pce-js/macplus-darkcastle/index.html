@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-<meta name="viewport" content="">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
     <style type="text/css">
-    * {
-      font-family: sans-serif;
-    }
-    p {
-      font-size: 14px;
-      margin: 8px 0;
-      color: #888;
-    }
-    .pcejs {
-      padding-right: 0;
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-      text-align: center;
-    }
-    div.pcejs-border {
-      border: none;
-    }
-    /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-    .pcejs-canvas {
-      border: 0px none;
-    }
-    .pcejs-container {
-      margin-top: 32px;
-      text-align: center;
-    }
+      * {
+        font-family: sans-serif;
+      }
+      p {
+        font-size: 14px;
+        margin: 8px 0;
+        color: #888;
+      }
+      .pcejs {
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        text-align: center;
+      }
+      div.pcejs-border {
+        border: none;
+      }
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      .pcejs-canvas {
+        border: 0px none;
+      }
+      .pcejs-container {
+        margin-top: 32px;
+        text-align: center;
+      }
 
-    /* macplus has mouse integration, so we can hide the host mouse */
-    .pcejs-container canvas {
-      cursor: none;
-    }
-
+      /* macplus has mouse integration, so we can hide the host mouse */
+      .pcejs-container canvas {
+        cursor: none;
+      }
     </style>
   </head>
   <body>
     <div class="pcejs pcejs-container">
       <div class="pcejs pcejs-loading-status">Downloading...</div>
       <div class="pcejs-border">
-        <canvas class="pcejs pcejs-canvas" oncontextmenu="event.preventDefault()"></canvas>
+        <canvas
+          class="pcejs pcejs-canvas"
+          oncontextmenu="event.preventDefault()"
+        ></canvas>
       </div>
     </div>
 

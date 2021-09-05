@@ -1,14 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>The Oregon Trail</title>
-    <link rel="stylesheet" type="text/css" href="css/pce.css">
-    <meta name="viewport" content="">
+    <link rel="stylesheet" type="text/css" href="css/pce.css" />
+
     <style type="text/css">
       h1 {
-        font-size:48px;
+        font-size: 48px;
         display: block;
         text-align: center;
       }
@@ -20,14 +21,21 @@
     <script type="text/javascript" src="js/pce-deps.js"></script>
     <script type="text/javascript" src="js/pce.js"></script>
     <script type="text/javascript">
-      PCEJS.init('ontouchstart' in window ? {} : {
-        canvasScale: 1.5,
-        canvasOffset: 100,
-        zoomControls: true
-      });
+      PCEJS.init(
+        'ontouchstart' in window
+          ? {}
+          : {
+              canvasScale: 1.5,
+              canvasOffset: 100,
+              zoomControls: true,
+            }
+      );
     </script>
 
     <script type="text/javascript" src="pce-macplus.js"></script>
-    <script type="text/javascript" src="/pce-js/pcejs-mobile-support.js"></script>
+    <script
+      type="text/javascript"
+      src="/pce-js/pcejs-mobile-support.js"
+    ></script>
   </body>
 </html>

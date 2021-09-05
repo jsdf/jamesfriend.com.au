@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Wolfenstein 3D</title>
     <style>
       body {
@@ -11,11 +12,19 @@
         padding: none;
       }
 
-      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
-      div.emscripten { text-align: center; }      
-      div.emscripten_border {   }
+      .emscripten {
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+      div.emscripten {
+        text-align: center;
+      }
+      div.emscripten_border {
+      }
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten { 
+      canvas.emscripten {
         transform: scaleY(2.4) scaleX(2);
         transform-origin: top;
         image-rendering: pixelated;
@@ -23,7 +32,7 @@
         background-color: black;
       }
 
-      .fullscreen canvas.emscripten { ;
+      .fullscreen canvas.emscripten {
         transform: none;
         margin-top: none;
       }
@@ -56,21 +65,17 @@
       .controlbox {
         display: flex;
         justify-content: center;
-      } 
+      }
       .statusarea {
         padding-left: 10px;
         padding-top: 2px;
       }
- 
     </style>
   </head>
   <body>
-
-
-  <div class="controlbox">
-
-    <div id="controls">
-      <!-- <input type="checkbox" id="resize">Resize canvas
+    <div class="controlbox">
+      <div id="controls">
+        <!-- <input type="checkbox" id="resize">Resize canvas
       <input type="checkbox" id="pointerLock" checked>Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;
       
         <input type="button" value="Fullscreen" onclick="
@@ -81,29 +86,33 @@
         );">
 -->
 
-    <script type="text/javascript">
-      function resumeSDLAudioContext() {
-        SDL.audioContext.resume().then(function() {
-          console.log('Playback resumed successfully');
-        });
-      }
+        <script type="text/javascript">
+          function resumeSDLAudioContext() {
+            SDL.audioContext.resume().then(function() {
+              console.log('Playback resumed successfully');
+            });
+          }
 
-      function scaleCanvas(size) {
-        document.querySelector('#canvas').style.transform = `scaleY(${size===2?2.4:3.6}) scaleX(${size})`
-      }
-    </script>
+          function scaleCanvas(size) {
+            document.querySelector('#canvas').style.transform = `scaleY(${
+              size === 2 ? 2.4 : 3.6
+            }) scaleX(${size})`;
+          }
+        </script>
 
-    <button id="enableSound" onclick="resumeSDLAudioContext()">enable sound</button>
-    <button id="screen2x" onclick="scaleCanvas(2)">2x scale</button>
-    <button id="screen3x" onclick="scaleCanvas(3)">3x scale</button>
-    </div> 
+        <button id="enableSound" onclick="resumeSDLAudioContext()">
+          enable sound
+        </button>
+        <button id="screen2x" onclick="scaleCanvas(2)">2x scale</button>
+        <button id="screen3x" onclick="scaleCanvas(3)">3x scale</button>
+      </div>
 
-    <div class="statusarea">
-      <div class="spinner" id="spinner"></div>
-      <div class="emscripten" id="status">Downloading...</div>
-    </div>
+      <div class="statusarea">
+        <div class="spinner" id="spinner"></div>
+        <div class="emscripten" id="status">Downloading...</div>
+      </div>
 
-    <pre style="position: absolute;top: 10px; left: 10px">
+      <pre style="position: absolute;top: 10px; left: 10px">
       <a href="/">home</a>
       <a href="https://twitter.com/ur_friend_james">twitter</a>
 
@@ -115,24 +124,23 @@
       alt+arrow keys: strafe
       number keys: change weapon
     </pre>
-
-
-
-  </div> <!-- end controlbox -->
+    </div>
+    <!-- end controlbox -->
 
     <div class="emscripten">
-      <progress value="0" max="100" id="progress" hidden=1></progress>
+      <progress value="0" max="100" id="progress" hidden="1"></progress>
     </div>
 
-
-</span>
-    
     <div class="emscripten_border">
-      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+      <canvas
+        class="emscripten"
+        id="canvas"
+        oncontextmenu="event.preventDefault()"
+      ></canvas>
     </div>
     <!-- <textarea id="output" rows="8"></textarea> -->
 
-    <script type='text/javascript'>
+    <script type="text/javascript">
       var statusElement = document.getElementById('status');
       var progressElement = document.getElementById('progress');
       var spinnerElement = document.getElementById('spinner');
@@ -158,7 +166,8 @@
           };
         })(),
         printErr: function(text) {
-          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+          if (arguments.length > 1)
+            text = Array.prototype.slice.call(arguments).join(' ');
           console.error(text);
         },
         canvas: (function() {
@@ -167,12 +176,20 @@
           // As a default initial behavior, pop up an alert when webgl context is lost. To make your
           // application robust, you may want to override this behavior before shipping!
           // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
-          canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+          canvas.addEventListener(
+            'webglcontextlost',
+            function(e) {
+              alert('WebGL context lost. You will need to reload the page.');
+              e.preventDefault();
+            },
+            false
+          );
 
           return canvas;
         })(),
         setStatus: function(text) {
-          if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+          if (!Module.setStatus.last)
+            Module.setStatus.last = {time: Date.now(), text: ''};
           if (text === Module.setStatus.last.text) return;
           var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
           var now = Date.now();
@@ -181,8 +198,8 @@
           Module.setStatus.last.text = text;
           if (m) {
             text = m[1];
-            progressElement.value = parseInt(m[2])*100;
-            progressElement.max = parseInt(m[4])*100;
+            progressElement.value = parseInt(m[2]) * 100;
+            progressElement.max = parseInt(m[4]) * 100;
             progressElement.hidden = false;
             // spinnerElement.hidden = false;
           } else {
@@ -196,8 +213,16 @@
         totalDependencies: 0,
         monitorRunDependencies: function(left) {
           this.totalDependencies = Math.max(this.totalDependencies, left);
-          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-        }
+          Module.setStatus(
+            left
+              ? 'Preparing... (' +
+                  (this.totalDependencies - left) +
+                  '/' +
+                  this.totalDependencies +
+                  ')'
+              : 'All downloads complete.'
+          );
+        },
       };
       Module.setStatus('Downloading...');
       window.onerror = function(event) {
@@ -209,7 +234,11 @@
         };
       };
     </script>
-    <script async type="text/javascript" src="Chocolate-Wolfenstein-3D.js"></script>
+    <script
+      async
+      type="text/javascript"
+      src="Chocolate-Wolfenstein-3D.js"
+    ></script>
 
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -217,12 +246,16 @@
       _gaq.push(['_trackPageview']);
 
       (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src =
+          ('https:' == document.location.protocol
+            ? 'https://ssl'
+            : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
       })();
     </script>
   </body>
 </html>
-
-

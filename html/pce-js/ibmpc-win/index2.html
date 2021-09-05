@@ -1,33 +1,74 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-      html {height: 100%;}
-      body {height: 100%;}
-      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
-      textarea.emscripten { font-family: monospace; width: 80%; }
-      div.emscripten { text-align: center; }
-      div.emscripten_border { border: none; margin-top: 1em }
+      html {
+        height: 100%;
+      }
+      body {
+        height: 100%;
+      }
+      .emscripten {
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+      textarea.emscripten {
+        font-family: monospace;
+        width: 80%;
+      }
+      div.emscripten {
+        text-align: center;
+      }
+      div.emscripten_border {
+        border: none;
+        margin-top: 1em;
+      }
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten { border: 0px none; }
-      .resize, .pointerLock {display: none}
+      canvas.emscripten {
+        border: 0px none;
+      }
+      .resize,
+      .pointerLock {
+        display: none;
+      }
     </style>
     <title>James Friend | PCE.js IBM PC/XT in the Browser</title>
-    <link rel="stylesheet" type="text/css" href="../pce-ui.css">
-    <link rel="stylesheet" type="text/css" href="../pce-ui-macplus.css">
+    <link rel="stylesheet" type="text/css" href="../pce-ui.css" />
+    <link rel="stylesheet" type="text/css" href="../pce-ui-macplus.css" />
   </head>
   <body>
-      <div id="titlebar">
-        <h1>PCE.js IBM PC/XT emulator running Windows 3.0 &mdash; a hack by <a href="http://jamesfriend.com.au/">James Friend</a></h1>
-      </div>
-		<p>Sorry, this demo is broken at the moment. I'll have it fixed in a day or two. In the mean time check out these others:</p>
-          <ul>
-            <li><a href="http://jamesfriend.com.au/pce-js/ibmpc-games/">IBM PC - Wolf3d, Civ, Monkey Island</a></li>
-            <li><a href="http://jamesfriend.com.au/pce-js/">Mac Plus</a></li>
-            <li><a href="http://jamesfriend.com.au/pce-js/pce-js-apps/">Mac Plus - apps + games</a></li>
-            <li><a href="http://jamesfriend.com.au/pce-js/system6/">Mac Plus - System 6 + games</a></li>
-          </ul>
+    <div id="titlebar">
+      <h1>
+        PCE.js IBM PC/XT emulator running Windows 3.0 &mdash; a hack by
+        <a href="http://jamesfriend.com.au/">James Friend</a>
+      </h1>
+    </div>
+    <p>
+      Sorry, this demo is broken at the moment. I'll have it fixed in a day or
+      two. In the mean time check out these others:
+    </p>
+    <ul>
+      <li>
+        <a href="http://jamesfriend.com.au/pce-js/ibmpc-games/"
+          >IBM PC - Wolf3d, Civ, Monkey Island</a
+        >
+      </li>
+      <li><a href="http://jamesfriend.com.au/pce-js/">Mac Plus</a></li>
+      <li>
+        <a href="http://jamesfriend.com.au/pce-js/pce-js-apps/"
+          >Mac Plus - apps + games</a
+        >
+      </li>
+      <li>
+        <a href="http://jamesfriend.com.au/pce-js/system6/"
+          >Mac Plus - System 6 + games</a
+        >
+      </li>
+    </ul>
   </body>
 </html>

@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width" />
     <title>MacBasic - pcejs classic mac emulator</title>
     <style type="text/css">
-    .pcejs {
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-      font-family: sans-serif;
-      font-weight: 100;
-      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      border: 0px none;
-      padding: 0;
-    }
-    .pcejs-container { margin-top: 32px }
-    /* macplus has mouse integration, so we can hide the host mouse */
-    .pcejs-canvas { cursor: none }
-    .description { width:  500px; margin: 0 auto; }
+      .pcejs {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-family: sans-serif;
+        font-weight: 100;
+        /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+        border: 0px none;
+        padding: 0;
+      }
+      .pcejs-container {
+        margin-top: 32px;
+      }
+      /* macplus has mouse integration, so we can hide the host mouse */
+      .pcejs-canvas {
+        cursor: none;
+      }
+      .description {
+        width: 500px;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
@@ -24,18 +32,25 @@
       <h1>MacBasic</h1>
       <div class="pcejs-loading-status pcejs">Downloading...</div>
       <div class="pcejs">
-        <canvas class="pcejs-canvas pcejs" oncontextmenu="event.preventDefault()"></canvas>
+        <canvas
+          class="pcejs-canvas pcejs"
+          oncontextmenu="event.preventDefault()"
+        ></canvas>
       </div>
       <div class="description">
         <p>
           This is an emulated Mac Plus running Mac OS 6.0.7 with MacBasic .335.
         </p>
         <p>
-          Try out the various sample programs: <br>Open the program file in MacBasic and then select Program > Run.
+          Try out the various sample programs: <br />Open the program file in
+          MacBasic and then select Program > Run.
         </p>
         <p>
           Read more about
-          <a href="http://www.folklore.org/StoryView.py?project=Macintosh&story=MacBasic.txt">the story behind MacBasic on folklore.org</a>
+          <a
+            href="http://www.folklore.org/StoryView.py?project=Macintosh&story=MacBasic.txt"
+            >the story behind MacBasic on folklore.org</a
+          >
         </p>
       </div>
     </div>

@@ -7,5 +7,3 @@ const demo = document.getElementById('demo');
 if (demo) {
   attachDemo(demo);
 }
-
-console.log('welcome home!');

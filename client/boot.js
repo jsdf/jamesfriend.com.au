@@ -6,11 +6,15 @@ import {addTooltip} from './tooltip';
 
 // this bundle is included on every page
 
-console.log('hi');
+// don't dead-code eliminate this module, we need its css :'(
+if (window.a) {
+  console.log('hi');
+}
 
-function shouldShowTooltip() {
-  return window.innerWidth >= 800;
-}
-for (const tooltipEl of document.querySelectorAll('.tooltip')) {
-  addTooltip(tooltipEl, shouldShowTooltip);
-}
+// not using tooltips anymore
+// function shouldShowTooltip() {
+//   return window.innerWidth >= 800;
+// }
+// for (const tooltipEl of document.querySelectorAll('.tooltip')) {
+//   addTooltip(tooltipEl, shouldShowTooltip);
+// }

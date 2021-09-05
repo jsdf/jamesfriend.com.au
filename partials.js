@@ -3,10 +3,12 @@
 const hogan = require('hogan.js');
 const path = require('path');
 
+const escapeHTML = hogan.Template.prototype.v;
+
 const projects = [
   {
     url: '/projects/basiliskii/BasiliskII-worker.html',
-    tip: 'Mac OS System 7/SimCity 2000/Marathon in the browser',
+    tip: 'Mac OS System 7, SimCity 2000 & Marathon in the browser',
     label: 'BasiliskII.js Macintosh emulator',
   },
   {
@@ -121,6 +123,19 @@ const projects = [
   },
 ];
 
+const projectsTemplate = hogan.compile(`
+      <li>
+        <a href="{{{url}}}" title="{{tip}}" class="tooltip">
+          {{label}}
+          <span class="tooltip-outer">
+            <span class="tooltip-content">
+              {{tip}}
+            </span>
+          </span>
+        </a>
+      </li>
+      `);
+
 module.exports = (
   context /*:
   {
@@ -217,7 +232,7 @@ module.exports = (
   <h3>Drop me a line</h3>
   <div>
     <ul>
-      <li><a href="&#109;&#97;&#x69;l&#116;&#x6f;&#x3a;j&#97;&#x6d;&#x65;&#115;&#64;&#x6a;&#x73;&#100;&#102;&#x2e;&#x63;&#111;">Email</a></li>
+      <li><a href="hi@kf.jsdf.co">Email</a></li>
       <li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
       <li><a href="https://github.com/jsdf">GitHub</a></li>
      </ul>
@@ -234,7 +249,7 @@ module.exports = (
       .map(
         (post) => `
         <div>
-          <a href="/${post.slug}">${post.title}</a>
+          <a href="/${post.slug}">${escapeHTML(post.title)}</a>
         </div>
         `
       )
@@ -252,7 +267,9 @@ module.exports = (
       .map(
         (item) => `
           <div>
-            <a href="${item.url}" title="${item.tip}">${item.label}</a>
+            <a href="${item.url}" title="${escapeHTML(item.tip)}">${escapeHTML(
+          item.label
+        )}</a>
           </div>
           `
       )
@@ -261,7 +278,7 @@ module.exports = (
 </div>
      `;
     },
-    site_slogan: () => `dusting off the digital bones`,
+    site_slogan: () => escapeHTML(`dusting off the digital bones`),
     rss_link: () =>
       `
 <a href="${context.options.host}/rss.xml" class="feed-icon" title="Subscribe to Front page feed">
@@ -270,11 +287,7 @@ module.exports = (
 `,
     top_links_bar: () => {
       const renderItem = ({url, tip, label}) =>
-        `
-      <li>
-        <a href="${url}" title="${tip}" class="tooltip">${label}</a>
-      </li>
-      `;
+        projectsTemplate.render({url, tip, label});
 
       return `
       <ul class="project-links">

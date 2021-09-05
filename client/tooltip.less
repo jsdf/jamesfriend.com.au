@@ -1,24 +1,37 @@
+// mobile
+.tooltip-outer {
+  display: block;
+  line-height: 0.7rem;
+}
 .tooltip-content {
   font-size: 14px;
   color: #000;
-  background-color: #fff;
-  padding: 4px;
-  margin-left: 16px;
-  width: 540px;
 }
 
-.tooltip-outer {
-  height: 16px;
-  display: inline-block;
-}
+// desktop
+@media only screen and (min-width: 601px) {
+  .tooltip-content {
+    font-size: 14px;
+    color: #000;
+    background-color: #fff;
+    padding: 4px;
+    margin-left: 16px;
+    width: 540px;
+  }
 
-.tooltip-hidden {
-  // equivalent to .sr-only
-  // so tooltip remains shown for screen reader users
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+  .tooltip-outer {
+    height: 16px;
+    display: inline-block;
+    line-height: initial;
+  }
+  .tooltip-hidden {
+    // equivalent to .sr-only
+    // so tooltip remains shown for screen reader users
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 }

@@ -4,6 +4,7 @@
 @responsive-margin: 16px;
 @responsive-breakpoint: @content-width + @responsive-margin;
 @demo-height: 800px;
+@desktop-min-width: 601px;
 
 html {
   margin: 0;
@@ -128,14 +129,18 @@ ul {
   }
 }
 
-.two-col {
-  display: flex;
-  flex-direction: row;
+@media only screen and (min-width: @desktop-min-width) {
+  .two-col {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .main-col {
-  width: @main-col-width;
-  padding: 0 32px 0 0;
+  @media only screen and (min-width: @desktop-min-width) {
+    width: @main-col-width;
+    padding: 0 32px 0 0;
+  }
   @media only screen and (max-width: @responsive-breakpoint) {
     width: initial;
   }
@@ -145,6 +150,20 @@ ul {
   width: @sidebar-width;
   @media only screen and (max-width: @responsive-breakpoint) {
     width: initial;
+  }
+  a {
+    line-height: 1.5em;
+  }
+  .contact-me a {
+    line-height: 1.3em;
+  }
+
+  @media (pointer: coarse) {
+    a {
+      padding-top: 14px;
+      padding-bottom: 14px;
+      line-height: 2em;
+    }
   }
 }
 
@@ -207,7 +226,9 @@ nav .project-links {
   margin-bottom: 32px;
   li a {
     display: inline-block;
-    min-width: 800px;
+    @media only screen and (min-width: 601px) {
+      min-width: 800px;
+    }
   }
 }
 
@@ -224,3 +245,26 @@ nav .project-links {
   }
 }
 //
+
+.pic-me {
+  img {
+    width: 230px;
+  }
+}
+
+// code blocks
+pre {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+}
+
+@media (pointer: coarse) {
+  a {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .project-links a {
+    padding: 0px;
+  }
+}

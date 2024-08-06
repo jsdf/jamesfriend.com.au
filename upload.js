@@ -51,6 +51,7 @@ const allowedExtensions = new Set([
   '.gif',
   '.jpg',
   '.jpeg',
+  '.zip',
   ...uploadConfig.allowedExtensions,
   ...uploadConfig.compressedExtensions,
 ]);
@@ -185,9 +186,10 @@ async function s3Upload(filepath, contentType) {
     } else {
       await putObject(uploadParams);
     }
+    console.log('s3Upload done', filepath);
     return true;
   } catch (err) {
-    console.error('failed', err, uploadParams);
+    console.error('s3Upload failed', err, uploadParams);
     return false;
   }
 }

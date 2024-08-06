@@ -56,7 +56,7 @@ const projects = [
     url: 'https://github.com/jsdf/robot-control',
     label: 'robot',
     tip:
-      'A crappy robot arm I built and wrote inverse kinematics-based control software for',
+      'A crappy robot arm I built with inverse kinematics-based control software',
   },
   {
     url: '/projects/wolf3d/Chocolate-Wolfenstein-3D.html',
@@ -71,7 +71,7 @@ const projects = [
   {
     url: 'https://jsdf.github.io/sysex-loader/',
     tip:
-      'a tool for uploading and downloading sysex patches/samples/messages to your midi gear from your web browser',
+      'A tool for uploading and downloading sysex patches/samples/messages to your midi gear from your web browser',
     label: 'sysex-loader',
   },
   {
@@ -126,11 +126,9 @@ const projects = [
 const projectsTemplate = hogan.compile(`
       <li>
         <a href="{{{url}}}" title="{{tip}}" class="tooltip">
-          {{label}}
-          <span class="tooltip-outer">
+          {{label}} 
             <span class="tooltip-content">
-              {{tip}}
-            </span>
+              {{tip}} 
           </span>
         </a>
       </li>
@@ -232,7 +230,7 @@ module.exports = (
   <h3>Drop me a line</h3>
   <div>
     <ul>
-      <li><a href="hi@kf.jsdf.co">Email</a></li>
+      <li><a href="mailto:hi@kf.jsdf.co">Email</a></li>
       <li><a href="https://twitter.com/ur_friend_james">Twitter</a></li>
       <li><a href="https://github.com/jsdf">GitHub</a></li>
      </ul>

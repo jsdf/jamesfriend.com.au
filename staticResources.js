@@ -1,14 +1,14 @@
-const path = require('path');
-const util = require('util');
-const rollup = require('rollup');
-const loadRollupConfigFile = require('rollup/dist/loadConfigFile');
-const {nullthrows} = require('./utils');
+const path = require("path");
+const util = require("util");
+const rollup = require("rollup");
+const loadRollupConfigFile = require("rollup/dist/loadConfigFile");
+const { nullthrows } = require("./postSummary");
 
 async function buildBundles(input, caches) {
-  if (!caches) console.log('building from cold cache');
+  if (!caches) console.log("building from cold cache");
   const rollupConfig = await loadRollupConfigFile(
-    path.resolve(__dirname, 'rollup.config.js'),
-    {input}
+    path.resolve(__dirname, "rollup.config.js"),
+    { input }
   );
   let outputs = [];
   let rollupOptionsIndex = 0;
@@ -27,7 +27,7 @@ async function buildBundles(input, caches) {
       written
         .map((bundle, outputsIndex) =>
           // take only the fields we need to reference from html
-          bundle.output.map(({name, fileName, type, imports}, i) => ({
+          bundle.output.map(({ name, fileName, type, imports }, i) => ({
             ...bundle.output[i],
             code: null,
             source: null,
@@ -46,11 +46,11 @@ async function buildBundles(input, caches) {
   }
 
   const jsOutputs = new Map(
-    outputs.filter((o) => o.fileExt === '.js').map((o) => [o.name, o])
+    outputs.filter((o) => o.fileExt === ".js").map((o) => [o.name, o])
   );
   const cssOutputs = new Map(
     outputs
-      .filter((o) => o.fileExt === '.css')
+      .filter((o) => o.fileExt === ".css")
       .map((o) => {
         if (false) {
           // rollup-plugin-postcss doesn't generate a name for its extracted bundles,
@@ -67,11 +67,11 @@ async function buildBundles(input, caches) {
           }
           return [o.name, o];
         } else {
-          return [path.basename(o.name, '.css'), o];
+          return [path.basename(o.name, ".css"), o];
         }
       })
   );
-  const builtBundles = {jsOutputs, cssOutputs, caches};
+  const builtBundles = { jsOutputs, cssOutputs, caches };
 
   // console.log('buildBundles', builtBundles);
   // console.log('allOutputs', outputs);
@@ -112,7 +112,7 @@ function getRequiredBundleFiles(builtBundles, requiredBundleNames) {
   //   'getRequiredBundleFiles',
   //   util.inspect({requiredBundleNames, depSet, depTree}, {depth: Infinity})
   // );
-  return {css, js};
+  return { css, js };
 }
 
 module.exports = {

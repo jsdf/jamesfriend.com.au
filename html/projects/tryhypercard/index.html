@@ -92,7 +92,7 @@
   <body class="loading">
     <script type="text/javascript">
       var isIncompatibleFirefoxVersion = false;
-      (function() {
+      (function () {
         var matches = navigator.userAgent.match(/Firefox\/(\d+).\d+/);
         if (matches && matches[1]) {
           var firefoxVersion = parseInt(matches[1]);
@@ -117,18 +117,13 @@
     </script>
     <div class="intro">
       <h1>Try Hypercard</h1>
-      <p>
-        This is an emulated Macintosh computer running HyperCard.
-      </p>
+      <p>This is an emulated Macintosh computer running HyperCard.</p>
       <p>
         To get started, double click on "Hypercard", and select an option from
         the main menu. "HyperCard Tour" and "HyperCard Help" should help you get
         started.
       </p>
-      <p>
-        A hack by
-        <a href="https://twitter.com/ur_friend_james">@ur_friend_james</a>.
-      </p>
+      <p><a href="/">Other Projects</a></p>
 
       <div class="note show-on-incompatible">
         <strong
@@ -165,7 +160,7 @@
           'MacOS753_Hypercard.img',
           'Quadra-650.rom',
           'prefs',
-        ].map(function(filename) {
+        ].map(function (filename) {
           return '/projects/tryhypercard/' + filename;
         }),
         arguments: ['--config', 'prefs'],
@@ -184,7 +179,7 @@
       _gaq.push(['_setAccount', 'UA-23661560-1']);
       _gaq.push(['_trackPageview']);
 
-      (function() {
+      (function () {
         var ga = document.createElement('script');
         ga.type = 'text/javascript';
         ga.async = true;

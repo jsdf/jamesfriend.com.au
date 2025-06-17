@@ -10,6 +10,7 @@
     "upload": "node upload",
     "deploy": "vite build && node upload",
     "start": "vite",
+    "dev": "vite",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "cssnano": "^4.1.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-helmet-async": "^2.0.5",
     "three": "^0.121.1"
   },
   "devDependencies": {
@@ -31,6 +33,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "less": "^4.3.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.4"
   }

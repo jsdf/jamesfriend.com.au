@@ -20,11 +20,13 @@ const noise = new Noise(Math.random());
 const VIEWPORT_HEIGHT = 800;
 
 let stats = null;
-if (process.env.NODE_ENV !== 'production') {
+if (import.meta.env.DEV) {
   import('stats.js').then(({default: Stats}) => {
     stats = new Stats();
     stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
     document.body.appendChild(stats.dom);
+  }).catch(() => {
+    // Stats.js not available, continue without it
   });
 }
 

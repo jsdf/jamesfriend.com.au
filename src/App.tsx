@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import "./App.css";
+import './App.css';
 
-import { useHash } from "./useHash";
+import {useHash} from './useHash';
 
 type PostMetadata = {
   id: string;
@@ -12,31 +11,80 @@ type PostMetadata = {
   published: boolean;
 };
 
-import posts from "../posts.json";
-import Post from "./Post";
+import posts from '../posts.json';
+import Post from './Post';
+import {projects} from './data/projects';
+import AboutMe from './components/AboutMe';
+import ContactMe from './components/ContactMe';
+import CanvasDemo from './components/CanvasDemo';
+import {formatPostDate} from './utils/dateFormat';
 
 function App() {
-  const [hash, updateHash] = useHash();
-  if (hash === "") {
+  const [hash] = useHash();
+
+  // Filter published posts and sort by date
+  const publishedPosts = (posts as PostMetadata[])
+    .filter((post) => post.published !== false)
+    .sort(
+      (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+    );
+
+  if (hash === '') {
+    // Homepage layout matching production site
     return (
-      <div className="content">
-        <ul>
-          {(posts as PostMetadata[]).map((post, index) => (
-            <li key={index}>
-              <a href={`#${post.slug}`}>
-                <h2>{post.title}</h2>
-              </a>
-              <p>{new Date(post.created).toLocaleDateString()}</p>
-              <p>{post.author}</p>
-            </li>
+      <div className="page-home">
+        <div className="demo-container">
+          <CanvasDemo />
+          <div className="demo-fadeout"></div>
+          <div className="demo-overlay">
+            <header id="name-and-slogan" className="content">
+              <div id="site-name">
+                <h1>James Friend</h1>
+              </div>
+            </header>
+            <nav className="content">
+              <h2>Projects</h2>
+              <ul className="project-links">
+                {projects.map((project) => (
+                  <li key={project.url}>
+                    <a
+                      href={project.url}
+                      title={project.tip}
+                      className="tooltip"
+                    >
+                      {project.label}
+                      <span className="tooltip-content">{project.tip}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <section className="posts content">
+          <h2>Blog</h2>
+          <a id="posts-section" />
+          {publishedPosts.map((post) => (
+            <div key={post.id} className="post">
+              <h3>
+                <a href={`#${post.slug}`}>{post.title}</a>
+              </h3>
+              <div className="submitted">
+                Posted by {post.author} on {formatPostDate(post.created)}
+              </div>
+            </div>
           ))}
-        </ul>
+        </section>
+
+        <footer className="content">
+          <AboutMe />
+          <ContactMe />
+        </footer>
       </div>
     );
   } else {
-    const post = (posts as PostMetadata[]).find(
-      (post) => `#${post.slug}` === hash
-    );
+    const post = publishedPosts.find((post) => `#${post.slug}` === hash);
     if (!post) {
       return <h1>404</h1>;
     }

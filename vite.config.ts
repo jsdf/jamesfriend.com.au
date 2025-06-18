@@ -8,7 +8,7 @@ export default defineConfig({
     {
       enforce: "pre",
       ...mdx({
-        /* jsxImportSource: …, otherOptions… */
+        include: /\.(mdx|md)$/,
       }),
     },
     react({ include: /\.(jsx|js|mdx|md|tsx|ts)$/ }),

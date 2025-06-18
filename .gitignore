@@ -38,6 +38,7 @@ node_modules
 bower_components
 
 build
+dist
 
 html/projects/basiliskii/DCImage.img
 html/projects/basiliskii/MacOS753

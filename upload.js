@@ -2,7 +2,7 @@
 'use strict';
 
 const S3 = require('aws-sdk/clients/s3');
-const s3 = new S3({apiVersion: '2006-03-01'});
+const s3 = new S3({ apiVersion: '2006-03-01' });
 const util = require('util');
 const fs = require('fs');
 const exec = require('child_process').execSync;
@@ -10,7 +10,9 @@ const glob = require('glob');
 const path = require('path');
 const crypto = require('crypto');
 const cloudflare = require('cloudflare');
-const {gzip} = require('node-gzip');
+const { gzip } = require('node-gzip');
+
+const buildDir = process.argv[2] === 'legacy' ? 'build' : 'dist'
 
 const utilUntyped /*: any*/ = util;
 const promisify /*: <Args, Ret>(Function) => (...Args) => Promise<Ret> */ =
@@ -30,7 +32,7 @@ const headObject /*: (Object) => Promise<Object> */ = promisify(
 const exists /*: (string) => Promise<boolean> */ = promisify(fs.exists);
 
 const cfCredentials = JSON.parse(
-  fs.readFileSync(`${process.env.HOME || '~'}/.cfapi`, {encoding: 'utf8'})
+  fs.readFileSync(`${process.env.HOME || '~'}/.cfapi`, { encoding: 'utf8' })
 );
 const cf = cloudflare(cfCredentials);
 
@@ -221,10 +223,10 @@ async function main() {
     ? new RegExp(`(?:${uploadConfig.excludedPaths.join('|')})`)
     : null;
 
-  process.chdir('build');
+  process.chdir(buildDir);
 
   const manifest /*: {host: string} */ = JSON.parse(
-    await readFile('./manifest.json', {encoding: 'utf8'})
+    await readFile('./manifest.json', { encoding: 'utf8' })
   );
 
   if (!manifest.host.includes(uploadConfig.s3Bucket)) {

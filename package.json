@@ -6,7 +6,8 @@
   "author": "James Friend <james@jsdf.co>",
   "license": "MIT",
   "scripts": {
-    "build": "node build",
+    "legacy-build": "node build",
+    "build": "vite build",
     "upload": "node upload",
     "deploy": "vite build && node upload",
     "start": "vite",

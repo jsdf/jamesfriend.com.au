@@ -1,6 +1,6 @@
 import './App.css';
 
-import {useHash} from './useHash';
+import {usePathRouting} from './usePathRouting';
 
 type PostMetadata = {
   id: string;
@@ -20,7 +20,7 @@ import CanvasDemo from './components/CanvasDemo';
 import {formatPostDate} from './utils/dateFormat';
 
 function App() {
-  const [hash] = useHash();
+  const [pathname] = usePathRouting();
 
   // Filter published posts and sort by date
   const publishedPosts = (posts as PostMetadata[])
@@ -29,7 +29,7 @@ function App() {
       (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
     );
 
-  if (hash === '') {
+  if (pathname === '/') {
     // Homepage layout matching production site
     return (
       <div className="page-home">
@@ -68,7 +68,7 @@ function App() {
           {publishedPosts.map((post) => (
             <div key={post.id} className="post">
               <h3>
-                <a href={`#${post.slug}`}>{post.title}</a>
+                <a href={`/${post.slug}`}>{post.title}</a>
               </h3>
               <div className="submitted">
                 Posted by {post.author} on {formatPostDate(post.created)}
@@ -84,7 +84,9 @@ function App() {
       </div>
     );
   } else {
-    const post = publishedPosts.find((post) => `#${post.slug}` === hash);
+    // Extract slug from pathname (remove leading slash)
+    const slug = pathname.slice(1);
+    const post = publishedPosts.find((post) => post.slug === slug);
     if (!post) {
       return <h1>404</h1>;
     }

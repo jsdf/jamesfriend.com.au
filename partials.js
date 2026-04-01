@@ -27,6 +27,12 @@ const projects = [
     tip: 'A raytracer written in AppleScript',
   },
   {
+    url: 'https://nam-web-visualizer.pages.dev/',
+    tip:
+      'Visualises activations of Neural Amp Modeler\'s neural network while processing audio',
+    label: 'Neural Amp Modeler web visualizer',
+  },
+  {
     url: 'https://jsdf.github.io/scaletoy',
     tip: 'Easily explore chords and scales',
     label: 'scaletoy',
@@ -152,8 +158,7 @@ module.exports = (
         .getCSS()
         .map(
           (bundle) =>
-            `<link type="text/css" rel="stylesheet" href="${
-              context.options.host
+            `<link type="text/css" rel="stylesheet" href="${context.options.host
             }/${context.getPublicPath(
               path.join(bundle.dir, bundle.fileName)
             )}" media="all"/>`
@@ -175,8 +180,7 @@ module.exports = (
         .getJS()
         .map(
           (bundle) =>
-            `<script type="text/javascript" src="${
-              context.options.host
+            `<script type="text/javascript" src="${context.options.host
             }/${context.getPublicPath(
               path.join(bundle.dir, bundle.fileName)
             )}"></script>`
@@ -187,8 +191,7 @@ module.exports = (
         .getJS()
         .map(
           (bundle) =>
-            `<link rel="preload" href="${
-              context.options.host
+            `<link rel="preload" href="${context.options.host
             }/${context.getPublicPath(
               path.join(bundle.dir, bundle.fileName)
             )}" as="script" />`
@@ -243,15 +246,15 @@ module.exports = (
   <h3>Recent stuff</h3>
   <div>
     ${context.options.posts
-      .slice(0, 5)
-      .map(
-        (post) => `
+        .slice(0, 5)
+        .map(
+          (post) => `
         <div>
           <a href="/${post.slug}">${escapeHTML(post.title)}</a>
         </div>
         `
-      )
-      .join('\n')}
+        )
+        .join('\n')}
   </div>
 </div>
 `,
@@ -262,16 +265,16 @@ module.exports = (
   <h3>Projects</h3>
   <div>
     ${projects
-      .map(
-        (item) => `
+          .map(
+            (item) => `
           <div>
             <a href="${item.url}" title="${escapeHTML(item.tip)}">${escapeHTML(
-          item.label
-        )}</a>
+              item.label
+            )}</a>
           </div>
           `
-      )
-      .join('\n')}
+          )
+          .join('\n')}
   </div>
 </div>
      `;
@@ -284,8 +287,8 @@ module.exports = (
 </a>
 `,
     top_links_bar: () => {
-      const renderItem = ({url, tip, label}) =>
-        projectsTemplate.render({url, tip, label});
+      const renderItem = ({ url, tip, label }) =>
+        projectsTemplate.render({ url, tip, label });
 
       return `
       <ul class="project-links">

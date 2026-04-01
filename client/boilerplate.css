@@ -181,8 +181,8 @@ textarea {
 }
 
 body {
-  color: #333;
-  background-color: #fff;
+  color: var(--color-base-content);
+  background-color: var(--color-base-bg);
 }
 
 body.front .title {
@@ -198,7 +198,7 @@ body {
 }
 
 p {
-  margin: 0 0 1em 0;
+  margin: 0 0 1.5em 0;
 }
 
 em {
@@ -217,7 +217,7 @@ code {
 }
 
 .caption {
-  color: #848484;
+  color: var(--color-muted);
   font-size: 13px;
   font-style: italic;
   letter-spacing: 0.01em;
@@ -244,7 +244,7 @@ a.more-link {
 .more-link a,
 a.more-link,
 .page-search .node-readmore a {
-  color: #006395;
+  color: var(--color-primary);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -260,7 +260,7 @@ a.more-link,
 a.more-link:hover,
 .page-search .node-readmore a:hover {
   text-decoration: none;
-  color: #000000;
+  color: var(--color-base-content);
   border-bottom: none;
 }
 
@@ -272,11 +272,11 @@ h3 a:hover {
 th,
 td {
   padding: 0.5em;
-  border: 1px solid #dddddd;
+  border: 1px solid color-mix(in srgb, var(--color-base-content) 20%, transparent);
 }
 
 th {
-  background-color: #f5f5f5;
+  background-color: color-mix(in srgb, var(--color-base-content) 8%, transparent);
 }
 
 th {

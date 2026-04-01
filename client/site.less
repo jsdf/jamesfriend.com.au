@@ -6,6 +6,35 @@
 @demo-height: 800px;
 @desktop-min-width: @content-width;
 
+// DaisyUI acid theme colors (exact oklch values from daisyui source)
+// primary:   oklch(71.9% 0.357 330.759)  — magenta
+// secondary: oklch(73.37% 0.224 48.25)   — yellow/gold
+// accent:    oklch(92.78% 0.264 122.962) — lime green
+
+// Dark mode — increased lightness for legibility on black
+:root {
+  --color-base-bg: #000000;
+  --color-base-content: oklch(92% 0 0);
+  --color-muted: oklch(65% 0 0);
+  --color-heading: oklch(92% 0 0);
+  --color-heading-hover: oklch(92.78% 0.264 122.962);
+  --demo-bg: rgba(0, 0, 0, 1);
+  --demo-bg-transparent: rgba(0, 0, 0, 0);
+}
+
+// Light mode — acid theme native values
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-base-bg: #ffffff;
+    --color-base-content: oklch(0% 0 0);
+    --color-muted: oklch(45% 0.06 280);
+    --color-heading: oklch(0% 0 0);
+    --color-heading-hover: oklch(73.37% 0.224 48.25);
+    --demo-bg: rgba(255, 255, 255, 1);
+    --demo-bg-transparent: rgba(255, 255, 255, 0);
+  }
+}
+
 html {
   margin: 0;
   line-height: 1.2em;
@@ -17,6 +46,8 @@ html {
 }
 
 body {
+  background-color: var(--color-base-bg);
+  color: var(--color-base-content);
 }
 
 a:link,
@@ -59,17 +90,26 @@ h3 {
 }
 
 html {
-  font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;
+  font-family: monospace;
+  text-transform: lowercase;
+}
+
+@keyframes link-color-cycle {
+  0%   { color: oklch(70% 0.35 328); }  // magenta
+  25%  { color: oklch(70% 0.35 280); }  // violet
+  50%  { color: oklch(70% 0.35 240); }  // blue
+  75%  { color: oklch(70% 0.35 200); }  // cyan
+  100% { color: oklch(70% 0.35 328); }  // back to magenta
 }
 
 a {
   text-decoration: none;
-  color: #ef03bb;
+  animation: link-color-cycle 8s linear infinite;
 }
 
 a:hover {
   text-decoration: none;
-  color: darken(#ef03bb, 10%);
+  animation-play-state: paused;
 }
 
 #site-name,
@@ -78,11 +118,11 @@ h2,
 h3 {
   a {
     text-decoration: none;
-    color: #333;
+    color: var(--color-heading);
   }
   a:hover {
     text-decoration: none;
-    color: darken(#333, 10%);
+    color: var(--color-heading-hover);
   }
 }
 
@@ -108,13 +148,13 @@ ul {
 
 .post {
   margin-bottom: 2em;
-  line-height: 1.4em;
-  font-size: 18px;
+  line-height: 1.6em;
+  font-size: 16px;
 }
 
 .post-body {
-  line-height: 1.35em;
-  font-size: 18px;
+  line-height: 1.6em;
+  font-size: 16px;
 }
 
 // site layout
@@ -195,8 +235,8 @@ article,
 .demo-fadeout {
   background-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 1)
+    var(--demo-bg-transparent),
+    var(--demo-bg)
   );
   width: 100%;
   height: @demo-height / 4;
